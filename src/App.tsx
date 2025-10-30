@@ -10,7 +10,6 @@ import NavigationIndicator from './components/NavigationIndicator';
 import MobileBottomNav from './components/MobileBottomNav';
 import SkipLink from './components/a11y/SkipLink';
 import './styles/mobile-optimizations.css';
-import SmoothScroll from './components/ui/smooth-scroll';
 import PerformanceMonitor from './components/ui/PerformanceMonitor';
 import Header from './components/Header';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -33,13 +32,26 @@ import RoadTransportPage from './pages/RoadTransportPage';
 import IntermodalTransportPage from './pages/IntermodalTransportPage';
 import SpecialTransportPage from './pages/SpecialTransportPage';
 import LogisticsServicesPage from './pages/LogisticsServicesPage';
+import AllInOneAccessibility from './components/AllInOneAccessibility';
+import LoadingScreen from './components/LoadingScreen';
 
 
 const AppContent: React.FC = () => {
   const { language } = useLanguage();
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    // Simulate page load - set to false after a short delay
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
+      <LoadingScreen isLoading={isLoading} />
       <Helmet>
         <html lang={language} />
         <link rel="alternate" hreflang="el" href="https://www.intracosta.gr/el" />
@@ -52,8 +64,8 @@ const AppContent: React.FC = () => {
       <Router>
         <div className="min-h-screen">
           <SkipLink />
-          <Header />
-          <NavigationIndicator />
+          {!isLoading && <Header />}
+          {!isLoading && <NavigationIndicator />}
           <MobileBottomNav />
           <main id="main-content" role="main" tabIndex={-1}>
             <Routes>
@@ -177,6 +189,7 @@ const AppContent: React.FC = () => {
             </Routes>
           </main>
           <Footer />
+          <AllInOneAccessibility />
         </div>
       </Router>
     </>
@@ -187,9 +200,7 @@ function App() {
   return (
     <HelmetProvider>
       <LanguageProvider>
-        <SmoothScroll>
-          <AppContent />
-        </SmoothScroll>
+        <AppContent />
       </LanguageProvider>
     </HelmetProvider>
   );

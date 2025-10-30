@@ -42,6 +42,11 @@ const translations: Translations = {
     en: 'Send Message',
     de: 'Nachricht senden'
   },
+  requestQuote: {
+    el: 'Ζητήστε Προσφορά',
+    en: 'Request Quote',
+    de: 'Angebot anfordern'
+  },
   // Contact Section Titles & Subtitles
   'contact.emailUsTitle': {
     el: 'Στείλτε μας Email',
@@ -132,16 +137,6 @@ const translations: Translations = {
     el: 'Τεμάχια/Κιβώτια',
     en: 'Boxes/Pieces',
     de: 'Kisten/Stück'
-  },
-  bulk: {
-    el: 'Χύδην',
-    en: 'Bulk',
-    de: 'Schüttgut'
-  },
-  container: {
-    el: 'Κοντέινερ',
-    en: 'Container',
-    de: 'Container'
   },
   otherPackage: {
     el: 'Άλλο',
@@ -274,9 +269,9 @@ const translations: Translations = {
     de: 'Für Fragen zu diesen Nutzungsbedingungen kontaktieren Sie uns bitte unter:'
   },
   aboutHighlight1Title: {
-    el: 'Σχεδόν καθημερινά δρομολόγια',
-    en: 'Almost Daily Routes',
-    de: 'Nahezu tägliche Routen'
+    el: 'Καθημερινά δρομολόγια',
+    en: 'Daily routes',
+    de: 'Tägliche Routen'
   },
   aboutHighlight1Desc: {
     el: 'Από/προς Ελλάδα και κεντρική Ευρώπη με τακτικές μετακινήσεις.',
@@ -284,9 +279,9 @@ const translations: Translations = {
     de: 'Von/nach Griechenland und Mitteleuropa mit regelmäßigen Fahrten.'
   },
   aboutHighlight2Title: {
-    el: 'Δίκτυο Αποθηκών',
-    en: 'Warehouse Network',
-    de: 'Lagernetzwerk'
+    el: 'Εκτεταμένο δίκτυο αποθηκών',
+    en: 'Extended warehouse network',
+    de: 'Erweitertes Lagernetzwerk'
   },
   aboutHighlight2Desc: {
     el: 'Δύο ιδιόκτητες αποθήκες και συνεργάτες σε όλη την Ευρώπη.',
@@ -323,6 +318,108 @@ const translations: Translations = {
     en: "Ready to take your business to the next level? Let's start a discussion about your goals and how we can help you achieve them.",
     de: 'Bereit, Ihr Unternehmen auf die nächste Stufe zu bringen? Lassen Sie uns ein Gespräch über Ihre Ziele führen und wie wir Ihnen helfen können, sie zu erreichen.'
   },
+  certifiedServices: {
+    el: 'Πιστοποιημένες Υπηρεσίες',
+    en: 'Certified Services',
+    de: 'Zertifizierte Dienstleistungen'
+  },
+  // ISO Certifications
+  iso9001Subtitle: {
+    el: 'Σύστημα Διαχείρισης Ποιότητας',
+    en: 'Quality Management System',
+    de: 'Qualitätsmanagementsystem'
+  },
+  iso9001Description: {
+    el: 'Η ISO 9001 είναι το διεθνές πρότυπο για συστήματα διαχείρισης ποιότητας. Εξασφαλίζει ότι η εταιρεία μας ακολουθεί τις καλύτερες πρακτικές για την παροχή υψηλής ποιότητας υπηρεσιών, συνεχή βελτίωση και ικανοποίηση πελατών.',
+    en: 'ISO 9001 is the international standard for quality management systems. It ensures that our company follows best practices for providing high-quality services, continuous improvement, and customer satisfaction.',
+    de: 'ISO 9001 ist der internationale Standard für Qualitätsmanagementsysteme. Er stellt sicher, dass unser Unternehmen bewährte Praktiken für die Bereitstellung hochwertiger Dienstleistungen, kontinuierliche Verbesserung und Kundenzufriedenheit befolgt.'
+  },
+  iso9001Benefit1: {
+    el: 'Συνεχής βελτίωση των διαδικασιών',
+    en: 'Continuous improvement of processes',
+    de: 'Kontinuierliche Verbesserung der Prozesse'
+  },
+  iso9001Benefit2: {
+    el: 'Αυξημένη ικανοποίηση πελατών',
+    en: 'Increased customer satisfaction',
+    de: 'Erhöhte Kundenzufriedenheit'
+  },
+  iso9001Benefit3: {
+    el: 'Καλύτερη διαχείριση κινδύνων',
+    en: 'Better risk management',
+    de: 'Besseres Risikomanagement'
+  },
+  iso9001Benefit4: {
+    el: 'Ενίσχυση της αξιοπιστίας',
+    en: 'Enhanced credibility',
+    de: 'Verbesserte Glaubwürdigkeit'
+  },
+  iso39001Subtitle: {
+    el: 'Διαχείριση Ασφάλειας Οδικής Κυκλοφορίας',
+    en: 'Road Traffic Safety Management',
+    de: 'Straßenverkehrssicherheitsmanagement'
+  },
+  iso39001Description: {
+    el: 'Η ISO 39001 είναι το διεθνές πρότυπο για συστήματα διαχείρισης ασφάλειας οδικής κυκλοφορίας. Εξασφαλίζει ότι οι μεταφορικές μας υπηρεσίες ακολουθούν τα υψηλότερα πρότυπα ασφάλειας και προστασίας.',
+    en: 'ISO 39001 is the international standard for road traffic safety management systems. It ensures that our transport services follow the highest safety and protection standards.',
+    de: 'ISO 39001 ist der internationale Standard für Straßenverkehrssicherheitsmanagementsysteme. Er stellt sicher, dass unsere Transportdienstleistungen den höchsten Sicherheits- und Schutzstandards entsprechen.'
+  },
+  iso39001Benefit1: {
+    el: 'Μείωση ατυχημάτων και κινδύνων',
+    en: 'Reduction of accidents and risks',
+    de: 'Reduzierung von Unfällen und Risiken'
+  },
+  iso39001Benefit2: {
+    el: 'Προστασία οδηγών και φορτίων',
+    en: 'Protection of drivers and cargo',
+    de: 'Schutz von Fahrern und Fracht'
+  },
+  iso39001Benefit3: {
+    el: 'Συμμόρφωση με διεθνείς κανονισμούς',
+    en: 'Compliance with international regulations',
+    de: 'Einhaltung internationaler Vorschriften'
+  },
+  iso39001Benefit4: {
+    el: 'Βελτίωση της ασφάλειας οδικής κυκλοφορίας',
+    en: 'Improvement of road traffic safety',
+    de: 'Verbesserung der Straßenverkehrssicherheit'
+  },
+  benefits: {
+    el: 'Οφέλη',
+    en: 'Benefits',
+    de: 'Vorteile'
+  },
+  learnMoreIso: {
+    el: 'Μάθετε περισσότερα στο επίσημο site της ISO',
+    en: 'Learn more on the official ISO website',
+    de: 'Erfahren Sie mehr auf der offiziellen ISO-Website'
+  },
+  workingHours: {
+    el: 'Δευτέρα - Παρασκευή: 09:00 - 17:00',
+    en: 'Monday - Friday: 09:00 - 17:00',
+    de: 'Montag - Freitag: 09:00 - 17:00'
+  },
+  // LDM Form Fields
+  ldmValue: {
+    el: 'LDM',
+    en: 'LDM',
+    de: 'LDM'
+  },
+  ldmPlaceholder: {
+    el: 'π.χ. 5',
+    en: 'e.g. 5',
+    de: 'z.B. 5'
+  },
+  ldmInstructions: {
+    el: 'Εισάγετε την τιμή LDM που χρειάζεστε',
+    en: 'Enter the LDM value you need',
+    de: 'Geben Sie den benötigten LDM-Wert ein'
+  },
+  invalidLdmValue: {
+    el: 'Παρακαλώ εισάγετε μια έγκυρη τιμή LDM',
+    en: 'Please enter a valid LDM value',
+    de: 'Bitte geben Sie einen gültigen LDM-Wert ein'
+  },
   responseTime: {
     el: 'Χρόνος Απάντησης',
     en: 'Response Time',
@@ -332,6 +429,52 @@ const translations: Translations = {
     el: 'Ευρωπαϊκές Διαδρομές',
     en: 'European Routes',
     de: 'Europäische Routen'
+  },
+  coverageDescription: {
+    el: 'Εξυπηρετούμε 15+ χώρες με τακτικά δρομολόγια',
+    en: 'We serve 15+ countries with regular routes',
+    de: 'Wir bedienen über 15 Länder mit regelmäßigen Routen'
+  },
+  viewAllRoutes: {
+    el: 'Δείτε όλες τις διαδρομές',
+    en: 'View All Routes',
+    de: 'Alle Routen anzeigen'
+  },
+  // LDM and Measurement Types
+  measurementType: {
+    el: 'Τύπος Μέτρησης',
+    en: 'Measurement Type',
+    de: 'Messart'
+  },
+  ldmMeasurement: {
+    el: 'LDM',
+    en: 'LDM',
+    de: 'LDM'
+  },
+  ldmDescription: {
+    el: 'Load Meter (μήκος φορτηγού)',
+    en: 'Load Meter (truck length)',
+    de: 'Lademeter (LKW-Länge)'
+  },
+  packageDimensions: {
+    el: 'Διαστάσεις Πακέτου',
+    en: 'Package Dimensions',
+    de: 'Paketabmessungen'
+  },
+  packageDimensionsDescription: {
+    el: 'Μήκος x Πλάτος x Ύψος',
+    en: 'Length x Width x Height',
+    de: 'Länge x Breite x Höhe'
+  },
+  ldmExplanation: {
+    el: 'Μονάδα μέτρησης που αντιπροσωπεύει το μήκος του φορτηγού σε μέτρα. 1 LDM = 1 μέτρο μήκους φορτηγού.',
+    en: 'Measurement unit representing truck length in meters. 1 LDM = 1 meter of truck length.',
+    de: 'Maßeinheit für LKW-Länge in Metern. 1 LDM = 1 Meter LKW-Länge.'
+  },
+  ldmDimensions: {
+    el: 'LDM - Διαστάσεις',
+    en: 'LDM - Dimensions',
+    de: 'LDM - Abmessungen'
   },
   cmrInsurance: {
     el: 'Ασφάλεια CMR',
@@ -349,7 +492,6 @@ const translations: Translations = {
   services: { el: 'Υπηρεσίες', en: 'Services', de: 'Dienstleistungen' },
   servicesDescription: { el: 'Οι υπηρεσίες μας', en: 'Our services', de: 'Unsere Dienstleistungen' },
   coverage: { el: 'Περιοχές', en: 'Coverage', de: 'Abdeckung' },
-  coverageDescription: { el: 'Περιοχές κάλυψης', en: 'Coverage areas', de: 'Abdeckungsgebiete' },
   covered: {
     el: 'Καλύπτεται',
     en: 'Covered',
@@ -569,7 +711,7 @@ const translations: Translations = {
   },
   aboutIntracostaDetails: {
     el: 'Τι μας κάνει διαφορετικούς:\n- Σχεδόν καθημερινά δρομολόγια απο/προς Ελλάδα, από/προς κεντρική Ευρώπη\n- Δύο ιδιοκτήτες αποθήκες (Γιαννιτσά, Όσναμπουργκ) και δεκάδες συνεργαζόμενες σε Ελλάδα, Γερμανία, Αυστρία, Ολλανδία, Βέλγιο, Πολωνία για φορτοεκφορτώσεις και προσωρινή αποθήκευση\n- Ασφάλιση CMR, για αποδεικτικά παράδοσης και εγγύηση ασφαλείας, αξιοπιστίας και διαφάνειας σε κάθε διαδρομή\n- Ομάδα οδηγών και εργαζόμενων που αντιμετωπίζουν κάθε σου αποστολή σαν να ήταν δίκη τους\n\nΗ αποστολή μας είναι να κρατάμε την εφοδιαστική αλυσίδα των πελατών μας σε κίνηση—γρήγορα, με ασφάλεια και απόλυτη διαφάνεια κόστους. Από μια παλέτα μέχρι πλήρες φορτίο, σχεδιάζουμε τη βέλτιστη διαδρομή, αξιοποιούμε το διεθνές μας δίκτυο και παραδίδουμε ακριβώς όταν το χρειάζεστε, ώστε εσείς να εστιάζετε στην ανάπτυξη της επιχείρησής σας.',
-    en: 'What makes us different:\n- Almost daily routes to/from Greece and central Europe\n- Two owned warehouses (Giannitsa, Osnabrück) and dozens of partner facilities in Greece, Germany, Austria, Netherlands, Belgium, Poland for loading/unloading and temporary storage\n- CMR insurance for delivery proofs and guaranteed security, reliability, and transparency on every route\n- A team of drivers and staff who treat every shipment as if it were their own\n\nOur mission is to keep our customers’ supply chains moving—quickly, safely, and with complete cost transparency. From a single pallet to full truckloads, we design the optimal route, leverage our international network, and deliver exactly when you need it so you can focus on growing your business.',
+    en: 'What makes us different:\n- Almost daily routes to/from Greece and central Europe\n- Two owned warehouses (Giannitsa, Osnabrück) and dozens of partner facilities in Greece, Germany, Austria, Netherlands, Belgium, Poland for loading/unloading and temporary storage\n- CMR insurance for delivery proofs and guaranteed security, reliability, and transparency on every route\n- A team of drivers and staff who treat every shipment as if it were their own\n\nOur mission is to keep our customers\' supply chains moving—quickly, safely, and with complete cost transparency. From a single pallet to full truckloads, we design the optimal route, leverage our international network, and deliver exactly when you need it so you can focus on growing your business.',
     de: 'Was uns anders macht:\n- Nahezu tägliche Routen von/nach Griechenland und Mitteleuropa\n- Zwei firmeneigene Lagerhäuser (Giannitsa, Osnabrück) und Dutzende Partnerstandorte in Griechenland, Deutschland, Österreich, Niederlande, Belgien, Polen für Be- und Entladung sowie Zwischenlagerung\n- CMR-Versicherung für Liefernachweise und garantierte Sicherheit, Zuverlässigkeit und Transparenz auf jeder Route\n- Ein Team von Fahrern und Mitarbeitern, das jede Sendung behandelt, als wäre es ihre eigene\n\nUnsere Mission ist es, die Lieferketten unserer Kunden am Laufen zu halten – schnell, sicher und mit vollständiger Kostentransparenz. Von einer Palette bis hin zu Komplettladungen entwerfen wir die optimale Route, nutzen unser internationales Netzwerk und liefern genau dann, wenn Sie es brauchen, damit Sie sich auf das Wachstum Ihres Unternehmens konzentrieren können.'
   },
   
@@ -772,9 +914,9 @@ const translations: Translations = {
     de: 'Sichere Lagerung und Lagerverwaltung'
   },
   centralWarehousesTitle: {
-    el: '6 Κεντρικές Αποθήκες',
-    en: '6 Central Warehouses',
-    de: '6 Zentrale Lagerhäuser'
+    el: 'Εκτεταμένο Δίκτυο',
+    en: 'Extended Network',
+    de: 'Erweitertes Netzwerk'
   },
   centralWarehousesDescription: {
     el: 'Πανευρωπαϊκή κάλυψη με σύγχρονα κέντρα διανομής',
@@ -877,6 +1019,14 @@ const translations: Translations = {
   Denmark: { el: 'Δανία', en: 'Denmark', de: 'Dänemark' },
   Greece: { el: 'Ελλάδα', en: 'Greece', de: 'Griechenland' },
   Cyprus: { el: 'Κύπρος', en: 'Cyprus', de: 'Zypern' },
+  France: { el: 'Γαλλία', en: 'France', de: 'Frankreich' },
+  Italy: { el: 'Ιταλία', en: 'Italy', de: 'Italien' },
+  Hungary: { el: 'Ουγγαρία', en: 'Hungary', de: 'Ungarn' },
+  Romania: { el: 'Ρουμανία', en: 'Romania', de: 'Rumänien' },
+  Slovakia: { el: 'Σλοβακία', en: 'Slovakia', de: 'Slowakei' },
+  Czechia: { el: 'Τσεχία', en: 'Czechia', de: 'Tschechien' },
+  Switzerland: { el: 'Ελβετία', en: 'Switzerland', de: 'Schweiz' },
+  Liechtenstein: { el: 'Λιχτενστάιν', en: 'Liechtenstein', de: 'Liechtenstein' },
 
   // --- New services translations ---
   // Service 1: National and International Road Transport
@@ -925,9 +1075,9 @@ const translations: Translations = {
     de: 'Wir verfügen über das Know-how und die Ausrüstung für anspruchsvolle Fracht: übergroße, schwere, empfindliche oder hochwertige Güter.'
   },
   'services.specialTransportFull': {
-    el: 'Διαθέτουμε την τεχνογνωσία και τον εξοπλισμό για τη διαχείριση απαιτητικών φορτίων:\n– υπερμεγέθη,\n– βαρέα,\n– ευπαθή ή\n– υψηλής αξίας εμπορεύματα.\n\nΚάθε έργο σχεδιάζεται με βάση τις τεχνικές του ιδιαιτερότητες, τηρώντας όλους τους κανονισμούς και τις προδιαγραφές ασφαλείας. Προσφέρουμε εξατομικευμένες λύσεις ανά έργο και φορτίο.',
-    en: 'We have the expertise and equipment to handle demanding cargo:\n– oversized,\n– heavy,\n– fragile or\n– high-value goods.\n\nEach project is designed based on its technical specifications, complying with all regulations and safety standards. We offer customized solutions per project and cargo.',
-    de: 'Wir verfügen über das Know-how und die Ausrüstung für anspruchsvolle Fracht:\n– übergroß,\n– schwer,\n– empfindlich oder\n– hochwertig.\n\nJedes Projekt wird nach seinen technischen Spezifikationen geplant und entspricht allen Vorschriften und Sicherheitsstandards. Wir bieten maßgeschneiderte Lösungen pro Projekt und Fracht.'
+    el: 'Διαθέτουμε την τεχνογνωσία και τον εξοπλισμό για τη διαχείριση απαιτητικών φορτίων:\n– υπερμεγέθη φορτία,\n– βαρέα εμπορεύματα,\n– ευπαθή προϊόντα ή\n– υψηλής αξίας εμπορεύματα.\n\nΚάθε έργο σχεδιάζεται με βάση τις τεχνικές του ιδιαιτερότητες, τηρώντας όλους τους κανονισμούς και τις προδιαγραφές ασφαλείας. Προσφέρουμε εξατομικευμένες λύσεις ανά έργο και φορτίο.',
+    en: 'We have the expertise and equipment to handle demanding cargo:\n– oversized loads,\n– heavy goods,\n– fragile products or\n– high-value merchandise.\n\nEach project is designed based on its technical specifications, complying with all regulations and safety standards. We offer customized solutions per project and cargo.',
+    de: 'Wir verfügen über das Know-how und die Ausrüstung für anspruchsvolle Fracht:\n– übergroße Ladungen,\n– schwere Güter,\n– empfindliche Produkte oder\n– hochwertige Waren.\n\nJedes Projekt wird nach seinen technischen Spezifikationen geplant und entspricht allen Vorschriften und Sicherheitsstandards. Wir bieten maßgeschneiderte Lösungen pro Projekt und Fracht.'
   },
 
   // Service 4: Logistics Services
@@ -942,9 +1092,9 @@ const translations: Translations = {
     de: 'Wir bieten umfassende Logistikdienstleistungen, die das gesamte Supply-Chain-Management von der Lagerung bis zur Verteilung abdecken.'
   },
   'services.logisticsFull': {
-    el: 'Προσφέρουμε ολοκληρωμένες υπηρεσίες logistics, καλύπτοντας το σύνολο της διαχείρισης της εφοδιαστικής αλυσίδας.\n\nΟι υπηρεσίες μας περιλαμβάνουν:\n– παραλαβή και ταξινόμηση φορτίων,\n– αποθήκευση,\n– διαχείριση αποθεμάτων (inventory control),\n– picking, packing & repacking,\n– φορτοεκφορτώσεις,\n– cross-docking και\n– προετοιμασία για διανομή ή εξαγωγή.\n\nΗ ομάδα μας συνδυάζει τεχνογνωσία, σύγχρονο εξοπλισμό και λειτουργική ευελιξία για να υποστηρίξει αποδοτικά κάθε κρίκο της εφοδιαστικής αλυσίδας των συνεργατών μας.',
-    en: 'We offer comprehensive logistics services covering the entire supply chain management.\n\nOur services include:\n– cargo reception and sorting,\n– warehousing,\n– inventory control,\n– picking, packing & repacking,\n– loading/unloading,\n– cross-docking and\n– preparation for distribution or export.\n\nOur team combines expertise, modern equipment and operational flexibility to efficiently support every link in our partners\' supply chain.',
-    de: 'Wir bieten umfassende Logistikdienstleistungen, die das gesamte Supply-Chain-Management abdecken.\n\nUnsere Dienstleistungen umfassen:\n– Warenannahme und Sortierung,\n– Lagerung,\n– Bestandsverwaltung (Inventory Control),\n– Kommissionierung, Verpackung & Umverpackung,\n– Be- und Entladung,\n– Cross-Docking und\n– Vorbereitung für Verteilung oder Export.\n\nUnser Team kombiniert Fachwissen, moderne Ausrüstung und operative Flexibilität, um jedes Glied der Lieferkette unserer Partner effizient zu unterstützen.'
+    el: 'Προσφέρουμε ολοκληρωμένες υπηρεσίες logistics, καλύπτοντας το σύνολο της διαχείρισης της εφοδιαστικής αλυσίδας.\n\nΟι υπηρεσίες μας περιλαμβάνουν:\n– παραλαβή και ταξινόμηση φορτίων,\n– αποθήκευση και διαχείριση αποθεμάτων,\n– picking, packing & repacking,\n– φορτοεκφορτώσεις και cross-docking,\n– προετοιμασία για διανομή ή εξαγωγή.\n\nΗ ομάδα μας συνδυάζει τεχνογνωσία, σύγχρονο εξοπλισμό και λειτουργική ευελιξία για να υποστηρίξει αποδοτικά κάθε κρίκο της εφοδιαστικής αλυσίδας των συνεργατών μας.',
+    en: 'We offer comprehensive logistics services covering the entire supply chain management.\n\nOur services include:\n– cargo reception and sorting,\n– warehousing and inventory management,\n– picking, packing & repacking,\n– loading/unloading and cross-docking,\n– preparation for distribution or export.\n\nOur team combines expertise, modern equipment and operational flexibility to efficiently support every link in our partners\' supply chain.',
+    de: 'Wir bieten umfassende Logistikdienstleistungen, die das gesamte Supply-Chain-Management abdecken.\n\nUnsere Dienstleistungen umfassen:\n– Warenannahme und Sortierung,\n– Lagerung und Bestandsverwaltung,\n– Kommissionierung, Verpackung & Umverpackung,\n– Be- und Entladung und Cross-Docking,\n– Vorbereitung für Verteilung oder Export.\n\nUnser Team kombiniert Fachwissen, moderne Ausrüstung und operative Flexibilität, um jedes Glied der Lieferkette unserer Partner effizient zu unterstützen.'
   },
   
   // Add missing form validation translations
@@ -1123,6 +1273,356 @@ const translations: Translations = {
     el: 'Κεντρική Αποθήκη',
     en: 'Central Warehouse',
     de: 'Zentrales Lager'
+  },
+  // Accessibility Widget Translations
+  accessibilitySettings: {
+    el: 'Ρυθμίσεις προσβασιμότητας',
+    en: 'Accessibility settings',
+    de: 'Barrierefreiheits-Einstellungen'
+  },
+  increaseFontSize: {
+    el: 'Αύξηση μεγέθους γραμματοσειράς',
+    en: 'Increase font size',
+    de: 'Schriftgröße erhöhen'
+  },
+  decreaseFontSize: {
+    el: 'Μείωση μεγέθους γραμματοσειράς',
+    en: 'Decrease font size',
+    de: 'Schriftgröße verringern'
+  },
+  enableGrayscale: {
+    el: 'Ενεργοποίηση κλίμακας γκρι',
+    en: 'Enable grayscale mode',
+    de: 'Graustufen-Modus aktivieren'
+  },
+  enableHighContrast: {
+    el: 'Ενεργοποίηση υψηλής αντίθεσης',
+    en: 'Enable high contrast mode',
+    de: 'Hohen Kontrast aktivieren'
+  },
+  enableNegativeContrast: {
+    el: 'Ενεργοποίηση αρνητικής αντίθεσης',
+    en: 'Enable negative contrast mode',
+    de: 'Negativen Kontrast aktivieren'
+  },
+  enableLightBackground: {
+    el: 'Ενεργοποίηση ανοιχτόχρωμου φόντου',
+    en: 'Enable light background mode',
+    de: 'Hellen Hintergrund aktivieren'
+  },
+  enableUnderlineLinks: {
+    el: 'Ενεργοποίηση υπογράμμισης συνδέσμων',
+    en: 'Enable link underlining',
+    de: 'Link-Unterstreichung aktivieren'
+  },
+  enableDyslexicFont: {
+    el: 'Ενεργοποίηση αναγνώσιμης γραμματοσειράς',
+    en: 'Enable dyslexia-friendly font',
+    de: 'Legasthenie-freundliche Schrift aktivieren'
+  },
+  resetAllAccessibility: {
+    el: 'Επαναφορά όλων των ρυθμίσεων προσβασιμότητας',
+    en: 'Reset all accessibility settings',
+    de: 'Alle Barrierefreiheits-Einstellungen zurücksetzen'
+  },
+  accessibilityToggle: {
+    el: 'Εναλλαγή μενού προσβασιμότητας',
+    en: 'Toggle accessibility menu',
+    de: 'Barrierefreiheitsmenü umschalten'
+  },
+  customizeExperience: {
+    el: 'Προσαρμόστε την εμπειρία σας',
+    en: 'Customize your experience',
+    de: 'Passen Sie Ihre Erfahrung an'
+  },
+  closeSettings: {
+    el: 'Κλείσιμο ρυθμίσεων',
+    en: 'Close settings',
+    de: 'Einstellungen schließen'
+  },
+  textSize: {
+    el: 'Μέγεθος κειμένου',
+    en: 'Text Size',
+    de: 'Textgröße'
+  },
+  current: {
+    el: 'Τρέχον',
+    en: 'Current',
+    de: 'Aktuell'
+  },
+  visualAdjustments: {
+    el: 'Οπτικές Προσαρμογές',
+    en: 'Visual Adjustments',
+    de: 'Visuelle Anpassungen'
+  },
+  grayscaleLabel: {
+    el: 'Κλίμακα γκρι',
+    en: 'Grayscale',
+    de: 'Graustufen'
+  },
+  highContrastLabel: {
+    el: 'Υψηλή αντίθεση',
+    en: 'High Contrast',
+    de: 'Hoher Kontrast'
+  },
+  negativeContrastLabel: {
+    el: 'Αρνητική αντίθεση',
+    en: 'Negative Contrast',
+    de: 'Negativer Kontrast'
+  },
+  lightBackgroundLabel: {
+    el: 'Ανοιχτό φόντο',
+    en: 'Light Background',
+    de: 'Heller Hintergrund'
+  },
+  textAndReading: {
+    el: 'Κείμενο & Ανάγνωση',
+    en: 'Text & Reading',
+    de: 'Text & Lesen'
+  },
+  underlineLinksLabel: {
+    el: 'Υπογράμμιση συνδέσμων',
+    en: 'Underline Links',
+    de: 'Links unterstreichen'
+  },
+  dyslexiaFontLabel: {
+    el: 'Γραμματοσειρά δυσλεξίας',
+    en: 'Dyslexia Font',
+    de: 'Legasthenie-Schriftart'
+  },
+  
+  // Contact Form Translation Keys
+  allEmailAddresses: {
+    el: 'Όλες οι Διευθύνσεις Email',
+    en: 'All Email Addresses',
+    de: 'Alle E-Mail-Adressen'
+  },
+  clickToSendEmail: {
+    el: 'Κάντε κλικ για να στείλετε email στην κατάλληλη διεύθυνση.',
+    en: 'Click to send email to the appropriate address.',
+    de: 'Klicken Sie, um eine E-Mail an die entsprechende Adresse zu senden.'
+  },
+  generalInfo: {
+    el: 'Γενικές Πληροφορίες',
+    en: 'General Information',
+    de: 'Allgemeine Informationen'
+  },
+  exports: {
+    el: 'Εξαγωγές',
+    en: 'Exports',
+    de: 'Exporte'
+  },
+  imports: {
+    el: 'Εισαγωγές',
+    en: 'Imports',
+    de: 'Importe'
+  },
+  accounting: {
+    el: 'Λογιστήριο',
+    en: 'Accounting',
+    de: 'Buchhaltung'
+  },
+  orUseForm: {
+    el: 'ή χρησιμοποιήστε τη φόρμα για να μας στείλετε μήνυμα',
+    en: 'or use the form to send us a message',
+    de: 'oder verwenden Sie das Formular, um uns eine Nachricht zu senden'
+  },
+  nameRequired: {
+    el: 'Το όνομα είναι υποχρεωτικό',
+    en: 'Name is required',
+    de: 'Name ist erforderlich'
+  },
+  emailRequired: {
+    el: 'Το email είναι υποχρεωτικό',
+    en: 'Email is required',
+    de: 'E-Mail ist erforderlich'
+  },
+  validEmailRequired: {
+    el: 'Παρακαλώ εισάγετε έγκυρο email',
+    en: 'Please enter a valid email',
+    de: 'Bitte geben Sie eine gültige E-Mail ein'
+  },
+  messageRequired: {
+    el: 'Το μήνυμα είναι υποχρεωτικό',
+    en: 'Message is required',
+    de: 'Nachricht ist erforderlich'
+  },
+  messageMinLength: {
+    el: 'Το μήνυμα πρέπει να έχει τουλάχιστον 10 χαρακτήρες',
+    en: 'Message must be at least 10 characters',
+    de: 'Nachricht muss mindestens 10 Zeichen haben'
+  },
+  gdprConsentRequired: {
+    el: 'Πρέπει να αποδεχτείτε την πολιτική απορρήτου',
+    en: 'You must accept the privacy policy',
+    de: 'Sie müssen die Datenschutzrichtlinie akzeptieren'
+  },
+  formSubmissionError: {
+    el: 'Παρουσιάστηκε σφάλμα κατά την αποστολή του μηνύματος. Παρακαλώ δοκιμάστε ξανά.',
+    en: 'An error occurred while sending the message. Please try again.',
+    de: 'Beim Senden der Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
+  },
+  messageSent: {
+    el: 'Το μήνυμα στάλθηκε!',
+    en: 'Message sent!',
+    de: 'Nachricht gesendet!'
+  },
+  thankYouMessage: {
+    el: 'Σας ευχαριστούμε που επικοινωνήσατε μαζί μας. Θα επικοινωνήσουμε μαζί σας εντός 24 ωρών.',
+    en: 'Thank you for contacting us. We will get back to you within 24 hours.',
+    de: 'Vielen Dank für Ihre Kontaktaufnahme. Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.'
+  },
+  sendAnotherMessage: {
+    el: 'Αποστολή άλλου μηνύματος',
+    en: 'Send another message',
+    de: 'Weitere Nachricht senden'
+  },
+  dataUsageNotice: {
+    el: 'Τα προσωπικά σας δεδομένα θα χρησιμοποιηθούν μόνο για να σας απαντήσουμε.',
+    en: 'Your personal data will only be used to respond to you.',
+    de: 'Ihre persönlichen Daten werden nur verwendet, um Ihnen zu antworten.'
+  },
+  seeFull: {
+    el: 'Δείτε την πλήρη',
+    en: 'See the full',
+    de: 'Vollständige'
+  },
+  gdprConsentText: {
+    el: 'Αποδέχομαι την',
+    en: 'I accept the',
+    de: 'Ich akzeptiere die'
+  },
+  gdprConsentSuffix: {
+    el: 'και συναινώ στην επεξεργασία των προσωπικών μου δεδομένων',
+    en: 'and consent to the processing of my personal data',
+    de: 'und stimme der Verarbeitung meiner persönlichen Daten zu'
+  },
+  response: {
+    el: 'Απάντηση',
+    en: 'Response',
+    de: 'Antwort'
+  },
+  delivery: {
+    el: 'Παράδοση',
+    en: 'Delivery',
+    de: 'Lieferung'
+  },
+  
+  // Enhanced Accessibility Widget Translations
+  quickProfiles: {
+    el: 'Γρήγορα Προφίλ',
+    en: 'Quick Profiles',
+    de: 'Schnellprofile'
+  },
+  dyslexiaFriendly: {
+    el: 'Δυσλεξία',
+    en: 'Dyslexia Friendly',
+    de: 'Legasthenie-freundlich'
+  },
+  lowVision: {
+    el: 'Χαμηλή Όραση',
+    en: 'Low Vision',
+    de: 'Sehschwäche'
+  },
+  motorControl: {
+    el: 'Κινητικός Έλεγχος',
+    en: 'Motor Control',
+    de: 'Motorische Kontrolle'
+  },
+  readingMode: {
+    el: 'Λειτουργία Ανάγνωσης',
+    en: 'Reading',
+    de: 'Lesemodus'
+  },
+  quickActions: {
+    el: 'Γρήγορες Ενέργειες',
+    en: 'Quick Actions',
+    de: 'Schnellaktionen'
+  },
+  advanced: {
+    el: 'Προχωρημένα',
+    en: 'Advanced',
+    de: 'Erweitert'
+  },
+  quick: {
+    el: 'Γρήγορα',
+    en: 'Quick',
+    de: 'Schnell'
+  },
+  lineHeight: {
+    el: 'Ύψος Γραμμής',
+    en: 'Line Height',
+    de: 'Zeilenhöhe'
+  },
+  letterSpacing: {
+    el: 'Απόσταση Γραμμάτων',
+    en: 'Letter Spacing',
+    de: 'Zeichenabstand'
+  },
+  readableFont: {
+    el: 'Αναγνώσιμη Γραμματοσειρά',
+    en: 'Readable Font',
+    de: 'Lesbare Schriftart'
+  },
+  focusMode: {
+    el: 'Λειτουργία Εστίασης',
+    en: 'Focus Mode',
+    de: 'Fokus-Modus'
+  },
+  enhancedFocus: {
+    el: 'Βελτιωμένη Εστίαση',
+    en: 'Enhanced Focus',
+    de: 'Verbesserter Fokus'
+  },
+  darkMode: {
+    el: 'Σκοτεινή Λειτουργία',
+    en: 'Dark Mode',
+    de: 'Dunkler Modus'
+  },
+  screenReaderOptimized: {
+    el: 'Βελτιστοποιημένο για Ανάγνωση',
+    en: 'Screen Reader',
+    de: 'Bildschirmleser'
+  },
+  reduceMotion: {
+    el: 'Μείωση Κίνησης',
+    en: 'Reduce Motion',
+    de: 'Bewegung reduzieren'
+  },
+  underlineLinks: {
+    el: 'Υπογράμμιση Συνδέσμων',
+    en: 'Underline Links',
+    de: 'Links unterstreichen'
+  },
+  colorBlindFriendly: {
+    el: 'Φιλικό για Τυφλότητα Χρωμάτων',
+    en: 'Color Blind Friendly',
+    de: 'Farbenblindfreundlich'
+  },
+  keyboardNavigation: {
+    el: 'Πλοήγηση με Πληκτρολόγιο',
+    en: 'Keyboard Navigation',
+    de: 'Tastaturnavigation'
+  },
+  visualAdjustmentsSection: {
+    el: 'Οπτικές Προσαρμογές',
+    en: 'Visual Adjustments',
+    de: 'Visuelle Anpassungen'
+  },
+  navigationInteraction: {
+    el: 'Πλοήγηση & Αλληλεπίδραση',
+    en: 'Navigation & Interaction',
+    de: 'Navigation & Interaktion'
+  },
+  accessibilityFeaturesForEveryone: {
+    el: 'Δυνατότητες προσβασιμότητας για όλους',
+    en: 'Accessibility features for everyone',
+    de: 'Barrierefreiheitsfunktionen für alle'
+  },
+  language: {
+    el: 'Γλώσσα',
+    en: 'Language',
+    de: 'Sprache'
   }
 };
 
@@ -1140,7 +1640,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   const t = (key: string, variables?: { [key: string]: any }): string => {
     const translatedString = translations[key]?.[language] || key;
     if (variables) {
-      return translatedString.replace(/{{(.*?)}}/g, (match, variableName) => {
+      return translatedString.replace(/{{(.*?)}}/g, (_, variableName) => {
         return variables[variableName.trim()];
       });
     }

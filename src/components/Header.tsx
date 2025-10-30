@@ -54,7 +54,16 @@ const Header: React.FC = () => {
         { name: 'Luxembourg', flag: '🇱🇺', routes: '3x/Week' },
         { name: 'Denmark', flag: '🇩🇰', routes: '2x/Week' },
         { name: 'Greece', flag: '🇬🇷', routes: 'Daily' },
-        { name: 'Cyprus', flag: '🇨🇾', routes: '2x/Week' }
+        { name: 'Cyprus', flag: '🇨🇾', routes: '2x/Week' },
+        // Added countries
+        { name: 'France', flag: '🇫🇷', routes: '3x/Week' },
+        { name: 'Italy', flag: '🇮🇹', routes: '3x/Week' },
+        { name: 'Hungary', flag: '🇭🇺', routes: '2x/Week' },
+        { name: 'Romania', flag: '🇷🇴', routes: '2x/Week' },
+        { name: 'Slovakia', flag: '🇸🇰', routes: '2x/Week' },
+        { name: 'Czechia', flag: '🇨🇿', routes: '2x/Week' },
+        { name: 'Switzerland', flag: '🇨🇭', routes: '2x/Week' },
+        { name: 'Liechtenstein', flag: '🇱🇮', routes: '1x/Week' }
       ]
     },
     { 
@@ -71,46 +80,61 @@ const Header: React.FC = () => {
     }
   ];
 
-  // Track scroll position and active section
+  // Track scroll position and active section with throttling
   useEffect(() => {
+    let ticking = false;
+    let lastScrollTime = 0;
+    
     const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
+      const now = Date.now();
       
-      setIsScrolled(currentScrollPos > 20);
-      
-      // Compact mode: scroll down = compact, scroll up = normal
-      if (currentScrollPos > 100) {
-        if (currentScrollPos > prevScrollPos) {
-          // Scrolling down
-          setIsCompact(true);
-        } else {
-          // Scrolling up
-          setIsCompact(false);
-        }
-      } else {
-        // Near top, always normal size
-        setIsCompact(false);
+      // More aggressive throttling for better performance (30fps)
+      if (now - lastScrollTime < 33) {
+        return;
       }
+      lastScrollTime = now;
       
-      setPrevScrollPos(currentScrollPos);
-      
-      // Update active section based on scroll position
-      const sections = menuItems.map(item => item.key);
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      
-      if (currentSection) {
-        setActiveSection(currentSection);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollPos = window.scrollY;
+          
+          setIsScrolled(currentScrollPos > 20);
+          
+          // Compact logic with hysteresis to avoid jitter
+          const downThreshold = 200; // enter compact only after 200px
+          const upThreshold = 100;   // exit compact when near top
+          const scrollDelta = prevScrollPos - currentScrollPos;
+
+          if (currentScrollPos > downThreshold && currentScrollPos > prevScrollPos) {
+            setIsCompact(true);
+          } else if (currentScrollPos < upThreshold || scrollDelta > 20) {
+            setIsCompact(false);
+          }
+          
+          setPrevScrollPos(currentScrollPos);
+          
+          // Update active section based on scroll position (throttled)
+          const sections = menuItems.map(item => item.key);
+          const currentSection = sections.find(section => {
+            const element = document.getElementById(section);
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              return rect.top <= 100 && rect.bottom >= 100;
+            }
+            return false;
+          });
+          
+          if (currentSection) {
+            setActiveSection(currentSection);
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos]);
 
@@ -130,7 +154,9 @@ const Header: React.FC = () => {
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Check if user prefers reduced motion for accessibility
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      element.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
     setIsMenuOpen(false);
     setIsCoverageOpen(false);
@@ -142,9 +168,9 @@ const Header: React.FC = () => {
     <>
       <header role="banner">
         {/* Top Contact Bar - Hidden on mobile */}
-        <div className="hidden lg:block bg-gray-800 text-white py-2">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center text-sm">
+        <div className="hidden lg:block bg-gray-800 text-white py-3">
+          <div className="spacing-container">
+            <div className="flex justify-between items-center text-body-sm">
               <div className="flex items-center space-x-6">
                 <a href="tel:+302382027111" className="flex items-center space-x-2 hover:text-yellow-400 transition-colors">
                   <Phone className="w-4 h-4" aria-hidden="true" />
@@ -156,43 +182,47 @@ const Header: React.FC = () => {
               </a>
             </div>
             <div className="text-gray-300">
-              Δευτέρα - Παρασκευή: 09:00 - 17:00
+              {t('workingHours')}
             </div>
           </div>
         </div>
       </div>
 
         {/* Main Header */}
-        <div className={`fixed top-0 lg:top-10 left-0 right-0 z-50 transition-all duration-300 ${
+        <div className={`fixed top-0 lg:top-10 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200'
             : 'bg-white/90 backdrop-blur-sm'
         }`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className={`flex justify-between items-center transition-all duration-300 ${
-              isCompact ? 'py-3 lg:py-4' : 'py-4 lg:py-6'
+          <div className="spacing-container">
+            <div className={`flex justify-between items-center transition-all duration-300 ease-in-out ${
+              isCompact ? 'py-2 lg:py-3' : 'py-4 lg:py-6'
             }`}>
             {/* Logo */}
-              <div className="flex items-center justify-start ml-8 lg:ml-12 mr-auto">
+              <div className="flex items-center justify-start ml-2 lg:ml-12 mr-auto">
               <a
                 href="#home"
                 onClick={(e) => {
                   e.preventDefault();
-                  scrollToSection('#home');
+                  if (window.location.pathname !== '/') {
+                    window.location.href = '/';
+                  } else {
+                    scrollToSection('#home');
+                  }
                 }}
-                className="group transition-all duration-300 hover:scale-105 focus:outline-none rounded-lg p-2"
+                className="group transition-colors duration-200 focus:outline-none rounded-lg p-2"
                 aria-label="Intracosta Home"
               >
                 <div itemScope itemType="https://schema.org/Organization">
                   <img
                     src="/intracosta001.png"
                     alt="Intracosta Logo"
-                    className="object-contain transition-all duration-300 group-hover:brightness-110 drop-shadow-lg hover:drop-shadow-xl"
+                    className="object-contain transition-all duration-500 ease-in-out group-hover:brightness-110 drop-shadow-lg hover:drop-shadow-xl"
                     style={{
-                      height: isCompact ? '64px' : '72px',
-                      width: isCompact ? '128px' : '144px',
-                      minWidth: isCompact ? '128px' : '144px',
-                      maxWidth: isCompact ? '128px' : '144px'
+                      height: isCompact ? '40px' : '72px',
+                      width: isCompact ? '80px' : '144px',
+                      minWidth: isCompact ? '80px' : '144px',
+                      maxWidth: isCompact ? '112px' : '144px'
                     }}
                     itemProp="logo"
                   />
@@ -212,7 +242,7 @@ const Header: React.FC = () => {
                       <button
                         onClick={() => setIsCoverageOpen(!isCoverageOpen)}
                         onMouseEnter={() => setIsCoverageOpen(true)}
-                        className={`flex items-center space-x-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 group relative overflow-hidden ${
+                        className={`flex items-center space-x-2 ${isCompact ? 'px-3 py-2' : 'px-5 py-3'} rounded-xl font-semibold transition-all duration-300 group relative overflow-hidden ${
                           isActive(item.key)
                             ? 'text-yellow-600'
                             : 'text-gray-700 hover:text-yellow-600'
@@ -245,8 +275,8 @@ const Header: React.FC = () => {
                       >
                         <div className="p-8">
                           <div className="mb-4">
-                            <h3 className="font-bold text-xl text-gray-900 mb-2 bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">Ευρωπαϊκές Διαδρομές</h3>
-                            <p className="text-gray-600">Εξυπηρετούμε 15+ χώρες με τακτικά δρομολόγια</p>
+                            <h3 className="font-bold text-xl text-gray-900 mb-2 bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">{t('europeanRoutes')}</h3>
+                            <p className="text-gray-600">{t('coverageDescription')}</p>
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                               {item.countries?.map((country) => (
@@ -276,9 +306,9 @@ const Header: React.FC = () => {
                                   e.preventDefault();
                                   scrollToSection('#coverage');
                                 }}
-                                className="w-full block text-center py-3 px-4 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-105"
+                                className="w-full block text-center py-3 px-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-105"
                               >
-                                Δείτε όλες τις διαδρομές
+                                {t('viewAllRoutes')}
                               </a>
                             </div>
                         </div>
@@ -293,7 +323,7 @@ const Header: React.FC = () => {
                           e.preventDefault();
                           scrollToSection(item.href);
                         }}
-                        className={`flex items-center space-x-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group ${
+                        className={`flex items-center space-x-2 ${isCompact ? 'px-3 py-2' : 'px-5 py-3'} rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group ${
                           isActive(item.key)
                             ? 'text-yellow-600'
                             : 'text-gray-700 hover:text-yellow-600'
@@ -318,7 +348,7 @@ const Header: React.FC = () => {
                         e.preventDefault();
                         scrollToSection(item.href);
                       }}
-                      className={`flex items-center space-x-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group ${
+                      className={`flex items-center space-x-2 ${isCompact ? 'px-3 py-2' : 'px-5 py-3'} rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group ${
                         isActive(item.key)
                           ? 'text-yellow-600'
                           : 'text-gray-700 hover:text-yellow-600'
@@ -345,7 +375,7 @@ const Header: React.FC = () => {
               <div className="relative dropdown-container">
                 <button
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                  className="flex items-center space-x-2 px-4 py-3 text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-xl hover:underline hover:decoration-yellow-500 hover:underline-offset-4 group"
+                  className={`flex items-center space-x-2 ${isCompact ? 'px-3 py-2' : 'px-4 py-3'} text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-xl hover:underline hover:decoration-yellow-500 hover:underline-offset-4 group`}
                   aria-expanded={isLanguageOpen}
                   aria-haspopup="true"
                   aria-label="Select language"
@@ -390,7 +420,7 @@ const Header: React.FC = () => {
                   e.preventDefault();
                   scrollToSection('#quote');
                 }}
-                className="hidden sm:flex items-center space-x-2 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-yellow-900 px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group relative overflow-hidden whitespace-nowrap"
+                className="hidden sm:flex items-center space-x-2 bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group relative overflow-hidden whitespace-nowrap"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -skew-x-12"></div>
                 <span>{t('getQuote')}</span>
@@ -400,7 +430,7 @@ const Header: React.FC = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden p-3 text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-xl hover:bg-gray-50 hover:scale-110 min-h-[48px] min-w-[48px] touch-manipulation"
+                className={`lg:hidden ${isCompact ? 'p-2' : 'p-3'} text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-xl hover:bg-gray-50 hover:scale-110 min-h-[48px] min-w-[48px] touch-manipulation`}
                 aria-expanded={isMenuOpen}
                 aria-label="Toggle mobile menu"
               >
@@ -518,7 +548,7 @@ const Header: React.FC = () => {
                           scrollToSection('#quote');
                           setIsMenuOpen(false);
                         }}
-                        className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-yellow-900 px-6 py-4 rounded-xl font-semibold transition-all duration-300 text-center shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
+                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 text-center shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
                       >
                         {t('getQuote')}
                       </a>
@@ -547,8 +577,8 @@ const Header: React.FC = () => {
       </header>
 
       {/* Spacer for fixed header */}
-      <div className={`transition-all duration-300 ${
-        isCompact ? 'h-20 lg:h-28' : 'h-28 lg:h-48'
+      <div className={`transition-all duration-500 ease-in-out ${
+        isCompact ? 'h-16 lg:h-20' : 'h-28 lg:h-48'
       }`}></div>
     </>
   );

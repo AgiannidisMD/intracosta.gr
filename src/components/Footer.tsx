@@ -1,17 +1,29 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import NAP from './SEO/NAP';
-import { Truck, MapPin, Phone, Mail, Facebook, Linkedin, Instagram } from 'lucide-react';
+import { Facebook, Linkedin, Instagram } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const { t, language } = useLanguage();
-
+  const { t } = useLanguage();
+  const location = useLocation();
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Check if user prefers reduced motion for accessibility
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      element.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+  };
+
+  const handleQuickLinkClick = (href: string) => {
+    // If we're not on the homepage, navigate to homepage first
+    if (location.pathname !== '/') {
+      window.location.href = `/${href}`;
+    } else {
+      // If we're on homepage, just scroll to section
+      scrollToSection(href);
     }
   };
 
@@ -24,14 +36,15 @@ const Footer: React.FC = () => {
   ];
 
   const services = [
-    { key: 'internationalTransport' },
-    { key: 'domesticTransport' },
-    { key: 'specializedTransport' },
-    { key: 'warehousingDistribution' }
+    { key: 'internationalTransport', route: '/international-transport' },
+    { key: 'domesticTransport', route: '/domestic-transport' },
+    { key: 'specializedTransport', route: '/special-transport' },
+    { key: 'warehousingDistribution', route: '/warehousing' }
   ];
 
   return (
-    <footer className="bg-white text-gray-900" role="contentinfo">
+    <>
+      <footer className="bg-white text-gray-900" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -40,12 +53,12 @@ const Footer: React.FC = () => {
               <img src="/logocorrectversion.svg" alt={t('logoAlt')} className="h-24" />
             </div>
             <div className="flex space-x-4">
-              <button className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Visit Intracosta on Facebook">
+              <a href="https://www.facebook.com/intracosta" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Visit Intracosta on Facebook">
                 <Facebook className="w-5 h-5 text-yellow-500" />
-              </button>
-              <button className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Visit Intracosta on LinkedIn">
+              </a>
+              <a href="https://www.linkedin.com/company/intracosta" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Visit Intracosta on LinkedIn">
                 <Linkedin className="w-5 h-5 text-yellow-500" />
-              </button>
+              </a>
               <a href="https://www.instagram.com/intracosta/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Visit Intracosta on Instagram">
                 <Instagram className="w-5 h-5 text-yellow-500" />
               </a>
@@ -62,7 +75,7 @@ const Footer: React.FC = () => {
                     href={link.href}
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToSection(link.href);
+                      handleQuickLinkClick(link.href);
                     }}
                     className="inline-block relative text-gray-700 hover:text-yellow-500 transition-all duration-300 before:absolute before:bottom-0 before:left-0 before:h-[1px] before:w-0 before:bg-yellow-500 before:transition-all before:duration-300 hover:before:w-full"
                   >
@@ -79,16 +92,12 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service.key}>
-                  <a
-                    href={`#${service.key}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(`#${service.key}`);
-                    }}
+                  <Link
+                    to={service.route}
                     className="inline-block relative text-gray-700 hover:text-yellow-500 transition-all duration-300 before:absolute before:bottom-0 before:left-0 before:h-[1px] before:w-0 before:bg-yellow-500 before:transition-all before:duration-300 hover:before:w-full"
                   >
                     {t(service.key)}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -97,11 +106,10 @@ const Footer: React.FC = () => {
           {/* Contact Info */}
           <div>
             <h3 className="text-lg font-semibold mb-6">{t('contactInfo')}</h3>
-            <NAP variant="full" showIcons={true} />
+            <NAP />
             <div className="mt-4 space-y-1">
               <a href="mailto:export@intracosta.com" className="block text-sm text-gray-600 hover:text-yellow-500 transition-colors">export@intracosta.com</a>
               <a href="mailto:import@intracosta.com" className="block text-sm text-gray-600 hover:text-yellow-500 transition-colors">import@intracosta.com</a>
-              <a href="mailto:dispo.greece@intracosta.com" className="block text-sm text-gray-600 hover:text-yellow-500 transition-colors">dispo.greece@intracosta.com</a>
               <a href="mailto:account@intracosta.com" className="block text-sm text-gray-600 hover:text-yellow-500 transition-colors">account@intracosta.com</a>
             </div>
           </div>
@@ -112,7 +120,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
             <div className="text-gray-700 text-center lg:text-left">
               <span itemScope itemType="https://schema.org/Organization">
-                © 2024 <span itemProp="name">Intracosta</span>. All rights reserved.
+                © 2024 <span itemProp="name">Intracosta</span>. All rights reserved. StolosOfficial
               </span>
             </div>
             <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
@@ -149,6 +157,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
+    </>
   );
 };
 

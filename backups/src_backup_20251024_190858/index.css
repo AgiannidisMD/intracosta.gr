@@ -1,0 +1,802 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens for accessibility */
+:root {
+  --color-brand-primary: #eab308; /* yellow-500 */
+  --color-brand-dark: #ca8a04; /* yellow-600 - better contrast */
+  --color-text-primary: #111827; /* gray-900 */
+  --color-text-secondary: #4b5563; /* gray-600 */
+  --color-text-muted: #6b7280; /* gray-500 */
+  --color-focus: #eab308; /* yellow-500 */
+  --color-error: #dc2626; /* red-600 */
+  --color-success: #16a34a; /* green-600 */
+  --color-warning: #d97706; /* amber-600 */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+}
+
+html {
+  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+  scroll-padding-top: 80px; /* Account for fixed header */
+}
+
+/* Optimize scroll performance */
+* {
+  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+}
+
+/* Disable expensive animations on mobile */
+@media (max-width: 768px) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .magnetic,
+  .hover-glow,
+  .parallax {
+    transform: none !important;
+    filter: none !important;
+  }
+  
+  /* Mobile accessibility widget optimizations */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Ensure minimum touch target size */
+  button, input[type="checkbox"], label {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve mobile scrolling */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Optimize scroll performance globally */
+* {
+  will-change: auto !important; /* Disable will-change to prevent GPU layer creation */
+}
+
+/* Disable expensive transforms during scroll */
+.scrolling * {
+  transform: none !important;
+  filter: none !important;
+  animation-play-state: paused !important;
+}
+
+/* Optimize motion elements */
+[data-framer-motion] {
+  transform: translateZ(0); /* Force hardware acceleration only when needed */
+}
+
+/* Reduce motion for better performance */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Accessibility features */
+.high-contrast {
+  filter: contrast(150%) brightness(120%);
+}
+
+body.high-contrast {
+  filter: contrast(200%) brightness(130%) !important;
+}
+
+body.custom-high-contrast {
+  filter: contrast(200%) brightness(130%) !important;
+}
+
+/* High contrast overrides for better visibility */
+body.high-contrast * {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+/* Dark backgrounds become black */
+body.high-contrast .bg-gray-900,
+body.high-contrast .bg-gray-800,
+body.high-contrast .bg-gray-700,
+body.high-contrast .bg-gray-600 {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Yellow/orange backgrounds become bright yellow */
+body.high-contrast .bg-yellow-500,
+body.high-contrast .bg-orange-500,
+body.high-contrast .bg-yellow-400,
+body.high-contrast .bg-orange-400 {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+/* White text stays white */
+body.high-contrast .text-white {
+  color: #ffffff !important;
+}
+
+/* Dark text becomes black */
+body.high-contrast .text-gray-900,
+body.high-contrast .text-gray-800,
+body.high-contrast .text-gray-700,
+body.high-contrast .text-gray-600 {
+  color: #000000 !important;
+}
+
+/* Light text becomes white */
+body.high-contrast .text-gray-300,
+body.high-contrast .text-gray-200,
+body.high-contrast .text-gray-100 {
+  color: #ffffff !important;
+}
+
+/* Links become blue */
+body.high-contrast a {
+  color: #0000ff !important;
+  text-decoration: underline !important;
+}
+
+/* Buttons get high contrast borders */
+body.high-contrast button {
+  border: 2px solid #000000 !important;
+}
+
+/* Input fields get high contrast borders */
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+  border: 2px solid #000000 !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Enhanced Accessibility Features - Custom Widget */
+body.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+body.enhanced-focus *:focus {
+  outline: 3px solid #f59e0b !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3) !important;
+}
+
+body.screen-reader-optimized {
+  /* Improve screen reader experience */
+}
+
+body.screen-reader-optimized img {
+  /* Ensure all images have alt text */
+}
+
+body.keyboard-navigation {
+  /* Enhanced keyboard navigation */
+}
+
+body.keyboard-navigation a:focus,
+body.keyboard-navigation button:focus,
+body.keyboard-navigation input:focus,
+body.keyboard-navigation textarea:focus,
+body.keyboard-navigation select:focus {
+  outline: 3px solid #f59e0b !important;
+  outline-offset: 2px !important;
+}
+
+body.color-blind-friendly {
+  /* Color blind friendly adjustments */
+}
+
+body.color-blind-friendly .text-red-500 {
+  color: #dc2626 !important;
+  font-weight: bold;
+}
+
+body.color-blind-friendly .text-green-500 {
+  color: #16a34a !important;
+  font-weight: bold;
+}
+
+body.dyslexia-friendly {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', cursive !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.05em !important;
+}
+
+body.dark-mode {
+  background-color: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+body.dark-mode .bg-white {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+body.dark-mode .text-gray-900 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+body.dark-mode .border-gray-200 {
+  border-color: #4b5563 !important;
+}
+
+.high-contrast * {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+.high-contrast a {
+  color: #0000ff !important;
+  text-decoration: underline !important;
+}
+
+.negative-contrast {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+.negative-contrast img,
+.negative-contrast video,
+.negative-contrast iframe {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+.light-background {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.light-background * {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.light-background a {
+  color: #0000ff !important;
+}
+
+.dyslexic-font {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Enhanced scroll animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInUpFast {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotateY(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+}
+
+@keyframes blurIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in-up-fast {
+  animation: fadeInUpFast 0.4s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.7s ease-out;
+}
+
+.animate-blur-in {
+  animation: blurIn 0.8s ease-out;
+}
+
+/* Staggered animations */
+.animate-stagger-1 { animation-delay: 0.1s; }
+.animate-stagger-2 { animation-delay: 0.2s; }
+.animate-stagger-3 { animation-delay: 0.3s; }
+.animate-stagger-4 { animation-delay: 0.4s; }
+.animate-stagger-5 { animation-delay: 0.5s; }
+
+/* Enhanced focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Custom gradient backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Loading spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Typography improvements */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+}
+
+.btn-secondary {
+  @apply bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden;
+}
+
+.card-hover {
+  @apply hover:-translate-y-2;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gray-600 {
+    @apply text-gray-800;
+  }
+  
+  .text-gray-500 {
+    @apply text-gray-700;
+  }
+}
+
+/* Enhanced scroll effects */
+.scroll-smooth-enhanced {
+  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+  scroll-padding-top: 80px;
+}
+
+.scroll-margin-top {
+  scroll-margin-top: 80px;
+}
+
+/* Parallax container */
+.parallax-container {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #f59e0b, #ef4444, #8b5cf6);
+  transform-origin: left;
+  z-index: 9999;
+  transition: transform 0.1s ease-out;
+}
+
+/* Disabled floating animations for better performance */
+.floating {
+  /* animation: float 6s ease-in-out infinite; - DISABLED FOR PERFORMANCE */
+}
+
+/* Accessibility Widget - Ensure it's never clipped */
+.accessibility-widget {
+  position: fixed !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+  transform: translateZ(0) !important;
+  will-change: transform !important;
+}
+
+/* Mobile positioning - avoid navigation bar overlap and ensure visibility */
+@media (max-width: 768px) {
+  .accessibility-widget {
+    right: 8px !important;
+    top: 8rem !important; /* 32 * 0.25rem = 8rem */
+    bottom: auto !important;
+  }
+  
+  .accessibility-widget .accessibility-panel {
+    max-width: calc(100vw - 32px) !important;
+    right: 0 !important;
+    left: auto !important;
+  }
+}
+
+/* Tablet positioning */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .accessibility-widget {
+    top: 6rem !important; /* 24 * 0.25rem = 6rem */
+    bottom: auto !important;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Magnetic hover effect */
+.magnetic {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.magnetic:hover {
+  transform: scale(1.05);
+}
+
+/* Scroll reveal classes */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enhanced hover effects */
+.hover-glow {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.hover-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+}
+
+.hover-glow:hover::before {
+  opacity: 1;
+}
+
+/* Form-specific animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Hide scrollbar for horizontal team scroll */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth horizontal scroll */
+.overflow-x-auto {
+  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Team photo centering - completely static */
+.team-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  /* Completely static - no animations */
+}
+
+/* Face-centered cropping for team photos */
+.team-photo-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.team-photo-container img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  /* Ensure face is centered - focus on upper center of image */
+  object-position: center 30%;
+}
+
+/* Enhanced reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .floating {
+    animation: none;
+  }
+
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .magnetic:hover {
+    transform: none;
+  }
+
+  .hover-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .hover-glow::before {
+    opacity: 0;
+  }
+
+  /* New Accessibility Features */
+  
+  /* Focus Mode - Highlight interactive elements */
+  body.focus-mode a,
+  body.focus-mode button,
+  body.focus-mode input,
+  body.focus-mode select,
+  body.focus-mode textarea {
+    outline: 2px solid #f59e0b !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Underline Links */
+  body.underline-links a {
+    text-decoration: underline !important;
+  }
+
+  /* Readable Font - Use serif font for better readability */
+  body.readable-font {
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+  }
+
+  body.readable-font h1,
+  body.readable-font h2,
+  body.readable-font h3,
+  body.readable-font h4,
+  body.readable-font h5,
+  body.readable-font h6 {
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+  }
+
+  /* Line Height Adjustment */
+  body {
+    line-height: var(--line-height, 1.5);
+  }
+
+  /* Letter Spacing Adjustment */
+  body {
+    letter-spacing: var(--letter-spacing, 0);
+  }
+
+  /* Combine focus mode with keyboard navigation */
+  body.focus-mode.keyboard-navigation *:focus {
+    outline: 3px solid #f59e0b !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3) !important;
+  }
+}

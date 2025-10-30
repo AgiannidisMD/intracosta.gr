@@ -43,16 +43,16 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <section id="services" className="py-12 sm:py-16 lg:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 px-4">
+    <section id="services" className="spacing-section-lg bg-white">
+      <div className="spacing-container">
+        <div className="text-center mb-16 sm:mb-20 visual-hierarchy">
+          <h2 className="text-heading-2 sm:text-heading-1 text-gray-900 mb-6 px-4">
             {t('servicesTitle')}
           </h2>
           <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 sm:gap-10 max-w-6xl mx-auto">
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -62,16 +62,16 @@ const Services: React.FC = () => {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
             >
-              <div className="p-6 sm:p-8 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white text-yellow-500 mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+              <div className="p-4 sm:p-6 text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white text-yellow-500 mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
                   {service.icon}
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 px-2">{service.title}</h3>
-                <p className="text-white mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base px-2">{service.description}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-2 px-2">{service.title}</h3>
+                <p className="text-white mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base px-2">{service.description}</p>
                 {service.link && (
                   <Link
                     to={service.link}
-                    className="inline-flex items-center text-white hover:text-yellow-400 font-semibold transition-colors min-h-[44px] touch-manipulation px-4 py-2 rounded-lg"
+                    className="inline-flex items-center text-white hover:text-yellow-400 font-semibold transition-colors px-3 py-2 rounded-lg touch-manipulation focus-ring"
                   >
                     {t('learnMore')}
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

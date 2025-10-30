@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Send, Package, User, Mail, Phone, Building, ChevronDown, ChevronUp, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Send, Package, User, Mail, Building, ChevronDown, ChevronUp, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { PhoneInput } from './ui/PhoneInput';
 import {
   validateEmail,
@@ -51,20 +51,29 @@ const QuoteFormEnhanced: React.FC = () => {
     length: '',
     width: '',
     height: '',
+    ldmValue: '', // NEW: LDM value field
     weight: '',
     companyName: '',
     contactPerson: '',
     email: '',
     emailConfirm: '',
-    phone: ''
+    phone: '',
+    vatNumber: '' // NEW: Optional VAT number
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showCargoDetails, setShowCargoDetails] = useState(false);
+  const [dimensionType, setDimensionType] = useState<'ldm' | 'package'>('ldm'); // NEW: Toggle between LDM and Package dimensions
   const [fieldValidation, setFieldValidation] = useState<FieldValidation>({});
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
   const [submissionError, setSubmissionError] = useState<string | null>(null);
+  
+  // Smart form features
+  const [formProgress, setFormProgress] = useState(0);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [isAutoSaving, setIsAutoSaving] = useState(false);
+  const [showProgress, setShowProgress] = useState(false);
 
   useEffect(() => {
     const savedData = localStorage.getItem(FORM_STORAGE_KEY);
@@ -90,13 +99,77 @@ const QuoteFormEnhanced: React.FC = () => {
     return match ? match[1] : '';
   };
 
+  // Calculate form completion percentage
+  const calculateProgress = useCallback(() => {
+    const requiredFields = [
+      'pickupCountry', 'pickupCity', 'pickupPostalCode',
+      'deliveryCountry', 'deliveryCity', 'deliveryPostalCode',
+      'loadingDate', 'cargoType', 'packageType', 'quantity',
+      'weight', 'companyName', 'contactPerson', 'email', 'phone'
+    ];
+    
+    const filledFields = requiredFields.filter(field => {
+      const value = formData[field as keyof typeof formData];
+      return value && value.toString().trim() !== '';
+    }).length;
+    
+    return Math.round((filledFields / requiredFields.length) * 100);
+  }, [formData]);
+
+  // Auto-save functionality
+  const autoSave = useCallback(async () => {
+    if (Object.values(formData).some(val => val !== '')) {
+      setIsAutoSaving(true);
+      try {
+        localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
+        setLastSaved(new Date());
+        console.log('Form auto-saved at', new Date().toLocaleTimeString());
+      } catch (error) {
+        console.error('Auto-save failed:', error);
+      } finally {
+        setIsAutoSaving(false);
+      }
+    }
+  }, [formData]);
+
+  // Update progress when form data changes
+  useEffect(() => {
+    const progress = calculateProgress();
+    setFormProgress(progress);
+    setShowProgress(progress > 0);
+  }, [formData, calculateProgress]);
+
+  // Auto-save every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      autoSave();
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [autoSave]);
+
+  // Auto-save on form data changes (debounced)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (Object.values(formData).some(val => val !== '')) {
+        autoSave();
+      }
+    }, 2000); // 2 second delay
+
+    return () => clearTimeout(timeoutId);
+  }, [formData, autoSave]);
+
+
   const validateField = useCallback((name: string, value: string): ValidationResult => {
     switch (name) {
       case 'email':
         return validateEmail(value);
       case 'emailConfirm':
+        if (!value) {
+          return { isValid: false, message: 'Please confirm your email address' };
+        }
         if (value !== formData.email) {
-          return { isValid: false, message: 'Emails do not match' };
+          return { isValid: false, message: 'Emails do not match. Please check both email fields carefully.' };
         }
         return { isValid: true };
       case 'phone':
@@ -106,7 +179,16 @@ const QuoteFormEnhanced: React.FC = () => {
       case 'deliveryPostalCode':
         return validatePostalCode(value, formData.deliveryCountry);
       case 'loadingDate':
-        return validateDate(value);
+        const dateResult = validateDate(value);
+        if (dateResult.isValid && value) {
+          const selectedDate = new Date(value);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          if (selectedDate < today) {
+            return { isValid: false, message: 'Loading date cannot be in the past. Please select a future date.' };
+          }
+        }
+        return dateResult;
       case 'weight':
         return validateWeight(value);
       case 'length':
@@ -115,18 +197,26 @@ const QuoteFormEnhanced: React.FC = () => {
         return validateDimension(value, 'Width');
       case 'height':
         return validateDimension(value, 'Height');
+      case 'ldmValue':
+        if (dimensionType === 'ldm' && value.trim() === '') {
+          return { isValid: false, message: t('requiredField') || 'This field is required' };
+        }
+        if (value.trim() !== '' && (isNaN(Number(value)) || Number(value) <= 0)) {
+          return { isValid: false, message: t('invalidLdmValue') || 'Please enter a valid LDM value' };
+        }
+        return { isValid: true };
       case 'cargoTypeOther':
         if (formData.cargoType === 'other' && value.trim() === '') {
           return { isValid: false, message: 'Please specify the cargo type' };
         }
         return { isValid: true };
       default:
-        if (value.trim() === '' && name !== 'pickupCompany' && name !== 'deliveryCompany' && name !== 'pallets' && name !== 'boxes' && name !== 'cargoTypeOther') {
+        if (value.trim() === '' && name !== 'pickupCompany' && name !== 'deliveryCompany' && name !== 'pallets' && name !== 'boxes' && name !== 'cargoTypeOther' && name !== 'vatNumber') {
           return { isValid: false, message: 'This field is required' };
         }
         return { isValid: true };
     }
-  }, [formData.email, formData.pickupCountry, formData.deliveryCountry, formData.cargoType]);
+  }, [formData.email, formData.pickupCountry, formData.deliveryCountry, formData.cargoType, dimensionType, t]);
 
   const markFieldTouched = (fieldName: string) => {
     setTouchedFields(prev => new Set(prev).add(fieldName));
@@ -188,7 +278,9 @@ const QuoteFormEnhanced: React.FC = () => {
     if (hasErrors) {
       setIsSubmitting(false);
       setSubmissionError(t('formValidationError') || 'Please correct the errors before submitting');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Check if user prefers reduced motion for accessibility
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
       return;
     }
 
@@ -205,7 +297,9 @@ const QuoteFormEnhanced: React.FC = () => {
 
       localStorage.removeItem(FORM_STORAGE_KEY);
       setIsSubmitted(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Check if user prefers reduced motion for accessibility
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     } catch (err) {
       console.error(err);
       setSubmissionError(t('submissionError') || 'Failed to submit quote. Please try again.');
@@ -235,12 +329,14 @@ const QuoteFormEnhanced: React.FC = () => {
       length: '',
       width: '',
       height: '',
+      ldmValue: '',
       weight: '',
       companyName: '',
       contactPerson: '',
       email: '',
       emailConfirm: '',
-      phone: ''
+      phone: '',
+      vatNumber: ''
     });
     setFieldValidation({});
     setTouchedFields(new Set());
@@ -281,19 +377,39 @@ const QuoteFormEnhanced: React.FC = () => {
     return today.toISOString().split('T')[0];
   };
 
-  const completedFields = Object.entries(formData).filter(([key, value]) => {
-    if (key === 'emailConfirm' || key === 'pickupCompany' || key === 'deliveryCompany') return true;
-    if (key === 'cargoTypeOther' && formData.cargoType !== 'other') return true;
-    if ((key === 'packageType' || key === 'quantity' || key === 'length' || key === 'width' || key === 'height') && !showCargoDetails) return true;
+  // Calculate form progress - required fields only
+  const requiredFields = [
+    'pickupCountry', 'pickupCity', 'pickupPostalCode',
+    'deliveryCountry', 'deliveryCity', 'deliveryPostalCode',
+    'loadingDate', 'cargoType', 'weight',
+    'companyName', 'contactPerson', 'email', 'phone'
+  ];
+  
+  // Add conditional required fields
+  const conditionalRequiredFields = [];
+  if (formData.cargoType === 'other') {
+    conditionalRequiredFields.push('cargoTypeOther');
+  }
+  if (showCargoDetails) {
+    if (dimensionType === 'ldm') {
+      conditionalRequiredFields.push('ldmValue');
+    } else {
+      conditionalRequiredFields.push('packageType', 'quantity', 'length', 'width', 'height');
+    }
+  }
+  
+  const allRequiredFields = [...requiredFields, ...conditionalRequiredFields];
+  const completedFields = allRequiredFields.filter(key => {
+    const value = formData[key as keyof typeof formData];
     return value !== '';
   }).length;
-  const totalFields = Object.keys(formData).length - 8;
+  const totalFields = allRequiredFields.length;
 
   if (isSubmitted) {
     return (
       <section id="quote" className="py-20 bg-gradient-to-br from-gray-700 to-gray-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white rounded-xl shadow-2xl p-12">
+          <div className="bg-white rounded-xl shadow-2xl p-12 quote-form-mobile">
             <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="w-10 h-10 text-white animate-pulse" />
             </div>
@@ -350,11 +466,12 @@ const QuoteFormEnhanced: React.FC = () => {
             </div>
           </div>
         )}
+
         <form onSubmit={handleSubmit} noValidate>
-          <div className="rounded-2xl shadow-xl bg-gradient-to-br from-white via-gray-50 to-gray-100 p-6 sm:p-10 lg:p-12 transition-all duration-300">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="rounded-2xl shadow-xl bg-gradient-to-br from-white via-gray-50 to-gray-100 p-6 sm:p-10 lg:p-12 transition-all duration-300 form-section">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 form-grid">
               <div className="space-y-6">
-                <div>
+                <div className="form-field">
                   <label htmlFor="pickupCountry" className="block text-sm font-semibold text-gray-700 mb-2">
                     {t('pickupPlace')} <span className="text-red-500">*</span>
                   </label>
@@ -383,7 +500,7 @@ const QuoteFormEnhanced: React.FC = () => {
                     {renderFieldIcon('pickupCountry')}
                   </div>
                   {touchedFields.has('pickupCountry') && fieldValidation.pickupCountry && !fieldValidation.pickupCountry.isValid && (
-                    <p id="pickupCountry-error" className="text-red-600 text-sm mt-1 flex items-center" role="alert">
+                    <p id="pickupCountry-error" className="text-red-600 text-sm mt-1 flex items-center error-message" role="alert">
                       <AlertCircle className="w-4 h-4 mr-1" />
                       {fieldValidation.pickupCountry.message}
                     </p>
@@ -637,7 +754,6 @@ const QuoteFormEnhanced: React.FC = () => {
                           <option value="controlled">{t('cargoTypeControlled')}</option>
                           <option value="adr">{t('cargoTypeAdr')}</option>
                           <option value="special">{t('cargoTypeSpecial')}</option>
-                          <option value="ldm">{t('cargoTypeLdm') || 'LDM'}</option>
                           <option value="other">{t('cargoTypeOther') || 'Άλλο'}</option>
                         </select>
                         <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -709,9 +825,10 @@ const QuoteFormEnhanced: React.FC = () => {
                       >
                         {showCargoDetails && (
                           <div className="space-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <div>
+                            {/* Package Type Selection - MOVED TO TOP */}
+                            <div className="mb-6">
                               <label htmlFor="packageType" className="block text-sm font-semibold text-gray-700 mb-2">
-                                {t('packageType') || 'Τύπος Συσκευασίας'}
+                                {t('packageType') || 'Τύπος Συσκευασίας'} <span className="text-red-500">*</span>
                               </label>
                               <div className="relative">
                                 <Package className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none z-10" />
@@ -727,8 +844,6 @@ const QuoteFormEnhanced: React.FC = () => {
                                   <option value="">{t('selectPackageType') || 'Επιλέξτε τύπο συσκευασίας'}</option>
                                   <option value="pallets">{t('pallets') || 'Παλέτες'}</option>
                                   <option value="boxes">{t('boxes') || 'Τεμάχια/Κιβώτια'}</option>
-                                  <option value="bulk">{t('bulk') || 'Χύδην'}</option>
-                                  <option value="container">{t('container') || 'Κοντέινερ'}</option>
                                   <option value="other">{t('otherPackage') || 'Άλλο'}</option>
                                 </select>
                                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -743,7 +858,103 @@ const QuoteFormEnhanced: React.FC = () => {
                               )}
                             </div>
 
-                            {formData.packageType && (
+                            {/* Toggle between LDM and Package Dimensions */}
+                            <div className="mb-6">
+                              <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                {t('measurementType') || 'Τύπος Μέτρησης'} <span className="text-red-500">*</span>
+                              </label>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <button
+                                  type="button"
+                                  onClick={() => setDimensionType('ldm')}
+                                  className={`flex flex-col items-center justify-center px-4 py-4 rounded-lg border-2 transition-all font-medium ${
+                                    dimensionType === 'ldm'
+                                      ? 'bg-yellow-500 border-yellow-500 text-white shadow-md'
+                                      : 'bg-white border-gray-300 text-gray-700 hover:border-yellow-400'
+                                  }`}
+                                >
+                                  <Package className="w-6 h-6 mb-2" />
+                                  <span className="font-semibold">{t('ldmMeasurement') || 'LDM'}</span>
+                                  <span className="text-xs opacity-80 mt-1">
+                                    {t('ldmDescription') || 'Load Meter (μήκος φορτηγού)'}
+                                  </span>
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setDimensionType('package')}
+                                  className={`flex flex-col items-center justify-center px-4 py-4 rounded-lg border-2 transition-all font-medium ${
+                                    dimensionType === 'package'
+                                      ? 'bg-yellow-500 border-yellow-500 text-white shadow-md'
+                                      : 'bg-white border-gray-300 text-gray-700 hover:border-yellow-400'
+                                  }`}
+                                >
+                                  <Package className="w-6 h-6 mb-2" />
+                                  <span className="font-semibold">{t('packageDimensions') || 'Διαστάσεις Πακέτου'}</span>
+                                  <span className="text-xs opacity-80 mt-1">
+                                    {t('packageDimensionsDescription') || 'Μήκος x Πλάτος x Ύψος'}
+                                  </span>
+                                </button>
+                              </div>
+                              
+                              {/* LDM Explanation */}
+                              {dimensionType === 'ldm' && (
+                                <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                  <div className="flex items-start">
+                                    <div className="flex-shrink-0">
+                                      <Package className="w-5 h-5 text-blue-600 mt-0.5" />
+                                    </div>
+                                    <div className="ml-3">
+                                      <p className="text-sm text-blue-800">
+                                        <strong>LDM (Load Meter):</strong> {t('ldmExplanation') || 'Μονάδα μέτρησης που αντιπροσωπεύει το μήκος του φορτηγού σε μέτρα. 1 LDM = 1 μέτρο μήκους φορτηγού.'}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* LDM Fields */}
+                            {dimensionType === 'ldm' && (
+                              <div className="space-y-4 animate-fade-in">
+                                <div>
+                                  <label htmlFor="ldmValue" className="block text-sm font-semibold text-gray-700 mb-2">
+                                    {t('ldmValue') || 'LDM'} <span className="text-red-500">*</span>
+                                  </label>
+                                  <p className="text-xs text-gray-600 mb-3">
+                                    {t('ldmInstructions') || 'Εισάγετε την τιμή LDM που χρειάζεστε'}
+                                  </p>
+                                  <div className="relative">
+                                    <input
+                                      type="number"
+                                      step="0.1"
+                                      min="0.1"
+                                      id="ldmValue"
+                                      name="ldmValue"
+                                      value={formData.ldmValue || ''}
+                                      onChange={handleInputChange}
+                                      onBlur={handleBlur}
+                                      placeholder={t('ldmPlaceholder') || 'π.χ. 5'}
+                                      className={getFieldClassName('ldmValue', 'w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all min-h-[48px] text-base')}
+                                      aria-label={t('ldmValue') || 'LDM Value'}
+                                      aria-required="true"
+                                      aria-invalid={getFieldStatus('ldmValue') === 'invalid'}
+                                      aria-describedby="ldmValue-error"
+                                    />
+                                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                      {renderFieldIcon('ldmValue')}
+                                    </div>
+                                  </div>
+                                  {getFieldStatus('ldmValue') === 'invalid' && (
+                                    <p id="ldmValue-error" className="mt-2 text-sm text-red-600 error-message">
+                                      {fieldValidation.ldmValue?.message || t('requiredField') || 'This field is required'}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Package Dimensions Fields */}
+                            {dimensionType === 'package' && (
                               <div className="space-y-4 animate-fade-in">
                                 <div>
                                   <label htmlFor="quantity" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -932,6 +1143,36 @@ const QuoteFormEnhanced: React.FC = () => {
                 </div>
 
                 <div>
+                  <label htmlFor="vatNumber" className="block text-sm font-semibold text-gray-700 mb-2">
+                    ΑΦΜ / VAT Number <span className="text-gray-400 text-xs">(Προαιρετικό)</span>
+                  </label>
+                  <div className="relative">
+                    <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                    <input
+                      type="text"
+                      id="vatNumber"
+                      name="vatNumber"
+                      value={formData.vatNumber}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      placeholder="π.χ. EL123456789"
+                      className={getFieldClassName('vatNumber', 'w-full pl-12 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all min-h-[48px] text-base')}
+                      aria-label="VAT Number (Optional)"
+                      autoComplete="off"
+                    />
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      {renderFieldIcon('vatNumber')}
+                    </div>
+                  </div>
+                  {touchedFields.has('vatNumber') && fieldValidation.vatNumber && !fieldValidation.vatNumber.isValid && (
+                    <p className="text-red-600 text-sm mt-1 flex items-center" role="alert">
+                      <AlertCircle className="w-4 h-4 mr-1" />
+                      {fieldValidation.vatNumber.message}
+                    </p>
+                  )}
+                </div>
+
+                <div>
                   <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
                     {t('email')} <span className="text-red-500">*</span>
                   </label>
@@ -1005,7 +1246,7 @@ const QuoteFormEnhanced: React.FC = () => {
                     id="phone"
                     name="phone"
                     value={formData.phone}
-                    onChange={(value, countryCode) => {
+                    onChange={(value) => {
                       setFormData(prev => ({ ...prev, phone: value }));
                       if (touchedFields.has('phone')) {
                         const validation = validateField('phone', value);
@@ -1021,7 +1262,7 @@ const QuoteFormEnhanced: React.FC = () => {
                     className={getFieldClassName('phone', '')}
                     required
                     aria-label={t('phone')}
-                    aria-required="true"
+                    aria-required={true}
                     aria-invalid={getFieldStatus('phone') === 'invalid'}
                     autoComplete="tel"
                   />
@@ -1040,7 +1281,7 @@ const QuoteFormEnhanced: React.FC = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full max-w-md bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white py-4 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100 flex items-center justify-center min-h-[56px]"
+              className="w-full max-w-md bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white py-4 px-8 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100 flex items-center justify-center min-h-[56px] form-button"
               aria-label={t('submitQuote')}
             >
               {isSubmitting ? (

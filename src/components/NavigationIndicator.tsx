@@ -16,36 +16,70 @@ const NavigationIndicator: React.FC = () => {
   ];
 
   useEffect(() => {
+    let ticking = false;
+    let lastScrollTime = 0;
+    let lastScrollDirection = 'down';
+    let lastScrollY = window.scrollY;
+    
     const handleScroll = () => {
-      // Calculate scroll progress
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / docHeight) * 100;
-      setScrollProgress(progress);
+      const now = Date.now();
+      const currentScrollY = window.scrollY;
+      
+      // Determine scroll direction
+      const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+      lastScrollY = currentScrollY;
+      
+      // More aggressive throttling for upward scroll (common lag source)
+      const throttleTime = scrollDirection === 'up' ? 66 : 50; // 15fps for up, 20fps for down
+      
+      if (now - lastScrollTime < throttleTime) {
+        return;
+      }
+      lastScrollTime = now;
+      
+      // Skip processing if direction hasn't changed and we're scrolling up (but allow for small movements)
+      if (scrollDirection === 'up' && lastScrollDirection === 'up' && Math.abs(currentScrollY - lastScrollY) < 5) {
+        return;
+      }
+      lastScrollDirection = scrollDirection;
+      
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          // Calculate scroll progress (cached calculation)
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = Math.min(100, Math.max(0, (currentScrollY / docHeight) * 100));
+          setScrollProgress(progress);
 
-      // Update active section
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section.key);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
+          // Optimized section detection - only check when needed
+          const currentSection = sections.find(section => {
+            const element = document.getElementById(section.key);
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              return rect.top <= 100 && rect.bottom >= 100;
+            }
+            return false;
+          });
 
-      if (currentSection) {
-        setActiveSection(currentSection.key);
+          if (currentSection && currentSection.key !== activeSection) {
+            setActiveSection(currentSection.key);
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [sections, activeSection]);
 
   const scrollToSection = (sectionKey: string) => {
     const element = document.getElementById(sectionKey);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Check if user prefers reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      element.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
   };
 

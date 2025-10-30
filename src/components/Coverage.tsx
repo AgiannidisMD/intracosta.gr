@@ -62,7 +62,7 @@ const Coverage: React.FC = () => {
         { code: '19600', city: 'Ασπρόπυργος' }
       ],
       postalCodes: ['58100', '19600']
-    }
+    },
   };
 
   const countryFlagColors: { [key: string]: string[] } = {
@@ -75,20 +75,43 @@ const Coverage: React.FC = () => {
     'Austria': ['#ED2939', '#FFFFFF', '#ED2939'], // Red, White, Red
     'Switzerland': ['#D52B1E'], // Red (with a white cross, but we'll use solid red)
     'Czech Republic': ['#11457E', '#FFFFFF', '#D7141A'], // Blue, White, Red
+    'Czechia': ['#11457E', '#FFFFFF', '#D7141A'], // Alias for Czech Republic
     'Hungary': ['#CD2A3E', '#FFFFFF', '#436F4F'], // Red, White, Green
     'Slovakia': ['#FFFFFF', '#0B4EA2', '#EE1C25'], // White, Blue, Red
+    'Romania': ['#002B7F', '#FCD116', '#CE1126'], // Blue, Yellow, Red
     'Denmark': ['#C60C30', '#FFFFFF'], // Red, White
     'Luxembourg': ['#EF3340', '#FFFFFF', '#00A1DE'], // Red, White, Blue
     'Greece': ['#0D5EAF', '#FFFFFF'], // Blue, White
     'Cyprus': ['#D4AF37'], // Gold color for hover and fill
+    'Liechtenstein': ['#002680', '#CE1126', '#FFCE00'] // Blue, Red, Yellow (crown)
   };
 
+  // All countries for the main map (15 countries)
+  const allCountries = [
+    { name: 'Austria', flag: '🇦🇹', routes: '3x/Week', coordinates: [14.5501, 47.5162], count: 2 },
+    { name: 'Belgium', flag: '🇧🇪', routes: '3x/Week', coordinates: [4.4699, 50.5039], count: 1 },
+    { name: 'Bulgaria', flag: '🇧🇬', routes: '2x/Week', coordinates: [25.4858, 42.7339], count: 1 },
+    { name: 'Cyprus', flag: '🇨🇾', routes: '1x/Week', coordinates: [33.4299, 35.1264], count: 1 },
+    { name: 'Czech Republic', flag: '🇨🇿', routes: '2x/Week', coordinates: [15.4730, 49.8175], count: 1 },
+    { name: 'Denmark', flag: '🇩🇰', routes: '2x/Week', coordinates: [9.5018, 56.2639], count: 1 },
+    { name: 'Germany', flag: '🇩🇪', routes: 'Daily Routes', coordinates: [10.4515, 51.1657], count: 11 },
+    { name: 'Greece', flag: '🇬🇷', routes: 'Daily Routes', coordinates: [21.8243, 39.0742], count: 2 },
+    { name: 'Hungary', flag: '🇭🇺', routes: '2x/Week', coordinates: [19.5033, 47.1625], count: 1 },
+    { name: 'Luxembourg', flag: '🇱🇺', routes: '2x/Week', coordinates: [6.1296, 49.8153], count: 1 },
+    { name: 'Netherlands', flag: '🇳🇱', routes: 'Daily Routes', coordinates: [5.2913, 52.1326], count: 1 },
+    { name: 'Poland', flag: '🇵🇱', routes: '3x/Week', coordinates: [19.1342, 51.9194], count: 1 },
+    { name: 'Romania', flag: '🇷🇴', routes: '2x/Week', coordinates: [24.9668, 45.9442], count: 1 },
+    { name: 'Slovakia', flag: '🇸🇰', routes: '2x/Week', coordinates: [19.6990, 48.6690], count: 1 },
+    { name: 'Slovenia', flag: '🇸🇮', routes: '2x/Week', coordinates: [14.9955, 46.1512], count: 1 },
+  ].sort((a, b) => a.name.localeCompare(b.name));
+
+  // Countries with warehouses for the warehouse map (5 countries)
   const countries = [
     { name: 'Austria', flag: '🇦🇹', routes: '3x/Week', coordinates: [14.5501, 47.5162], count: 2 },
-    { name: 'Germany', flag: '🇩🇪', routes: 'Daily Routes', coordinates: [10.4515, 51.1657], count: 11 },
-    { name: 'Netherlands', flag: '🇳🇱', routes: 'Daily Routes', coordinates: [5.2913, 52.1326], count: 1 },
     { name: 'Belgium', flag: '🇧🇪', routes: '3x/Week', coordinates: [4.4699, 50.5039], count: 1 },
+    { name: 'Germany', flag: '🇩🇪', routes: 'Daily Routes', coordinates: [10.4515, 51.1657], count: 11 },
     { name: 'Greece', flag: '🇬🇷', routes: 'Daily Routes', coordinates: [21.8243, 39.0742], count: 2 },
+    { name: 'Netherlands', flag: '🇳🇱', routes: 'Daily Routes', coordinates: [5.2913, 52.1326], count: 1 },
   ].sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
 
   const features = [
@@ -256,7 +279,7 @@ const Coverage: React.FC = () => {
                           <Warehouse className="w-4 h-4 text-yellow-500" />
                           {t('warehousesLabel')} ({coverageData[selectedCountry].warehouses.length})
                         </h4>
-                        <div className="overflow-y-auto flex-1 pr-2 space-y-2">
+                        <div className="overflow-y-auto flex-1 space-y-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100" style={{ maxHeight: '200px' }}>
                           {coverageData[selectedCountry].warehouses.map((warehouse, idx) => (
                             <div
                               key={idx}
@@ -282,7 +305,7 @@ const Coverage: React.FC = () => {
                           <Warehouse className="w-4 h-4 text-yellow-500" />
                           Ταχυδρομικοί Κώδικες
                         </h4>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                           {coverageData[selectedCountry].postalCodes.map((code, idx) => (
                             <div
                               key={idx}
@@ -301,12 +324,14 @@ const Coverage: React.FC = () => {
                           onClick={(e) => {
                             e.preventDefault();
                             setSelectedCountry(null);
+                            // Use consistent scroll behavior
+                            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                             const el = document.querySelector('#quote');
-                            el?.scrollIntoView({ behavior: 'smooth' });
+                            el?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
                           }}
-                          className="block w-full text-center bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+                          className="block w-full text-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
                         >
-                          Ζητήστε Προσφορά
+                          {t('requestQuote')}
                         </a>
                       </div>
                     </div>
@@ -320,9 +345,9 @@ const Coverage: React.FC = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('ourRoutesTitle')}</h3>
               <div className="flex items-center mb-4">
                 {/* Reverted to using translation with placeholder after fixing t() function */}
-                <span className="text-gray-600 mr-3">{t('ourRoutesDescription', { count: countries.length })}</span>
+                <span className="text-gray-600 mr-3">{t('ourRoutesDescription', { count: allCountries.length })}</span>
                 <span className="ml-2 inline-flex items-center px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 font-bold text-lg shadow-sm">
-                  {countries.length}
+                  {allCountries.length}
                 </span>
               </div>
                 <button
@@ -351,8 +376,9 @@ const Coverage: React.FC = () => {
                   href="#quote"
                   onClick={(e) => {
                     e.preventDefault();
+                    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                     const el = document.querySelector('#quote');
-                    el?.scrollIntoView({ behavior: 'smooth' });
+                    el?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
                   }}
                   className="mt-4 inline-block text-yellow-600 font-semibold hover:underline"
                 >
@@ -472,12 +498,13 @@ const Coverage: React.FC = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     setExpandedCountry(null);
+                    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                     const el = document.querySelector('#quote');
-                    el?.scrollIntoView({ behavior: 'smooth' });
+                    el?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
                   }}
-                  className="block w-full text-center bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+                  className="block w-full text-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
                 >
-                  Ζητήστε Προσφορά
+                  {t('requestQuote')}
                 </a>
               </div>
             </div>
@@ -492,13 +519,14 @@ const Coverage: React.FC = () => {
           role="dialog"
           aria-modal="true"
         >
-          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden">
+          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden flex flex-col">
             <div className="flex justify-between items-center p-6 border-b border-gray-200">
               <h3 className="text-2xl font-bold text-gray-900">{t('coverageTitle')}</h3>
               <button
                 ref={closeButtonRef}
                 onClick={() => setIsModalOpen(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                aria-label="Κλείσιμο παραθύρου"
               >
                 <X className="w-6 h-6 text-gray-500" aria-hidden="true" />
               </button>

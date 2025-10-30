@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import './styles/design-system.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -29,7 +30,265 @@ body {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+  scroll-padding-top: 80px; /* Account for fixed header */
+}
+
+/* Optimize scroll performance */
+* {
+  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+}
+
+/* Disable expensive animations on mobile */
+@media (max-width: 768px) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .magnetic,
+  .hover-glow,
+  .parallax {
+    transform: none !important;
+    filter: none !important;
+  }
+  
+  /* Mobile accessibility widget optimizations */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Ensure minimum touch target size */
+  button, input[type="checkbox"], label {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve mobile scrolling */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Optimize scroll performance globally */
+* {
+  will-change: auto !important; /* Disable will-change to prevent GPU layer creation */
+}
+
+/* Disable expensive transforms during scroll */
+.scrolling * {
+  transform: none !important;
+  filter: none !important;
+  animation-play-state: paused !important;
+}
+
+/* Optimize motion elements */
+[data-framer-motion] {
+  transform: translateZ(0); /* Force hardware acceleration only when needed */
+}
+
+/* Reduce motion for better performance */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Accessibility features */
+.high-contrast {
+  filter: contrast(150%) brightness(120%);
+}
+
+body.high-contrast {
+  filter: contrast(200%) brightness(130%) !important;
+}
+
+body.custom-high-contrast {
+  filter: contrast(200%) brightness(130%) !important;
+}
+
+/* High contrast overrides for better visibility */
+body.high-contrast * {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+/* Dark backgrounds become black */
+body.high-contrast .bg-gray-900,
+body.high-contrast .bg-gray-800,
+body.high-contrast .bg-gray-700,
+body.high-contrast .bg-gray-600 {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Yellow/orange backgrounds become bright yellow */
+body.high-contrast .bg-yellow-500,
+body.high-contrast .bg-orange-500,
+body.high-contrast .bg-yellow-400,
+body.high-contrast .bg-orange-400 {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+/* White text stays white */
+body.high-contrast .text-white {
+  color: #ffffff !important;
+}
+
+/* Dark text becomes black */
+body.high-contrast .text-gray-900,
+body.high-contrast .text-gray-800,
+body.high-contrast .text-gray-700,
+body.high-contrast .text-gray-600 {
+  color: #000000 !important;
+}
+
+/* Light text becomes white */
+body.high-contrast .text-gray-300,
+body.high-contrast .text-gray-200,
+body.high-contrast .text-gray-100 {
+  color: #ffffff !important;
+}
+
+/* Links become blue */
+body.high-contrast a {
+  color: #0000ff !important;
+  text-decoration: underline !important;
+}
+
+/* Buttons get high contrast borders */
+body.high-contrast button {
+  border: 2px solid #000000 !important;
+}
+
+/* Input fields get high contrast borders */
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+  border: 2px solid #000000 !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Enhanced Accessibility Features - Custom Widget */
+body.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+body.enhanced-focus *:focus {
+  outline: 3px solid #f59e0b !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3) !important;
+}
+
+body.screen-reader-optimized {
+  /* Improve screen reader experience */
+}
+
+body.screen-reader-optimized img {
+  /* Ensure all images have alt text */
+}
+
+body.keyboard-navigation {
+  /* Enhanced keyboard navigation */
+}
+
+body.keyboard-navigation a:focus,
+body.keyboard-navigation button:focus,
+body.keyboard-navigation input:focus,
+body.keyboard-navigation textarea:focus,
+body.keyboard-navigation select:focus {
+  outline: 3px solid #f59e0b !important;
+  outline-offset: 2px !important;
+}
+
+body.color-blind-friendly {
+  /* Color blind friendly adjustments */
+}
+
+body.color-blind-friendly .text-red-500 {
+  color: #dc2626 !important;
+  font-weight: bold;
+}
+
+body.color-blind-friendly .text-green-500 {
+  color: #16a34a !important;
+  font-weight: bold;
+}
+
+body.dyslexia-friendly {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', cursive !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.05em !important;
+}
+
+body.dark-mode {
+  background-color: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+body.dark-mode .bg-white {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+body.dark-mode .text-gray-900 {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+body.dark-mode .border-gray-200 {
+  border-color: #4b5563 !important;
+}
+
+.high-contrast * {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+.high-contrast a {
+  color: #0000ff !important;
+  text-decoration: underline !important;
+}
+
+.negative-contrast {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+.negative-contrast img,
+.negative-contrast video,
+.negative-contrast iframe {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+.light-background {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.light-background * {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.light-background a {
+  color: #0000ff !important;
+}
+
+.dyslexic-font {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif !important;
 }
 
 /* Custom scrollbar */
@@ -273,7 +532,7 @@ a:focus-visible {
 
 /* Enhanced scroll effects */
 .scroll-smooth-enhanced {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Disable smooth scroll for better performance */
   scroll-padding-top: 80px;
 }
 
@@ -303,6 +562,38 @@ a:focus-visible {
 /* Disabled floating animations for better performance */
 .floating {
   /* animation: float 6s ease-in-out infinite; - DISABLED FOR PERFORMANCE */
+}
+
+/* Accessibility Widget - Ensure it's never clipped */
+.accessibility-widget {
+  position: fixed !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+  transform: translateZ(0) !important;
+  will-change: transform !important;
+}
+
+/* Mobile positioning - avoid navigation bar overlap and ensure visibility */
+@media (max-width: 768px) {
+  .accessibility-widget {
+    right: 8px !important;
+    top: 8rem !important; /* 32 * 0.25rem = 8rem */
+    bottom: auto !important;
+  }
+  
+  .accessibility-widget .accessibility-panel {
+    max-width: calc(100vw - 32px) !important;
+    right: 0 !important;
+    left: auto !important;
+  }
+}
+
+/* Tablet positioning */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .accessibility-widget {
+    top: 6rem !important; /* 24 * 0.25rem = 6rem */
+    bottom: auto !important;
+  }
 }
 
 @keyframes float {
@@ -392,7 +683,7 @@ a:focus-visible {
 
 /* Smooth horizontal scroll */
 .overflow-x-auto {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Disable smooth scroll for better performance */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -460,5 +751,53 @@ a:focus-visible {
 
   .hover-glow::before {
     opacity: 0;
+  }
+
+  /* New Accessibility Features */
+  
+  /* Focus Mode - Highlight interactive elements */
+  body.focus-mode a,
+  body.focus-mode button,
+  body.focus-mode input,
+  body.focus-mode select,
+  body.focus-mode textarea {
+    outline: 2px solid #f59e0b !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Underline Links */
+  body.underline-links a {
+    text-decoration: underline !important;
+  }
+
+  /* Readable Font - Use serif font for better readability */
+  body.readable-font {
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+  }
+
+  body.readable-font h1,
+  body.readable-font h2,
+  body.readable-font h3,
+  body.readable-font h4,
+  body.readable-font h5,
+  body.readable-font h6 {
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+  }
+
+  /* Line Height Adjustment */
+  body {
+    line-height: var(--line-height, 1.5);
+  }
+
+  /* Letter Spacing Adjustment */
+  body {
+    letter-spacing: var(--letter-spacing, 0);
+  }
+
+  /* Combine focus mode with keyboard navigation */
+  body.focus-mode.keyboard-navigation *:focus {
+    outline: 3px solid #f59e0b !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3) !important;
   }
 }

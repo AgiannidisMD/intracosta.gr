@@ -121,10 +121,7 @@ export function validateWeight(weight: string): ValidationResult {
     return { isValid: false, message: 'Weight must be greater than 0' };
   }
 
-  if (numWeight > 25000) {
-    return { isValid: false, message: 'Weight exceeds maximum (25,000 kg)' };
-  }
-
+  // No upper limit - removed 25,000 kg restriction
   return { isValid: true };
 }
 
@@ -138,9 +135,6 @@ export function validateDimension(dimension: string, name: string): ValidationRe
     return { isValid: false, message: `${name} must be greater than 0` };
   }
 
-  if (numDimension > 15) {
-    return { isValid: false, message: `${name} exceeds maximum (15m)` };
-  }
-
+  // No upper limit - removed 15m restriction
   return { isValid: true };
 }

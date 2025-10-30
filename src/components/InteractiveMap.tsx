@@ -89,24 +89,44 @@ const InteractiveMap: React.FC = () => {
 
         {/* Map Container */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {/* Removed map component */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             {warehouseData.map((country) => (
               <button
                 key={country.country}
                 onClick={() => handleCountryClick(country.country)}
-                className="p-6 rounded-xl border-2 border-gray-200 hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 text-center group"
+                className="p-3 sm:p-4 md:p-6 rounded-xl border-2 border-gray-200 hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 text-center group"
               >
-                <MapPin className="w-8 h-8 text-gray-400 group-hover:text-yellow-600 mx-auto mb-2" />
-                <h3 className="font-bold text-gray-900 group-hover:text-yellow-700">
+                <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 group-hover:text-yellow-600 mx-auto mb-1 sm:mb-2" />
+                <h3 className="font-bold text-gray-900 group-hover:text-yellow-700 text-sm sm:text-base">
                   {t(country.country)}
                 </h3>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-xs sm:text-sm text-gray-500 mt-1">
                   {country.warehouses.length} {t('warehousesTitle').toLowerCase()}
                 </p>
               </button>
             ))}
           </div>
         </div>
+  
+         {/* Country Buttons Grid */}
+         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+           {warehouseData.map((country) => (
+             <button
+               key={country.country}
+               onClick={() => handleCountryClick(country.country)}
+               className="p-6 rounded-xl border-2 border-gray-200 hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 text-center group"
+             >
+               <MapPin className="w-8 h-8 text-gray-400 group-hover:text-yellow-600 mx-auto mb-2" />
+               <h3 className="font-bold text-gray-900 group-hover:text-yellow-700">
+                 {t(country.country)}
+               </h3>
+               <p className="text-sm text-gray-500 mt-1">
+                 {country.warehouses.length} {t('warehousesTitle').toLowerCase()}
+               </p>
+             </button>
+           ))}
+          </div>
 
         {/* Modal for selected country */}
         {selectedCountry && (
@@ -182,14 +202,16 @@ const InteractiveMap: React.FC = () => {
                     onClick={() => {
                       const quoteSection = document.querySelector('#quote');
                       if (quoteSection) {
-                        quoteSection.scrollIntoView({ behavior: 'smooth' });
+                        // Check if user prefers reduced motion for accessibility
+                        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                        quoteSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
                         closeModal();
                       }
                     }}
-                    className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-4 px-6 rounded-xl hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
                   >
                     <Mail className="w-5 h-5 inline mr-2" />
-                    Ζητήστε Προσφορά
+                    {t('requestQuote')}
                   </button>
                 </div>
               </div>

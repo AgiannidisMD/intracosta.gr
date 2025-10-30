@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { motion, Variants } from 'framer-motion';
-import { useScrollAnimation } from '../../hooks/useScrollAnimation';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 interface ScrollAnimationProps {
   children: ReactNode;
