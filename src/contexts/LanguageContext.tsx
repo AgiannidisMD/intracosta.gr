@@ -78,6 +78,26 @@ const translations: Translations = {
     en: 'Our headquarters',
     de: 'Unser Hauptsitz'
   },
+  contactVisitUsAddress: {
+    el: '3ο χλμ Γιαννιτσών Θεσσαλονίκης, GR58100 Γιαννιτσά',
+    en: '3rd km Giannitsa–Thessaloniki, GR58100 Giannitsa',
+    de: '3. km Giannitsa–Thessaloniki, GR58100 Giannitsa'
+  },
+  vatNumberLabel: {
+    el: 'ΑΦΜ / VAT Number',
+    en: 'VAT Number',
+    de: 'USt-IdNr.'
+  },
+  vatNumberPlaceholder: {
+    el: 'π.χ. EL123456789',
+    en: 'e.g. EL123456789',
+    de: 'z.B. EL123456789'
+  },
+  optionalLabel: {
+    el: 'Προαιρετικό',
+    en: 'Optional',
+    de: 'Optional'
+  },
   cargoTypeDry: {
     el: 'Ξηρό φορτίο',
     en: 'Dry cargo',
@@ -1096,6 +1116,191 @@ const translations: Translations = {
     en: 'We offer comprehensive logistics services covering the entire supply chain management.\n\nOur services include:\n– cargo reception and sorting,\n– warehousing and inventory management,\n– picking, packing & repacking,\n– loading/unloading and cross-docking,\n– preparation for distribution or export.\n\nOur team combines expertise, modern equipment and operational flexibility to efficiently support every link in our partners\' supply chain.',
     de: 'Wir bieten umfassende Logistikdienstleistungen, die das gesamte Supply-Chain-Management abdecken.\n\nUnsere Dienstleistungen umfassen:\n– Warenannahme und Sortierung,\n– Lagerung und Bestandsverwaltung,\n– Kommissionierung, Verpackung & Umverpackung,\n– Be- und Entladung und Cross-Docking,\n– Vorbereitung für Verteilung oder Export.\n\nUnser Team kombiniert Fachwissen, moderne Ausrüstung und operative Flexibilität, um jedes Glied der Lieferkette unserer Partner effizient zu unterstützen.'
   },
+  'services.featuresTitle': {
+    el: 'Βασικά Χαρακτηριστικά',
+    en: 'Key Features',
+    de: 'Wesentliche Merkmale'
+  },
+  'services.roadTransportFeatures': {
+    el: 'Πλήρη και μερικά φορτία (FTL/LTL)\nΤακτικά δρομολόγια\nΣύγχρονος στόλος\nΔιαρκής παρακολούθηση μεταφοράς\nΈμφαση στη συνεργασία\nΑπόλυτη συνέπεια και ασφάλεια',
+    en: 'Full and partial loads (FTL/LTL)\nRegular scheduled routes\nModern fleet\nContinuous shipment tracking\nFocus on collaboration\nAbsolute consistency and safety',
+    de: 'Komplett- und Teilladungen (FTL/LTL)\nRegelmäßige Fahrpläne\nModerne Flotte\nKontinuierliche Sendungsverfolgung\nFokus auf Zusammenarbeit\nAbsolute Zuverlässigkeit und Sicherheit'
+  },
+  'services.roadTransportCoverageList': {
+    el: 'Ελλάδα, Γερμανία, Αυστρία, Ολλανδία, Βέλγιο, Πολωνία, Λουξεμβούργο, Δανία, Κύπρος',
+    en: 'Greece, Germany, Austria, Netherlands, Belgium, Poland, Luxembourg, Denmark, Cyprus',
+    de: 'Griechenland, Deutschland, Österreich, Niederlande, Belgien, Polen, Luxemburg, Dänemark, Zypern'
+  },
+  'services.intermodalFeatures': {
+    el: 'Door-to-port λύσεις\nPort-to-door λύσεις\nΣυντονισμός με λιμάνια\nΣυντονισμός με αεροδρόμια\nΕλαχιστοποίηση χρόνου και κόστους\nΟμαλή διακίνηση',
+    en: 'Door-to-port solutions\nPort-to-door solutions\nCoordination with ports\nCoordination with airports\nMinimizing time and cost\nSmooth cargo flow',
+    de: 'Door-to-Port-Lösungen\nPort-to-Door-Lösungen\nKoordination mit Häfen\nKoordination mit Flughäfen\nZeit- und Kostenminimierung\nReibungsloser Warenfluss'
+  },
+  'services.intermodalSeaTitle': {
+    el: 'Θαλάσσια Μεταφορά',
+    en: 'Maritime Transport',
+    de: 'Seetransport'
+  },
+  'services.intermodalSeaDescription': {
+    el: 'Συνεργασία με όλα τα βασικά λιμάνια για ομαλή διασύνδεση οδικών και θαλάσσιων μεταφορών.',
+    en: 'Collaboration with all major ports to ensure seamless integration of road and sea transport.',
+    de: 'Zusammenarbeit mit allen wichtigen Häfen für eine nahtlose Verbindung von Straßen- und Seetransport.'
+  },
+  'services.intermodalAirTitle': {
+    el: 'Αεροπορική Μεταφορά',
+    en: 'Air Transport',
+    de: 'Lufttransport'
+  },
+  'services.intermodalAirDescription': {
+    el: 'Πλήρης συντονισμός με αεροδρόμια για γρήγορη και αποτελεσματική διακίνηση φορτίων.',
+    en: 'Full coordination with airports for fast and efficient cargo movement.',
+    de: 'Umfassende Koordination mit Flughäfen für eine schnelle und effiziente Frachtabwicklung.'
+  },
+  'services.specialTransportFeatures': {
+    el: 'Εξειδικευμένος εξοπλισμός\nΈμπειρο προσωπικό\nΠλήρη τήρηση κανονισμών\nΠροδιαγραφές ασφαλείας\nΕξατομικευμένες λύσεις\nΤεχνική υποστήριξη',
+    en: 'Specialized equipment\nExperienced team\nFull regulatory compliance\nSafety standards\nTailored solutions\nTechnical support',
+    de: 'Spezialisierte Ausrüstung\nErfahrenes Team\nVollständige Einhaltung der Vorschriften\nSicherheitsstandards\nMaßgeschneiderte Lösungen\nTechnische Unterstützung'
+  },
+  'services.specialCargoOversizedTitle': {
+    el: 'Υπερμεγέθη Φορτία',
+    en: 'Oversized Loads',
+    de: 'Überdimensionierte Ladungen'
+  },
+  'services.specialCargoOversizedDescription': {
+    el: 'Εξειδικευμένος εξοπλισμός για μεγάλα φορτία',
+    en: 'Specialized equipment for oversized cargo',
+    de: 'Spezialisierte Ausrüstung für übergroße Fracht'
+  },
+  'services.specialCargoHeavyTitle': {
+    el: 'Βαρέα Φορτία',
+    en: 'Heavy Loads',
+    de: 'Schwerlasten'
+  },
+  'services.specialCargoHeavyDescription': {
+    el: 'Διαχείριση φορτίων μεγάλου βάρους',
+    en: 'Handling of heavyweight cargo',
+    de: 'Handhabung von Schwerlasten'
+  },
+  'services.specialCargoSensitiveTitle': {
+    el: 'Ευπαθή Φορτία',
+    en: 'Sensitive Cargo',
+    de: 'Empfindliche Fracht'
+  },
+  'services.specialCargoSensitiveDescription': {
+    el: 'Ειδική μέριμνα για ευαίσθητα προϊόντα',
+    en: 'Special care for fragile products',
+    de: 'Besondere Sorgfalt für empfindliche Produkte'
+  },
+  'services.specialCargoHighValueTitle': {
+    el: 'Υψηλής Αξίας',
+    en: 'High-Value Cargo',
+    de: 'Hochwertige Fracht'
+  },
+  'services.specialCargoHighValueDescription': {
+    el: 'Ασφαλισμένη μεταφορά πολύτιμων αγαθών',
+    en: 'Insured transport of valuable goods',
+    de: 'Versicherter Transport wertvoller Güter'
+  },
+  'services.specialSafetyTitle': {
+    el: 'Ασφάλεια & Κανονισμοί',
+    en: 'Safety & Compliance',
+    de: 'Sicherheit & Vorschriften'
+  },
+  'services.specialSafetyDescription': {
+    el: 'Κάθε έργο σχεδιάζεται με βάση τις τεχνικές του ιδιαιτερότητες, τηρώντας όλους τους κανονισμούς και τις προδιαγραφές ασφαλείας. Προσφέρουμε εξατομικευμένες λύσεις ανά έργο και φορτίο.',
+    en: 'Each project is designed around its technical requirements, adhering to all regulations and safety standards. We offer tailored solutions for every project and cargo.',
+    de: 'Jedes Projekt wird nach seinen technischen Anforderungen geplant und erfüllt alle Vorschriften und Sicherheitsstandards. Wir bieten maßgeschneiderte Lösungen für jedes Projekt und jede Fracht.'
+  },
+  'services.specialCustomizationTitle': {
+    el: 'Εξατομίκευση',
+    en: 'Customization',
+    de: 'Personalisierung'
+  },
+  'services.specialCustomizationDescription': {
+    el: 'Κάθε μεταφορά σχεδιάζεται με βάση τις συγκεκριμένες ανάγκες και απαιτήσεις του φορτίου σας.',
+    en: 'Every transport plan is shaped around the specific needs and requirements of your cargo.',
+    de: 'Jeder Transport wird auf die spezifischen Bedürfnisse und Anforderungen Ihrer Fracht zugeschnitten.'
+  },
+  'services.logisticsFeatures': {
+    el: 'Ολοκληρωμένη διαχείριση εφοδιαστικής αλυσίδας\nΣύγχρονος εξοπλισμός\nΈμπειρη ομάδα\nΛειτουργική ευελιξία\nInventory control συστήματα\nΠροετοιμασία για διανομή/εξαγωγή',
+    en: 'End-to-end supply chain management\nModern equipment\nExperienced team\nOperational flexibility\nInventory control systems\nDistribution/export readiness',
+    de: 'Ganzheitliches Supply-Chain-Management\nModerne Ausstattung\nErfahrenes Team\nOperative Flexibilität\nBestandskontrollsysteme\nBereitschaft für Distribution/Export'
+  },
+  'services.logisticsServiceReceivingTitle': {
+    el: 'Παραλαβή & Ταξινόμηση',
+    en: 'Receiving & Sorting',
+    de: 'Wareneingang & Sortierung'
+  },
+  'services.logisticsServiceReceivingDescription': {
+    el: 'Επαγγελματική παραλαβή και οργάνωση φορτίων',
+    en: 'Professional cargo receiving and organization',
+    de: 'Professionelle Annahme und Organisation von Fracht'
+  },
+  'services.logisticsServiceWarehousingTitle': {
+    el: 'Αποθήκευση',
+    en: 'Warehousing',
+    de: 'Lagerung'
+  },
+  'services.logisticsServiceWarehousingDescription': {
+    el: 'Ασφαλείς χώροι αποθήκευσης με σύγχρονη διαχείριση',
+    en: 'Secure storage facilities with modern management',
+    de: 'Sichere Lagerflächen mit moderner Verwaltung'
+  },
+  'services.logisticsServiceInventoryTitle': {
+    el: 'Έλεγχος Αποθεμάτων',
+    en: 'Inventory Control',
+    de: 'Bestandskontrolle'
+  },
+  'services.logisticsServiceInventoryDescription': {
+    el: 'Διαχείριση αποθεμάτων σε πραγματικό χρόνο',
+    en: 'Real-time inventory management',
+    de: 'Bestandsverwaltung in Echtzeit'
+  },
+  'services.logisticsServicePickingTitle': {
+    el: 'Picking & Packing',
+    en: 'Picking & Packing',
+    de: 'Kommissionierung & Verpackung'
+  },
+  'services.logisticsServicePickingDescription': {
+    el: 'Προετοιμασία παραγγελιών και συσκευασία',
+    en: 'Order preparation and packaging',
+    de: 'Auftragsvorbereitung und Verpackung'
+  },
+  'services.logisticsServiceLoadingTitle': {
+    el: 'Φορτοεκφορτώσεις',
+    en: 'Loading & Unloading',
+    de: 'Be- und Entladung'
+  },
+  'services.logisticsServiceLoadingDescription': {
+    el: 'Γρήγορες και ασφαλείς υπηρεσίες φορτοεκφόρτωσης',
+    en: 'Fast, secure loading and unloading services',
+    de: 'Schnelle und sichere Be- und Entladedienste'
+  },
+  'services.logisticsServiceCrossDockingTitle': {
+    el: 'Cross-Docking',
+    en: 'Cross-Docking',
+    de: 'Cross-Docking'
+  },
+  'services.logisticsServiceCrossDockingDescription': {
+    el: 'Άμεση μεταφορά χωρίς ενδιάμεση αποθήκευση',
+    en: 'Direct transfer without intermediate storage',
+    de: 'Direkte Umladung ohne Zwischenlagerung'
+  },
+  'services.logisticsValueTitle': {
+    el: 'Η Αξία μας',
+    en: 'Our Value',
+    de: 'Unser Mehrwert'
+  },
+  'services.logisticsValueDescription': {
+    el: 'Η ομάδα μας συνδυάζει τεχνογνωσία, σύγχρονο εξοπλισμό και λειτουργική ευελιξία για να υποστηρίξει αποδοτικά κάθε κρίκο της εφοδιαστικής αλυσίδας των συνεργατών μας.',
+    en: 'Our team combines expertise, modern equipment and operational flexibility to support every link of our partners\' supply chain.',
+    de: 'Unser Team verbindet Fachwissen, moderne Ausrüstung und operative Flexibilität, um jedes Glied der Lieferkette unserer Partner zu unterstützen.'
+  },
+  'services.logisticsWarehousesDescription': {
+    el: 'Δύο ιδιόκτητες αποθήκες (Γιαννιτσά, Όσναμπουργκ) και δεκάδες συνεργαζόμενες στην Ευρώπη.',
+    en: 'Two owned warehouses (Giannitsa, Osnabrück) and dozens of partners across Europe.',
+    de: 'Zwei eigene Lager (Giannitsa, Osnabrück) und Dutzende Partner in ganz Europa.'
+  },
   
   // Add missing form validation translations
   invalidEmail: {
@@ -1217,6 +1422,91 @@ const translations: Translations = {
     en: 'Meet the people behind our success',
     de: 'Lernen Sie die Menschen hinter unserem Erfolg kennen'
   },
+  teamNavigationHint: {
+    el: '← Χρησιμοποιήστε τα βελάκια για πλοήγηση →',
+    en: '← Use the arrows to navigate →',
+    de: '← Nutzen Sie die Pfeile zur Navigation →'
+  },
+  teamPreviousMembers: {
+    el: 'Προηγούμενοι μέλη ομάδας',
+    en: 'Previous team members',
+    de: 'Vorherige Teammitglieder'
+  },
+  teamNextMembers: {
+    el: 'Επόμενοι μέλη ομάδας',
+    en: 'Next team members',
+    de: 'Nächste Teammitglieder'
+  },
+  'teamMember.kostasFilippos': {
+    el: 'Κώστας Φίλιππος',
+    en: 'Kostas Filippos',
+    de: 'Kostas Filippos'
+  },
+  'teamMember.kostaKaterina': {
+    el: 'Κώστα Κατερίνα',
+    en: 'Katerina Kosta',
+    de: 'Katerina Kosta'
+  },
+  'teamMember.petridisDimitrios': {
+    el: 'Πετρίδης Δημήτρης',
+    en: 'Dimitrios Petridis',
+    de: 'Dimitrios Petridis'
+  },
+  'teamMember.emmanouilidouAnastasia': {
+    el: 'Εμμανουηλίδου Αναστασία',
+    en: 'Anastasia Emmanouilidou',
+    de: 'Anastasia Emmanouilidou'
+  },
+  'teamMember.dimouMaria': {
+    el: 'Δήμου Μαρία',
+    en: 'Maria Dimou',
+    de: 'Maria Dimou'
+  },
+  'teamMember.giannakidouIrini': {
+    el: 'Γιαννακίδου Ειρήνη',
+    en: 'Irini Giannakidou',
+    de: 'Irini Giannakidou'
+  },
+  'teamMember.katerinaNtaoula': {
+    el: 'Κατερίνα Νταούλα',
+    en: 'Katerina Ntaoula',
+    de: 'Katerina Ntaoula'
+  },
+  'teamMember.pleplesTheodoros': {
+    el: 'Πλεπλές Θεόδωρος',
+    en: 'Theodoros Pleples',
+    de: 'Theodoros Pleples'
+  },
+  'teamMember.vangelisSaakian': {
+    el: 'Βαγγέλης Σαακιάν',
+    en: 'Vangelis Saakian',
+    de: 'Vangelis Saakian'
+  },
+  'teamMember.papadimitriouDimitrios': {
+    el: 'Παπαδημητρίου Δημήτριος',
+    en: 'Dimitrios Papadimitriou',
+    de: 'Dimitrios Papadimitriou'
+  },
+  'teamMember.kouloudiNikoleta': {
+    el: 'Κουλούδη Νικολέτα',
+    en: 'Nikoleta Kouloudi',
+    de: 'Nikoleta Kouloudi'
+  },
+  'teamMember.kouloudiIrini': {
+    el: 'Κουλόυδη Ειρήνη',
+    en: 'Irini Kouloudi',
+    de: 'Irini Kouloudi'
+  },
+  'teamMember.tsitlakidouKyriaki': {
+    el: 'Τσιτλακίδου Κυριακή',
+    en: 'Kyriaki Tsitlakidou',
+    de: 'Kyriaki Tsitlakidou'
+  },
+  'teamMember.eleniAlbani': {
+    el: 'Ελένη Αλμπάνη',
+    en: 'Eleni Albani',
+    de: 'Eleni Albani'
+  },
   teamGeneralDirector: {
     el: 'Γενικός Διευθυντής',
     en: 'General Director',
@@ -1273,6 +1563,26 @@ const translations: Translations = {
     el: 'Κεντρική Αποθήκη',
     en: 'Central Warehouse',
     de: 'Zentrales Lager'
+  },
+  warehousesCount: {
+    el: '{{count}} αποθήκες',
+    en: '{{count}} warehouses',
+    de: '{{count}} Lager'
+  },
+  coverageMapHoverHint: {
+    el: 'Κάντε κλικ για περισσότερα',
+    en: 'Click for more details',
+    de: 'Für mehr Details klicken'
+  },
+  coverageToggleDetails: {
+    el: 'Εναλλαγή λεπτομερειών για {{country}}',
+    en: 'Toggle details for {{country}}',
+    de: 'Details für {{country}} anzeigen'
+  },
+  coverageCloseLabel: {
+    el: 'Κλείσιμο παραθύρου',
+    en: 'Close window',
+    de: 'Fenster schließen'
   },
   // Accessibility Widget Translations
   accessibilitySettings: {

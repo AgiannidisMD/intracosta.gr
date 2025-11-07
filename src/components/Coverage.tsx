@@ -19,6 +19,8 @@ const Coverage: React.FC = () => {
   const [popoverPosition, setPopoverPosition] = useState({ x: 0, y: 0 });
   const [expandedCountry, setExpandedCountry] = useState<string | null>(null);
 
+  const translateCountryName = (name: string | null) => (name ? t(name) : '');
+
   // Real warehouse and coverage data
   const coverageData: { [key: string]: { warehouses: Array<{code: string, city: string, isCentral?: boolean}>, postalCodes: string[] } } = {
     'Germany': {
@@ -227,8 +229,8 @@ const Coverage: React.FC = () => {
                 {/* Hover Tooltip */}
                 {hoveredCountry && !selectedCountry && (
                   <div className="absolute top-4 left-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg z-10 pointer-events-none">
-                    <div className="text-sm font-medium">{hoveredCountry}</div>
-                    <div className="text-xs text-gray-300 mt-1">Click για περισσότερα</div>
+                    <div className="text-sm font-medium">{translateCountryName(hoveredCountry)}</div>
+                    <div className="text-xs text-gray-300 mt-1">{t('coverageMapHoverHint')}</div>
                   </div>
                 )}
 
@@ -262,12 +264,12 @@ const Coverage: React.FC = () => {
                       <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
                         <div className="flex items-center gap-2">
                           <MapPin className="w-5 h-5 text-yellow-600" aria-hidden="true" />
-                          <h3 className="text-xl font-bold text-gray-900">{selectedCountry}</h3>
+                          <h3 className="text-xl font-bold text-gray-900">{translateCountryName(selectedCountry)}</h3>
                         </div>
                         <button
                           onClick={() => setSelectedCountry(null)}
                           className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
-                          aria-label="Close"
+                          aria-label={t('coverageCloseLabel')}
                         >
                           <X className="w-5 h-5 text-gray-500" aria-hidden="true" />
                         </button>
@@ -303,7 +305,7 @@ const Coverage: React.FC = () => {
                       <div>
                         <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                           <Warehouse className="w-4 h-4 text-yellow-500" />
-                          Ταχυδρομικοί Κώδικες
+                          {t('postalCodesTitle')}
                         </h4>
                         <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                           {coverageData[selectedCountry].postalCodes.map((code, idx) => (
@@ -391,9 +393,9 @@ const Coverage: React.FC = () => {
         {/* Warehouse Cards Section */}
         <div className="mt-16">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">Χάρτης Αποθηκών</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">{t('mapTitle')}</h3>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Κάντε κλικ σε μια χώρα για να δείτε τις αποθήκες και τα ΤΚ
+              {t('mapSubtitle')}
             </p>
           </div>
           
@@ -415,15 +417,15 @@ const Coverage: React.FC = () => {
                   role="button"
                   tabIndex={0}
                   aria-expanded={expandedCountry === country.name}
-                  aria-label={`Toggle details for ${country.name}`}
+                  aria-label={t('coverageToggleDetails', { country: translateCountryName(country.name) })}
                 >
                   <div className="flex flex-col items-center">
                     <MapPin className="w-8 h-8 text-gray-400 mb-3 group-hover:text-yellow-500 transition-colors" aria-hidden="true" />
                     <h4 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors">
-                      {country.name}
+                      {translateCountryName(country.name)}
                     </h4>
                     <p className="text-sm text-gray-600">
-                      {country.count} αποθήκες
+                      {t('warehousesCount', { count: country.count })}
                     </p>
                   </div>
                 </div>
@@ -437,11 +439,12 @@ const Coverage: React.FC = () => {
               <div className="flex items-center justify-between mb-6">
                 <h4 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-yellow-500" aria-hidden="true" />
-                  {expandedCountry}
+                  {translateCountryName(expandedCountry)}
                 </h4>
                 <button
                   onClick={() => setExpandedCountry(null)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  aria-label={t('coverageCloseLabel')}
                 >
                   <X className="w-5 h-5 text-gray-500" aria-hidden="true" />
                 </button>
@@ -451,7 +454,7 @@ const Coverage: React.FC = () => {
               <div className="mb-6">
                 <h5 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                   <Warehouse className="w-4 h-4 text-yellow-500" />
-                  Αποθήκες ({coverageData[expandedCountry].warehouses.length})
+                  {t('warehousesLabel')} ({coverageData[expandedCountry].warehouses.length})
                 </h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {coverageData[expandedCountry].warehouses.map((warehouse, idx) => (
@@ -464,7 +467,7 @@ const Coverage: React.FC = () => {
                         <span className="text-gray-600 font-mono text-xs">{warehouse.code}</span>
                         {warehouse.isCentral && (
                           <span className="px-2 py-1 bg-yellow-200 text-yellow-900 text-xs font-semibold rounded-full">
-                            Κεντρική
+                            {t('centralWarehouseShort')}
                           </span>
                         )}
                       </div>
@@ -477,7 +480,7 @@ const Coverage: React.FC = () => {
               <div className="mb-6">
                 <h5 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                   <Warehouse className="w-4 h-4 text-yellow-500" />
-                  Ταχυδρομικοί Κώδικες
+                  {t('postalCodesTitle')}
                 </h5>
                 <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
                   {coverageData[expandedCountry].postalCodes.map((code, idx) => (
@@ -526,7 +529,7 @@ const Coverage: React.FC = () => {
                 ref={closeButtonRef}
                 onClick={() => setIsModalOpen(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                aria-label="Κλείσιμο παραθύρου"
+                aria-label={t('coverageCloseLabel')}
               >
                 <X className="w-6 h-6 text-gray-500" aria-hidden="true" />
               </button>
@@ -540,7 +543,9 @@ const Coverage: React.FC = () => {
                   >
                     <div className="flex items-center space-x-3 group">
                       <span className="text-2xl transform transition-transform duration-300 group-hover:translate-x-1">{country.flag}</span>
-                      <span className="font-medium text-gray-900 group-hover:text-yellow-500 transition-colors duration-300">{country.name}</span>
+                      <span className="font-medium text-gray-900 group-hover:text-yellow-500 transition-colors duration-300">
+                        {translateCountryName(country.name)}
+                      </span>
                     </div>
                   </div>
                 ))}

@@ -72,3 +72,5 @@ export const getAccessibilityConfig = (): AccessibilityConfig => {
     enableInDevelopment: isDevelopment ? accessibilityConfig.enableInDevelopment : true,
   };
 };
+
+

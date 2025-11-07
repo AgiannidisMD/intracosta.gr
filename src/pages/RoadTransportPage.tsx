@@ -18,14 +18,11 @@ const RoadTransportPage: React.FC = () => {
     { label: t('services.roadTransportTitle'), current: true }
   ];
 
-  const features = [
-    'Πλήρη και μερικά φορτία (FTL/LTL)',
-    'Τακτικά δρομολόγια',
-    'Σύγχρονος στόλος',
-    'Διαρκής παρακολούθηση μεταφοράς',
-    'Έμφαση στη συνεργασία',
-    'Απόλυτη συνέπεια και ασφάλεια'
-  ];
+  const features = t('services.roadTransportFeatures')
+    .split('\n')
+    .map((feature) => feature.trim())
+    .filter(Boolean);
+  const coverage = t('services.roadTransportCoverageList');
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-20">
@@ -101,7 +98,7 @@ const RoadTransportPage: React.FC = () => {
               className="bg-white rounded-2xl shadow-xl p-8 sticky top-8"
             >
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Βασικά Χαρακτηριστικά
+                {t('services.featuresTitle')}
               </h3>
               <ul className="space-y-4">
                 {features.map((feature, index) => (
@@ -125,10 +122,10 @@ const RoadTransportPage: React.FC = () => {
               <div className="mt-6 p-4 bg-gray-50 rounded-xl">
                 <div className="flex items-center gap-2 text-gray-700 mb-2">
                   <MapPin className="w-5 h-5 text-yellow-500" />
-                  <span className="font-semibold">Περιοχές Κάλυψης</span>
+                  <span className="font-semibold">{t('coverageTitle')}</span>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Ελλάδα, Γερμανία, Αυστρία, Ολλανδία, Βέλγιο, Πολωνία, Λουξεμβούργο, Δανία, Κύπρος
+                  {coverage}
                 </p>
               </div>
             </motion.div>

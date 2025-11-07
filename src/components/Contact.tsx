@@ -48,7 +48,7 @@ const Contact: React.FC = () => {
           addressSubtitle: t('contact.visitUsSubtitle'),
           emailValue: 'info@intracosta.com',
           phoneValue: '+30 23820 27111',
-          addressValue: '3ο χλμ Γιαννιτσών Θεσσαλονίκης, GR58100 Γιαννιτσά',
+          addressValue: t('contactVisitUsAddress'),
           formTitle: t('contactFormTitle'),
           formSubmit: t('sendMessage'),
           nameLabel: t('name'),
@@ -63,10 +63,10 @@ const Contact: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Επισκεφτείτε μας
+              {t('contact.visitUsTitle')}
             </h2>
             <p className="text-lg text-gray-600">
-              3ο χλμ Γιαννιτσών Θεσσαλονίκης, GR58100 Γιαννιτσά
+              {t('contactVisitUsAddress')}
             </p>
           </div>
           

@@ -18,14 +18,10 @@ const IntermodalTransportPage: React.FC = () => {
     { label: t('services.intermodalTitle'), current: true }
   ];
 
-  const features = [
-    'Door-to-port λύσεις',
-    'Port-to-door λύσεις',
-    'Συντονισμός με λιμάνια',
-    'Συντονισμός με αεροδρόμια',
-    'Ελαχιστοποίηση χρόνου και κόστους',
-    'Ομαλή διακίνηση'
-  ];
+  const features = t('services.intermodalFeatures')
+    .split('\n')
+    .map((feature) => feature.trim())
+    .filter(Boolean);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-20">
@@ -86,17 +82,17 @@ const IntermodalTransportPage: React.FC = () => {
             >
               <div className="p-6 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-blue-100">
                 <Anchor className="w-10 h-10 text-blue-600 mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Θαλάσσια Μεταφορά</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('services.intermodalSeaTitle')}</h3>
                 <p className="text-gray-600">
-                  Συνεργασία με όλα τα βασικά λιμάνια για ομαλή διασύνδεση οδικών και θαλάσσιων μεταφορών.
+                  {t('services.intermodalSeaDescription')}
                 </p>
               </div>
 
               <div className="p-6 bg-gradient-to-br from-orange-50 to-white rounded-xl border border-orange-100">
                 <Plane className="w-10 h-10 text-orange-600 mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Αεροπορική Μεταφορά</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('services.intermodalAirTitle')}</h3>
                 <p className="text-gray-600">
-                  Πλήρης συντονισμός με αεροδρόμια για γρήγορη και αποτελεσματική διακίνηση φορτίων.
+                  {t('services.intermodalAirDescription')}
                 </p>
               </div>
             </motion.div>
@@ -125,7 +121,7 @@ const IntermodalTransportPage: React.FC = () => {
               className="bg-white rounded-2xl shadow-xl p-8 sticky top-8"
             >
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Βασικά Χαρακτηριστικά
+                {t('services.featuresTitle')}
               </h3>
               <ul className="space-y-4">
                 {features.map((feature, index) => (

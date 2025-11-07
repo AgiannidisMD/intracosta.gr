@@ -47,79 +47,85 @@ const About: React.FC = () => {
 
   const teamMembers = [
     {
-      name: 'Κώστας Φίλιππος',
+      nameKey: 'teamMember.kostasFilippos',
       role: t('teamGeneralDirector'),
       image: '/team/kostas-filippos.JPG',
       department: 'leadership'
     },
     {
-      name: 'Κώστα Κατερίνα',
+      nameKey: 'teamMember.kostaKaterina',
       role: t('teamImportDepartment'),
       image: '/team/kosta-katerina.JPG',
       department: 'import'
     },
     {
-      name: 'Πετρίδης Δημήτρης',
+      nameKey: 'teamMember.petridisDimitrios',
       role: t('teamImportDepartment'),
       image: '/team/petridis-dimitrios.JPG',
       department: 'import'
     },
     {
-      name: 'Εμμανουηλίδου Αναστασία',
+      nameKey: 'teamMember.emmanouilidouAnastasia',
       role: t('teamImportDepartment'),
       image: '/team/emmanouilidou-anastasia.JPG',
       department: 'import'
     },
     {
-      name: 'Δήμου Μαρία',
+      nameKey: 'teamMember.dimouMaria',
       role: t('teamImportDepartment'),
       image: '/team/dimou-maria.JPG',
       department: 'import'
     },
     {
-      name: 'Γιαννακίδου Ειρήνη',
+      nameKey: 'teamMember.giannakidouIrini',
       role: t('teamImportDepartment'),
       image: '/team/giannakidou-irini.JPG',
       department: 'import'
     },
     {
-      name: 'Κατερίνα Νταούλα',
+      nameKey: 'teamMember.katerinaNtaoula',
       role: t('teamImportManager'),
       image: '/team/katerina-ntaoula.JPG',
       department: 'import'
     },
     {
-      name: 'Πλεπλές Θεόδωρος',
+      nameKey: 'teamMember.pleplesTheodoros',
       role: t('teamExportManager'),
       image: '/team/pleples-theodoros.JPG',
       department: 'export'
     },
     {
-      name: 'Βαγγέλης',
+      nameKey: 'teamMember.vangelisSaakian',
       role: t('teamExportDepartment'),
       image: '/team/vaggelis.JPG',
       department: 'export'
     },
     {
-      name: 'Παπαδημητρίου Δημήτριος',
+      nameKey: 'teamMember.eleniAlbani',
+      role: t('teamExportDepartment'),
+      image: '/team/eleni-almpani.JPG',
+      department: 'export'
+    },
+    {
+      nameKey: 'teamMember.papadimitriouDimitrios',
       role: t('teamAccountingManager'),
       image: '/team/dimitrios-papadimitriou.JPG',
       department: 'accounting'
     },
     {
-      name: 'Κουλούδη Νικολέτα',
+      nameKey: 'teamMember.kouloudiNikoleta',
       role: t('teamAccountingDepartment'),
       image: '/team/kouloudi-nikoleta.JPG',
       department: 'accounting'
     },
     {
-      name: 'Κουλόυδη Ειρήνη',
+      nameKey: 'teamMember.kouloudiIrini',
       role: t('teamAccountingDepartment'),
       image: '/team/kouloudi-irini.JPG',
       department: 'accounting'
     },
     {
-      name: 'Τσιτλακίδου Κυριακή',
+      nameKey: 'teamMember.tsitlakidouKyriaki',
       role: t('teamAccountingDepartment'),
       image: '/team/kyriaki-tsitlakidou.JPG',
       department: 'accounting'
@@ -301,7 +307,7 @@ const About: React.FC = () => {
                 }
               }}
               className="p-3 rounded-full bg-white border border-gray-300 hover:border-yellow-500 hover:bg-yellow-50 transition-colors duration-200 shadow-sm"
-              aria-label="Προηγούμενοι μέλη ομάδας"
+              aria-label={t('teamPreviousMembers')}
             >
               <svg className="w-5 h-5 text-gray-600 hover:text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -309,7 +315,7 @@ const About: React.FC = () => {
             </button>
             
             <span className="text-sm text-gray-500 px-4">
-              ← Χρησιμοποιήστε τα βελάκια για πλοήγηση →
+              {t('teamNavigationHint')}
             </span>
             
             <button
@@ -321,7 +327,7 @@ const About: React.FC = () => {
                 }
               }}
               className="p-3 rounded-full bg-white border border-gray-300 hover:border-yellow-500 hover:bg-yellow-50 transition-colors duration-200 shadow-sm"
-              aria-label="Επόμενοι μέλη ομάδας"
+              aria-label={t('teamNextMembers')}
             >
               <svg className="w-5 h-5 text-gray-600 hover:text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -347,7 +353,15 @@ const About: React.FC = () => {
                   width: 'max-content'
                 }}
               >
-                {teamMembers.map((member, index) => (
+              {teamMembers.map((member, index) => {
+                const displayName = t(member.nameKey);
+                const isManagement =
+                  member.department === 'leadership' ||
+                  member.nameKey === 'teamMember.katerinaNtaoula' ||
+                  member.nameKey === 'teamMember.pleplesTheodoros' ||
+                  member.nameKey === 'teamMember.papadimitriouDimitrios';
+
+                return (
                   <div
                     key={index}
                     className="relative flex-shrink-0"
@@ -381,7 +395,7 @@ const About: React.FC = () => {
                           <div className="absolute bottom-1.5 left-1.5 w-1.5 h-1.5 bg-orange-400 rounded-full opacity-40 group-hover:opacity-80 transition-opacity duration-300"></div>
                           <img
                             src={member.image}
-                            alt={member.name}
+                            alt={displayName}
                             className="w-full h-full object-cover object-center transition-all duration-300 group-hover:scale-110 group-hover:brightness-110"
                             loading="eager"
                             onError={handleImageError}
@@ -390,10 +404,7 @@ const About: React.FC = () => {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
                         {/* Badge for leadership/management - adjusted for smaller frame */}
-                        {(member.department === 'leadership' || 
-                          member.name === 'Κατερίνα Νταούλα' || 
-                          member.name === 'Πλεπλές Θεόδωρος' || 
-                          member.name === 'Παπαδημητρίου Δημήτριος') && (
+                        {isManagement && (
                           <div 
                             className="absolute -top-1 -right-1 bg-yellow-500 group-hover:bg-yellow-600 text-white px-1.5 py-0.5 rounded-full text-xs font-bold shadow-sm transition-colors duration-200"
                           >
@@ -405,10 +416,10 @@ const About: React.FC = () => {
                       {/* Text Content - Centered and with fixed spacing */}
                       <div className="text-center flex-1 flex flex-col justify-center">
                         <h4 className="font-bold text-base text-gray-900 mb-2 group-hover:text-yellow-700 transition-colors duration-200 leading-tight break-words">
-                          {member.name.split(' ').map((word, index) => (
+                          {displayName.split(' ').map((word, index) => (
                             <span key={index}>
                               {word}
-                              {index < member.name.split(' ').length - 1 && <br />}
+                              {index < displayName.split(' ').length - 1 && <br />}
                             </span>
                           ))}
                         </h4>
@@ -423,7 +434,8 @@ const About: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                );
+              })}
               </div>
             </div>
             

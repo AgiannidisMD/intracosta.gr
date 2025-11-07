@@ -19,20 +19,32 @@ const SpecialTransportPage: React.FC = () => {
   ];
 
   const cargoTypes = [
-    { title: 'Υπερμεγέθη Φορτία', icon: Ruler, description: 'Εξειδικευμένος εξοπλισμός για μεγάλα φορτία' },
-    { title: 'Βαρέα Φορτία', icon: Scale, description: 'Διαχείριση φορτίων μεγάλου βάρους' },
-    { title: 'Ευπαθή Φορτία', icon: Lock, description: 'Ειδική μέριμνα για ευαίσθητα προϊόντα' },
-    { title: 'Υψηλής Αξίας', icon: Gem, description: 'Ασφαλισμένη μεταφορά πολύτιμων αγαθών' }
+    {
+      title: t('services.specialCargoOversizedTitle'),
+      icon: Ruler,
+      description: t('services.specialCargoOversizedDescription')
+    },
+    {
+      title: t('services.specialCargoHeavyTitle'),
+      icon: Scale,
+      description: t('services.specialCargoHeavyDescription')
+    },
+    {
+      title: t('services.specialCargoSensitiveTitle'),
+      icon: Lock,
+      description: t('services.specialCargoSensitiveDescription')
+    },
+    {
+      title: t('services.specialCargoHighValueTitle'),
+      icon: Gem,
+      description: t('services.specialCargoHighValueDescription')
+    }
   ];
 
-  const features = [
-    'Εξειδικευμένος εξοπλισμός',
-    'Έμπειρο προσωπικό',
-    'Πλήρη τήρηση κανονισμών',
-    'Προδιαγραφές ασφαλείας',
-    'Εξατομικευμένες λύσεις',
-    'Τεχνική υποστήριξη'
-  ];
+  const features = t('services.specialTransportFeatures')
+    .split('\n')
+    .map((feature) => feature.trim())
+    .filter(Boolean);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-20">
@@ -132,10 +144,10 @@ const SpecialTransportPage: React.FC = () => {
             >
               <div className="flex items-center gap-3 mb-4">
                 <Shield className="w-8 h-8 text-yellow-600" />
-                <h3 className="text-2xl font-bold text-gray-900">Ασφάλεια & Κανονισμοί</h3>
+                <h3 className="text-2xl font-bold text-gray-900">{t('services.specialSafetyTitle')}</h3>
               </div>
               <p className="text-gray-700 text-lg leading-relaxed">
-                Κάθε έργο σχεδιάζεται με βάση τις τεχνικές του ιδιαιτερότητες, τηρώντας όλους τους κανονισμούς και τις προδιαγραφές ασφαλείας. Προσφέρουμε εξατομικευμένες λύσεις ανά έργο και φορτίο.
+                {t('services.specialSafetyDescription')}
               </p>
             </motion.div>
           </div>
@@ -149,7 +161,7 @@ const SpecialTransportPage: React.FC = () => {
               className="bg-white rounded-2xl shadow-xl p-8 sticky top-8"
             >
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Βασικά Χαρακτηριστικά
+                {t('services.featuresTitle')}
               </h3>
               <ul className="space-y-4">
                 {features.map((feature, index) => (
@@ -173,10 +185,10 @@ const SpecialTransportPage: React.FC = () => {
               <div className="mt-6 p-4 bg-gray-50 rounded-xl">
                 <div className="flex items-center gap-2 text-gray-700 mb-2">
                   <Settings className="w-5 h-5 text-yellow-500" />
-                  <span className="font-semibold">Εξατομίκευση</span>
+                  <span className="font-semibold">{t('services.specialCustomizationTitle')}</span>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Κάθε μεταφορά σχεδιάζεται με βάση τις συγκεκριμένες ανάγκες και απαιτήσεις του φορτίου σας.
+                  {t('services.specialCustomizationDescription')}
                 </p>
               </div>
             </motion.div>

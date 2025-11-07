@@ -165,3 +165,5 @@ The following files were used from the original all-in-one-accessibility_1.4 pac
 - `LICENSE.txt` - GNU GPL v2 license
 
 The JavaScript integration was adapted from the PHP code to work with React.
+
+

@@ -19,46 +19,42 @@ const LogisticsServicesPage: React.FC = () => {
   ];
 
   const services = [
-    { 
-      title: 'Παραλαβή & Ταξινόμηση', 
-      icon: Box, 
-      description: 'Επαγγελματική παραλαβή και οργάνωση φορτίων' 
+    {
+      title: t('services.logisticsServiceReceivingTitle'),
+      icon: Box,
+      description: t('services.logisticsServiceReceivingDescription')
     },
-    { 
-      title: 'Αποθήκευση', 
-      icon: Warehouse, 
-      description: 'Ασφαλείς χώροι αποθήκευσης με σύγχρονη διαχείριση' 
+    {
+      title: t('services.logisticsServiceWarehousingTitle'),
+      icon: Warehouse,
+      description: t('services.logisticsServiceWarehousingDescription')
     },
-    { 
-      title: 'Inventory Control', 
-      icon: Package, 
-      description: 'Διαχείριση αποθεμάτων σε πραγματικό χρόνο' 
+    {
+      title: t('services.logisticsServiceInventoryTitle'),
+      icon: Package,
+      description: t('services.logisticsServiceInventoryDescription')
     },
-    { 
-      title: 'Picking & Packing', 
-      icon: Box, 
-      description: 'Προετοιμασία παραγγελιών και συσκευασία' 
+    {
+      title: t('services.logisticsServicePickingTitle'),
+      icon: Box,
+      description: t('services.logisticsServicePickingDescription')
     },
-    { 
-      title: 'Φορτοεκφορτώσεις', 
-      icon: Truck, 
-      description: 'Γρήγορες και ασφαλείς υπηρεσίες φορτοεκφόρτωσης' 
+    {
+      title: t('services.logisticsServiceLoadingTitle'),
+      icon: Truck,
+      description: t('services.logisticsServiceLoadingDescription')
     },
-    { 
-      title: 'Cross-Docking', 
-      icon: ArrowRight, 
-      description: 'Άμεση μεταφορά χωρίς ενδιάμεση αποθήκευση' 
+    {
+      title: t('services.logisticsServiceCrossDockingTitle'),
+      icon: ArrowRight,
+      description: t('services.logisticsServiceCrossDockingDescription')
     }
   ];
 
-  const features = [
-    'Ολοκληρωμένη διαχείριση εφοδιαστικής αλυσίδας',
-    'Σύγχρονος εξοπλισμός',
-    'Έμπειρη ομάδα',
-    'Λειτουργική ευελιξία',
-    'Inventory control συστήματα',
-    'Προετοιμασία για διανομή/εξαγωγή'
-  ];
+  const features = t('services.logisticsFeatures')
+    .split('\n')
+    .map((feature) => feature.trim())
+    .filter(Boolean);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-20">
@@ -173,18 +169,18 @@ const LogisticsServicesPage: React.FC = () => {
             </motion.div>
 
             {/* Value Proposition */}
-            <motion.div
+              <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.9 }}
               className="mt-12 p-8 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl border border-yellow-200"
             >
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Η Αξία μας
-              </h3>
-              <p className="text-gray-700 text-lg leading-relaxed">
-                Η ομάδα μας συνδυάζει τεχνογνωσία, σύγχρονο εξοπλισμό και λειτουργική ευελιξία για να υποστηρίξει αποδοτικά κάθε κρίκο της εφοδιαστικής αλυσίδας των συνεργατών μας.
-              </p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  {t('services.logisticsValueTitle')}
+                </h3>
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  {t('services.logisticsValueDescription')}
+                </p>
             </motion.div>
           </div>
 
@@ -197,7 +193,7 @@ const LogisticsServicesPage: React.FC = () => {
               className="bg-white rounded-2xl shadow-xl p-8 sticky top-8"
             >
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Βασικά Χαρακτηριστικά
+                {t('services.featuresTitle')}
               </h3>
               <ul className="space-y-4">
                 {features.map((feature, index) => (
@@ -221,10 +217,10 @@ const LogisticsServicesPage: React.FC = () => {
               <div className="mt-6 p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
                 <div className="flex items-center gap-2 text-gray-700 mb-2">
                   <Warehouse className="w-5 h-5 text-yellow-500" />
-                  <span className="font-semibold">Αποθήκες</span>
+                  <span className="font-semibold">{t('warehousesTitle')}</span>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Δύο ιδιόκτητες αποθήκες (Γιαννιτσά, Όσναμπουργκ) και δεκάδες συνεργαζόμενες στην Ευρώπη.
+                  {t('services.logisticsWarehousesDescription')}
                 </p>
               </div>
             </motion.div>

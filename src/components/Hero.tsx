@@ -69,7 +69,7 @@ const Hero: React.FC = () => {
           
           <div className="mb-10 sm:mb-12">
             <h1 className="text-heading-2 sm:text-heading-1 text-gray-200 max-w-3xl mx-auto leading-relaxed px-4">
-              Αξιόπιστες διεθνείς μεταφορές σε όλη την Ευρώπη
+              {t('heroTitle')}
             </h1>
           </div>
           

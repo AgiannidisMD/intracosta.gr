@@ -1144,7 +1144,7 @@ const QuoteFormEnhanced: React.FC = () => {
 
                 <div>
                   <label htmlFor="vatNumber" className="block text-sm font-semibold text-gray-700 mb-2">
-                    ΑΦΜ / VAT Number <span className="text-gray-400 text-xs">(Προαιρετικό)</span>
+                    {t('vatNumberLabel')} <span className="text-gray-400 text-xs">({t('optionalLabel')})</span>
                   </label>
                   <div className="relative">
                     <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
@@ -1155,9 +1155,9 @@ const QuoteFormEnhanced: React.FC = () => {
                       value={formData.vatNumber}
                       onChange={handleInputChange}
                       onBlur={handleBlur}
-                      placeholder="π.χ. EL123456789"
+                      placeholder={t('vatNumberPlaceholder')}
                       className={getFieldClassName('vatNumber', 'w-full pl-12 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all min-h-[48px] text-base')}
-                      aria-label="VAT Number (Optional)"
+                      aria-label={`${t('vatNumberLabel')} (${t('optionalLabel')})`}
                       autoComplete="off"
                     />
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
