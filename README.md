@@ -1,40 +1,45 @@
 # Intracosta Transport & Logistics
 
-Modern, multilingual website for Intracosta transport and logistics company.
+Modern, multilingual marketing website for Intracosta's transport and logistics services.
+
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Local Setup](#local-setup)
+  - [Available Scripts](#available-scripts)
+- [Deployment](#deployment)
+- [Project Structure](#project-structure)
+- [Resources](#resources)
+
+## Overview
+The application delivers a high-performing, fully responsive experience tailored for a multilingual audience (Greek, English, German). It emphasizes modern visuals, smooth animations, and secure data handling backed by Supabase.
 
 ## Features
+- Multilingual interface (Greek, English, German)
+- Responsive layout optimized for mobile, tablet, and desktop
+- Modern UI with motion effects
+- Advanced quote request form with validation
+- CSRF-protected form submission
+- Supabase-backed data storage
+- SEO-friendly metadata and markup
 
-- 🌍 Multilingual support (Greek, English, German)
-- 📱 Fully responsive design
-- 🎨 Modern UI with smooth animations
-- 📋 Advanced quote request form
-- 🔒 Secure form submission with CSRF protection
-- 💾 Supabase database integration
-- ⚡ SEO optimized
+## Tech Stack
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- Supabase
+- React Router
+- Framer Motion
+- React Helmet Async
 
-## Deployment to Vercel
+## Getting Started
 
-### Environment Variables
-
-Before deploying to Vercel, you need to set the following environment variables in your Vercel project settings:
-
-1. Go to your Vercel project
-2. Navigate to Settings → Environment Variables
-3. Add the following variables:
-
-```
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
-```
-
-### Deploy
-
-The project will automatically build and deploy when you push to your connected Git repository.
-
-## Local Development
-
-1. Clone the repository
-2. Copy `.env.example` to `.env` and fill in your Supabase credentials
+### Local Setup
+1. Clone the repository.
+2. Copy `.env.example` to `.env` and provide your Supabase credentials.
 3. Install dependencies:
    ```bash
    npm install
@@ -48,22 +53,30 @@ The project will automatically build and deploy when you push to your connected 
    npm run build
    ```
 
+### Available Scripts
+- `npm run dev` – start the Vite dev server with hot reloading.
+- `npm run build` – create an optimized production build.
+
+## Deployment
+The project is ready for deployment on Vercel. Configure the required environment variables in your Vercel project before triggering a build:
+
+```
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+After the variables are set, every push to the connected repository will create a new deployment automatically.
+
 ## Project Structure
+- `src/components` – shared UI components.
+- `src/pages` – route-level pages.
+- `src/contexts` – React context providers (e.g., language).
+- `src/utils` – helpers and Supabase client setup.
+- `public` – static assets.
+- `supabase/migrations` – database migration files.
 
-- `/src/components` - React components
-- `/src/pages` - Page components for routing
-- `/src/contexts` - React contexts (Language, etc.)
-- `/src/utils` - Utility functions and Supabase client
-- `/public` - Static assets
-- `/supabase/migrations` - Database migration files
-
-## Technologies
-
-- React 18
-- TypeScript
-- Vite
-- Tailwind CSS
-- Supabase
-- React Router
-- Framer Motion
-- React Helmet Async
+## Resources
+- `ACCESSIBILITY_AUDIT.md` – accessibility review and findings.
+- `ALL_IN_ONE_ACCESSIBILITY.md` – accessibility widget reference.
+- `CPANEL_DEPLOYMENT.md` – instructions for cPanel deployments.
+- `deploy-to-cpanel.sh` – helper script for hosting on cPanel.

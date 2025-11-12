@@ -1,99 +1,89 @@
 # cPanel Deployment Guide for Intracosta Website
 
-## 🚀 Quick Start
+## Overview
+Use this guide to deploy the production build of the Intracosta website to any cPanel-based host. The instructions cover both a quick automated workflow and the full manual steps for teams that prefer to upload files themselves.
 
-### Option 1: Automated Deployment (Recommended)
+## Quick Start
+
+### Automated deployment (recommended)
 ```bash
 npm run deploy:prepare
 ```
-This will build your website and show you exactly what to do next.
+This script builds the project and lists the exact files that must be uploaded to `public_html`.
 
-### Option 2: Manual Steps
+### Manual workflow
 ```bash
 npm run build
 ```
-Then follow the manual upload steps below.
+After the build finishes, follow the manual deployment steps below.
 
 ---
 
-## 📋 Step-by-Step cPanel Deployment
+## Manual Deployment Steps
 
-### Step 1: Build Your Website
-1. Open terminal/command prompt
-2. Navigate to your project folder:
+### 1. Build the site locally
+1. Open a terminal and move into the project root:
    ```bash
-   cd /path/to/your/intracosta.gr-10
+   cd /path/to/intracosta.gr
    ```
-3. Run the build command:
-   ```bash
-   npm run build
-   ```
-4. Wait for build to complete (you'll see "✓ built in X.XXs")
+2. Run `npm run build` and wait for the `dist` folder to be generated.
 
-### Step 2: Access cPanel
-1. Log into your hosting provider's cPanel
-2. Find and click **"File Manager"**
-3. Navigate to your domain's folder:
-   - Usually `public_html` for main domain
-   - Or `public_html/subdomain` for subdomains
+### 2. Sign in to cPanel
+1. Log in to the hosting provider's cPanel dashboard.
+2. Open **File Manager**.
+3. Navigate to the target directory:
+   - `public_html` for the primary domain.
+   - `public_html/<subdomain>` for subdomains.
 
-### Step 3: Upload Files
-1. **Clear existing files** (if any) from `public_html`
-2. **Upload ALL contents** from the `dist` folder:
-   - Select all files in `dist` folder
-   - Upload to `public_html`
-   - **Important**: Upload the contents of `dist`, not the `dist` folder itself
+### 3. Upload the build output
+1. (Optional) Back up or remove any outdated files inside `public_html`.
+2. On your local machine, open the `dist` folder created during the build.
+3. Upload every file and folder from `dist` into `public_html`. Do not upload the `dist` directory itself—only its contents.
 
-### Step 4: Verify Upload
-Your `public_html` should contain:
-- ✅ `index.html`
-- ✅ `assets/` folder (with CSS, JS, images)
-- ✅ `.htaccess` file
-- ✅ All other files from `dist`
+### 4. Verify the file layout
+The `public_html` directory must contain:
+- `index.html`
+- `assets/` (bundled CSS, JS, images)
+- `.htaccess`
+- Any other files created inside `dist`
 
-### Step 5: Test Your Website
-1. Visit your domain (e.g., `https://intracosta.gr`)
-2. Test navigation between pages
-3. Test language switching
-4. Test service pages (e.g., `/international-transport`)
+### 5. Test the live site
+1. Visit the domain (for example `https://intracosta.gr`).
+2. Navigate through each page, including service pages.
+3. Switch languages to confirm translations load correctly.
+4. Confirm media assets display as expected.
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
-### Problem: 404 Error on Service Pages
-**Solution**: Make sure `.htaccess` file is uploaded
-- Check that `.htaccess` exists in `public_html`
-- Verify file permissions (644)
+### 404 errors on service pages
+- Confirm `.htaccess` was uploaded to `public_html`.
+- Ensure the file permissions are 644.
 
-### Problem: Website Shows "Cannot GET /"
-**Solution**: Check file structure
-- Ensure `index.html` is in `public_html` root
-- Not in a subfolder
+### "Cannot GET /" message
+- Move `index.html` directly into `public_html`. It must not be nested in a subfolder.
 
-### Problem: CSS/JS Not Loading
-**Solution**: Check file permissions
-- Files: 644 permissions
-- Folders: 755 permissions
-- Use cPanel File Manager to set permissions
+### Missing CSS or JavaScript
+- Check permissions: files should be 644 and folders 755.
+- Re-upload the entire `assets` directory if files look truncated.
 
-### Problem: Images Not Showing
-**Solution**: Check file paths
-- Ensure all files from `dist` are uploaded
-- Check that `assets` folder contains all images
+### Images not loading
+- Confirm the `assets` directory (or any custom media folders) was uploaded intact.
+- Verify case-sensitive file names match the references in HTML/JS.
 
 ---
 
-## 🔄 Setting Up Automatic Deployment
+## Automated Deployment Options
 
-### Method 1: cPanel Git Version Control
-1. In cPanel, go to **"Git Version Control"**
-2. **Clone Repository**:
+### cPanel Git Version Control
+1. Open **Git Version Control** from the cPanel dashboard.
+2. Clone the repository:
    - Repository URL: `https://github.com/yourusername/intracosta.gr.git`
-   - Repository Path: `/home/yourusername/repositories/intracosta`
-3. **Set up Deployment**:
-   - Deployment Path: `/home/yourusername/public_html`
-   - Post-receive Hook:
+   - Repository path: `/home/yourusername/repositories/intracosta`
+3. Configure deployment:
+   - Deployment path: `/home/yourusername/public_html`
+   - Post-receive hook:
      ```bash
      cd /home/yourusername/repositories/intracosta
      npm install
@@ -101,33 +91,32 @@ Your `public_html` should contain:
      cp -r dist/* /home/yourusername/public_html/
      ```
 
-### Method 2: Manual Git Deployment
-1. SSH into your server
-2. Clone repository:
+### Manual Git plus SSH
+1. SSH into the server and clone the repository:
    ```bash
    git clone https://github.com/yourusername/intracosta.gr.git
    cd intracosta.gr
    ```
-3. Build and deploy:
+2. Build and publish:
    ```bash
    npm install
    npm run build
-   cp -r dist/* /path/to/public_html/
+   cp -r dist/* /home/yourusername/public_html/
    ```
 
 ---
 
-## 📁 File Structure After Deployment
+## Expected File Structure
 
 ```
 public_html/
-├── index.html          # Main HTML file
-├── .htaccess          # Apache configuration
-├── assets/            # CSS, JS, images
-│   ├── index-xxx.css
-│   ├── index-xxx.js
+├── index.html          # Main entry file
+├── .htaccess           # React Router rewrite rules
+├── assets/             # Bundled CSS, JS, images
+│   ├── index-*.css
+│   ├── index-*.js
 │   └── images/
-├── locales/           # Translation files
+├── locales/            # Translation JSON files
 │   ├── el/
 │   ├── en/
 │   └── de/
@@ -136,37 +125,21 @@ public_html/
 
 ---
 
-## 🎯 Important Notes
+## Deployment Checklist
 
-1. **Always build before deploying**: Run `npm run build` to create the `dist` folder
-2. **Upload dist contents**: Upload files from `dist` folder, not the `dist` folder itself
-3. **Keep .htaccess**: This file is essential for React Router to work
-4. **Test thoroughly**: Check all pages and functionality after deployment
-5. **Backup first**: Always backup your current website before deploying
-
----
-
-## 🆘 Need Help?
-
-If you encounter issues:
-1. Check the troubleshooting section above
-2. Verify all files are uploaded correctly
-3. Check file permissions in cPanel
-4. Clear browser cache and try again
-5. Contact your hosting provider if server issues persist
+- [ ] Ran `npm run build` locally.
+- [ ] Logged into cPanel and opened File Manager.
+- [ ] Cleared or backed up old files in `public_html`.
+- [ ] Uploaded every file from the `dist` directory.
+- [ ] Confirmed `.htaccess` and `index.html` exist in `public_html`.
+- [ ] Visited the domain to verify navigation, languages, and media.
 
 ---
 
-## ✅ Deployment Checklist
-
-- [ ] Built the project (`npm run build`)
-- [ ] Accessed cPanel File Manager
-- [ ] Cleared old files from `public_html`
-- [ ] Uploaded all contents from `dist` folder
-- [ ] Verified `.htaccess` file is present
-- [ ] Tested website on domain
-- [ ] Tested all service pages
-- [ ] Tested language switching
-- [ ] Verified all images load correctly
-
-**🎉 Your website is now live on cPanel!**
+## Getting Help
+If problems persist after following this guide:
+1. Revisit the troubleshooting section to narrow down the issue.
+2. Confirm the `dist` output is complete by rebuilding locally.
+3. Check file and folder permissions through cPanel.
+4. Clear browser and CDN caches.
+5. Contact the hosting provider for server-level assistance.

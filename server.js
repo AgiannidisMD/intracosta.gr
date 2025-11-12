@@ -50,17 +50,24 @@ const smtpHost = process.env.SMTP_HOST;
 const smtpPort = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 465;
 const smtpUser = process.env.SMTP_USER;
 const smtpPass = process.env.SMTP_PASS;
-const mailFrom = process.env.MAIL_FROM || 'web@intracosta.com';
-const mailToContact = process.env.MAIL_TO_CONTACT || process.env.MAIL_TO || 'web@intracosta.com';
-const mailToQuote = process.env.MAIL_TO_QUOTE || process.env.MAIL_TO || 'web@intracosta.com';
+
+const requiredEnvVars = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS'];
+const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
+if (missingEnvVars.length > 0) {
+  throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+}
+
+const mailFrom = process.env.MAIL_FROM || smtpUser;
+const mailToContact = process.env.MAIL_TO_CONTACT || process.env.MAIL_TO || smtpUser;
+const mailToQuote = process.env.MAIL_TO_QUOTE || process.env.MAIL_TO || smtpUser;
 
 const transporter = nodemailer.createTransport({
-  host: smtpHost || 'mail.intracosta.com',
+  host: smtpHost,
   port: smtpPort || 465,
   secure: (smtpPort || 465) === 465, // true for 465, false for other ports
   auth: {
-    user: smtpUser || 'web@intracosta.com',
-    pass: smtpPass || 'wx7zI?PNuEn,QuWs'
+    user: smtpUser,
+    pass: smtpPass
   },
   connectionTimeout: 60000, // 60 seconds
   greetingTimeout: 30000,   // 30 seconds
