@@ -19,7 +19,7 @@ const warehouseData: WarehouseData[] = [
     country: 'Germany',
     postalCodes: ['85716', '65549', '79576', '16727', '04435', '34253', '22113', '68309', '74321', '49549', '30916', '53881', '18196'],
     warehouses: [
-      { code: '85716', city: 'Munich' },
+      { code: '85716', city: 'Unterschleißheim', mapsLink: 'https://maps.app.goo.gl/sfX9kgMQPEHZjGbz6' },
       { code: '65549', city: 'Limburg' },
       { code: '79576', city: 'Weil am Rhein' },
       { code: '16727', city: 'Velten', mapsLink: 'https://maps.app.goo.gl/tJM4zF6BoaPsf3oTA' },
@@ -27,8 +27,8 @@ const warehouseData: WarehouseData[] = [
       { code: '34253', city: 'Lohfelden', mapsLink: 'https://maps.app.goo.gl/258dBeVmcwiFYcmB9' },
       { code: '22113', city: 'Hamburg', mapsLink: 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9' },
       { code: '68309', city: 'Mannheim' },
-      { code: '74321', city: 'Bietigheim-Bissingen', mapsLink: 'https://maps.app.goo.gl/VKXJ5rXq2UnWV53j7' },
-      { code: '49549', city: 'Ladbergen', isCentral: true },
+      { code: '74321', city: 'Bietigheim-Bissingen', mapsLink: 'https://maps.app.goo.gl/Ax9Su5ApDcoGNYfN8' },
+      { code: '49549', city: 'Ladbergen', isCentral: true, mapsLink: 'https://maps.app.goo.gl/uer7C8ji3eMmvn5r5' },
       { code: '30916', city: 'Isernhagen', mapsLink: 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76' },
       { code: '53881', city: 'Euskirchen', mapsLink: 'https://maps.app.goo.gl/noiesWbnik4pVw9A8' },
       { code: '18196', city: 'Dummerstorf', mapsLink: 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46' }
@@ -37,11 +37,13 @@ const warehouseData: WarehouseData[] = [
       '30916': 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76',
       '04435': 'https://maps.app.goo.gl/AHj21ATFFo92RTRo7',
       '22113': 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9',
-      '74321': 'https://maps.app.goo.gl/VKXJ5rXq2UnWV53j7',
+      '74321': 'https://maps.app.goo.gl/Ax9Su5ApDcoGNYfN8',
       '16727': 'https://maps.app.goo.gl/tJM4zF6BoaPsf3oTA',
       '34253': 'https://maps.app.goo.gl/258dBeVmcwiFYcmB9',
       '53881': 'https://maps.app.goo.gl/noiesWbnik4pVw9A8',
-      '18196': 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46'
+      '18196': 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46',
+      '49549': 'https://maps.app.goo.gl/uer7C8ji3eMmvn5r5',
+      '85716': 'https://maps.app.goo.gl/sfX9kgMQPEHZjGbz6'
     }
   },
   {
@@ -175,7 +177,7 @@ const InteractiveMap: React.FC = () => {
                         return (
                           <div
                             key={index}
-                            className={`px-4 py-3 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg border border-yellow-200 hover:shadow-md transition-shadow ${mapsLink ? 'cursor-pointer' : ''}`}
+                            className={`px-4 py-3 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg border border-yellow-200 hover:shadow-md transition-all ${mapsLink ? 'cursor-pointer hover:border-yellow-400 hover:scale-[1.02]' : ''}`}
                             onClick={() => {
                               if (mapsLink) {
                                 window.open(mapsLink, '_blank', 'noopener,noreferrer');
@@ -184,19 +186,22 @@ const InteractiveMap: React.FC = () => {
                           >
                             <div className="flex justify-between items-start">
                               <div className="flex-1 min-w-0">
-                                <p className="font-semibold text-gray-900 truncate">{warehouse.city}</p>
+                                <div className="flex items-center gap-2">
+                                  <p className="font-semibold text-gray-900 truncate">{warehouse.city}</p>
+                                  {mapsLink && <MapPin className="w-4 h-4 text-yellow-600 flex-shrink-0" />}
+                                </div>
                                 {mapsLink ? (
                                   <a
                                     href={mapsLink}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="text-sm text-yellow-600 hover:text-yellow-700 hover:underline font-medium"
+                                    className="text-sm text-yellow-600 hover:text-yellow-700 hover:underline font-medium flex items-center gap-1 mt-1"
                                   >
-                                    {t('postalCodeLabel')}: {warehouse.code} <MapPin className="w-3 h-3 inline ml-1" />
+                                    {t('postalCodeLabel')}: {warehouse.code}
                                   </a>
                                 ) : (
-                                  <p className="text-sm text-gray-600">{t('postalCodeLabel')}: {warehouse.code}</p>
+                                  <p className="text-sm text-gray-600 mt-1">{t('postalCodeLabel')}: {warehouse.code}</p>
                                 )}
                               </div>
                               {warehouse.isCentral && (

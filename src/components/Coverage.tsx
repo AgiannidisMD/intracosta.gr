@@ -25,7 +25,7 @@ const Coverage: React.FC = () => {
   const coverageData: { [key: string]: { warehouses: Array<{code: string, city: string, isCentral?: boolean, mapsLink?: string}>, postalCodes: string[], postalCodeLinks?: { [code: string]: string } } } = {
     'Germany': {
       warehouses: [
-        { code: '85716', city: 'Munich' },
+        { code: '85716', city: 'Unterschleißheim', mapsLink: 'https://maps.app.goo.gl/sfX9kgMQPEHZjGbz6' },
         { code: '65549', city: 'Limburg' },
         { code: '79576', city: 'Weil am Rhein' },
         { code: '16727', city: 'Velten', mapsLink: 'https://maps.app.goo.gl/tJM4zF6BoaPsf3oTA' },
@@ -33,8 +33,8 @@ const Coverage: React.FC = () => {
         { code: '34253', city: 'Lohfelden', mapsLink: 'https://maps.app.goo.gl/258dBeVmcwiFYcmB9' },
         { code: '22113', city: 'Hamburg', mapsLink: 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9' },
         { code: '68309', city: 'Mannheim' },
-        { code: '74321', city: 'Bietigheim-Bissingen', mapsLink: 'https://maps.app.goo.gl/VKXJ5rXq2UnWV53j7' },
-        { code: '49549', city: 'Ladbergen', isCentral: true },
+        { code: '74321', city: 'Bietigheim-Bissingen', mapsLink: 'https://maps.app.goo.gl/Ax9Su5ApDcoGNYfN8' },
+        { code: '49549', city: 'Ladbergen', isCentral: true, mapsLink: 'https://maps.app.goo.gl/uer7C8ji3eMmvn5r5' },
         { code: '30916', city: 'Isernhagen', mapsLink: 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76' },
         { code: '53881', city: 'Euskirchen', mapsLink: 'https://maps.app.goo.gl/noiesWbnik4pVw9A8' },
         { code: '18196', city: 'Dummerstorf', mapsLink: 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46' }
@@ -44,11 +44,13 @@ const Coverage: React.FC = () => {
         '30916': 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76',
         '04435': 'https://maps.app.goo.gl/AHj21ATFFo92RTRo7',
         '22113': 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9',
-        '74321': 'https://maps.app.goo.gl/VKXJ5rXq2UnWV53j7',
+        '74321': 'https://maps.app.goo.gl/Ax9Su5ApDcoGNYfN8',
         '16727': 'https://maps.app.goo.gl/tJM4zF6BoaPsf3oTA',
         '34253': 'https://maps.app.goo.gl/258dBeVmcwiFYcmB9',
         '53881': 'https://maps.app.goo.gl/noiesWbnik4pVw9A8',
-        '18196': 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46'
+        '18196': 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46',
+        '49549': 'https://maps.app.goo.gl/uer7C8ji3eMmvn5r5',
+        '85716': 'https://maps.app.goo.gl/sfX9kgMQPEHZjGbz6'
       }
     },
     'Austria': {
@@ -299,7 +301,7 @@ const Coverage: React.FC = () => {
                             return (
                               <div
                                 key={idx}
-                                className={`flex justify-between items-center px-3 py-2 bg-gradient-to-r from-yellow-50 to-orange-50 text-yellow-800 text-sm rounded-lg border border-yellow-200 hover:shadow-md transition-shadow ${mapsLink ? 'cursor-pointer' : ''}`}
+                                className={`flex justify-between items-center px-3 py-2 bg-gradient-to-r from-yellow-50 to-orange-50 text-yellow-800 text-sm rounded-lg border border-yellow-200 hover:shadow-md transition-all ${mapsLink ? 'cursor-pointer hover:border-yellow-400 hover:scale-[1.02]' : ''}`}
                                 onClick={() => {
                                   if (mapsLink) {
                                     window.open(mapsLink, '_blank', 'noopener,noreferrer');
@@ -307,19 +309,22 @@ const Coverage: React.FC = () => {
                                 }}
                               >
                                 <div className="flex-1 min-w-0">
-                                  <span className="font-semibold block truncate">{warehouse.city}</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-semibold block truncate">{warehouse.city}</span>
+                                    {mapsLink && <MapPin className="w-3 h-3 text-yellow-600 flex-shrink-0" />}
+                                  </div>
                                   {mapsLink ? (
                                     <a
                                       href={mapsLink}
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       onClick={(e) => e.stopPropagation()}
-                                      className="text-yellow-600 hover:text-yellow-700 hover:underline text-xs font-medium flex items-center gap-1"
+                                      className="text-yellow-600 hover:text-yellow-700 hover:underline text-xs font-medium flex items-center gap-1 mt-1"
                                     >
-                                      {t('postalCodeLabel')}: {warehouse.code} <MapPin className="w-3 h-3" />
+                                      {t('postalCodeLabel')}: {warehouse.code}
                                     </a>
                                   ) : (
-                                    <span className="text-gray-600 text-xs">{t('postalCodeLabel')}: {warehouse.code}</span>
+                                    <span className="text-gray-600 text-xs mt-1 block">{t('postalCodeLabel')}: {warehouse.code}</span>
                                   )}
                                 </div>
                                 {warehouse.isCentral && (
@@ -532,14 +537,31 @@ const Coverage: React.FC = () => {
                   {t('postalCodesTitle')}
                 </h5>
                 <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-                  {coverageData[expandedCountry].postalCodes.map((code, idx) => (
-                    <div
-                      key={idx}
-                      className="px-3 py-2 bg-gray-50 text-gray-700 text-sm rounded-lg border border-gray-200 font-mono text-center"
-                    >
-                      {code}
-                    </div>
-                  ))}
+                  {coverageData[expandedCountry].postalCodes.map((code, idx) => {
+                    const mapsLink = coverageData[expandedCountry].postalCodeLinks?.[code];
+                    if (mapsLink) {
+                      return (
+                        <a
+                          key={idx}
+                          href={mapsLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-2 bg-gray-50 text-gray-700 text-sm rounded-lg border border-gray-200 font-mono text-center hover:bg-yellow-50 hover:border-yellow-500 hover:text-yellow-700 transition-colors flex items-center justify-center gap-1"
+                        >
+                          {code}
+                          <MapPin className="w-3 h-3" />
+                        </a>
+                      );
+                    }
+                    return (
+                      <div
+                        key={idx}
+                        className="px-3 py-2 bg-gray-50 text-gray-700 text-sm rounded-lg border border-gray-200 font-mono text-center"
+                      >
+                        {code}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
