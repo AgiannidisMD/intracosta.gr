@@ -25,6 +25,7 @@ const Coverage: React.FC = () => {
   const coverageData: { [key: string]: { warehouses: Array<{code: string, city: string, isCentral?: boolean, mapsLink?: string}>, postalCodes: string[], postalCodeLinks?: { [code: string]: string } } } = {
     'Germany': {
       warehouses: [
+        { code: '49549', city: 'Ladbergen', isCentral: true, mapsLink: 'https://maps.app.goo.gl/uer7C8ji3eMmvn5r5' },
         { code: '85716', city: 'Unterschleißheim', mapsLink: 'https://maps.app.goo.gl/sfX9kgMQPEHZjGbz6' },
         { code: '65549', city: 'Limburg' },
         { code: '79576', city: 'Weil am Rhein' },
@@ -34,7 +35,6 @@ const Coverage: React.FC = () => {
         { code: '22113', city: 'Hamburg', mapsLink: 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9' },
         { code: '68309', city: 'Mannheim' },
         { code: '74321', city: 'Bietigheim-Bissingen', mapsLink: 'https://maps.app.goo.gl/Ax9Su5ApDcoGNYfN8' },
-        { code: '49549', city: 'Ladbergen', isCentral: true, mapsLink: 'https://maps.app.goo.gl/uer7C8ji3eMmvn5r5' },
         { code: '30916', city: 'Isernhagen', mapsLink: 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76' },
         { code: '53881', city: 'Euskirchen', mapsLink: 'https://maps.app.goo.gl/noiesWbnik4pVw9A8' },
         { code: '18196', city: 'Dummerstorf', mapsLink: 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46' }
