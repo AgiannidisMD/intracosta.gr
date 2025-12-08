@@ -123,9 +123,9 @@ const FAQ: React.FC = () => {
         de: "Wie kann ich ein Angebot anfordern?"
       },
       answer: {
-        el: "Μπορείτε να συμπληρώσετε τη φόρμα \"Ας συνεργαστούμε\" στη σελίδα μας ή να επικοινωνήσετε απευθείας στα emails. Χρειαζόμαστε βασικές πληροφορίες για τον τόπο φόρτωσης, τον προορισμό, το είδος και τον όγκο του φορτίου.",
-        en: "You can fill out the \"Let's Collaborate\" form on our page or contact us directly via email. We need basic information about the loading location, destination, type and volume of cargo.",
-        de: "Sie können das \"Lassen Sie uns zusammenarbeiten\"-Formular auf unserer Seite ausfüllen oder uns direkt per E-Mail kontaktieren. Wir benötigen grundlegende Informationen über den Ladeort, das Ziel, die Art und das Volumen der Fracht."
+        el: "Μπορείτε να συμπληρώσετε τη φόρμα \"Επικοινωνήστε μαζί μας\" στη σελίδα μας ή να επικοινωνήσετε απευθείας στα emails. Χρειαζόμαστε βασικές πληροφορίες για τον τόπο φόρτωσης, τον προορισμό, το είδος και τον όγκο του φορτίου.",
+        en: "You can fill out the \"Contact Us\" form on our page or contact us directly via email. We need basic information about the loading location, destination, type and volume of cargo.",
+        de: "Sie können das \"Kontaktieren Sie uns\"-Formular auf unserer Seite ausfüllen oder uns direkt per E-Mail kontaktieren. Wir benötigen grundlegende Informationen über den Ladeort, das Ziel, die Art und das Volumen der Fracht."
       }
     },
     {

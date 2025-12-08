@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import NAP from './SEO/NAP';
+import ContactModal from './ContactModal';
 import { Menu, X, Globe, Truck, ChevronDown, Search, MapPin, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -14,6 +15,7 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const languages = [
     { code: 'el' as const, name: 'ΕΛ', flag: '🇬🇷', fullName: 'Ελληνικά' },
@@ -162,6 +164,14 @@ const Header: React.FC = () => {
     setIsCoverageOpen(false);
   };
 
+  const handleGetQuote = () => {
+    scrollToSection('#quote');
+  };
+
+  const handleRequestInfo = () => {
+    scrollToSection('#contact');
+  };
+
   const isActive = (key: string) => activeSection === key;
 
   return (
@@ -189,7 +199,7 @@ const Header: React.FC = () => {
       </div>
 
         {/* Main Header */}
-        <div className={`fixed top-0 lg:top-10 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        <div className={`fixed ${isScrolled ? 'top-0' : 'top-0 lg:top-10'} left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200'
             : 'bg-white/90 backdrop-blur-sm'
@@ -414,18 +424,14 @@ const Header: React.FC = () => {
               </div>
 
               {/* CTA Button */}
-              <a
-                href="#quote"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection('#quote');
-                }}
-                className="hidden sm:flex items-center space-x-2 bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group relative overflow-hidden whitespace-nowrap"
+              <button
+                onClick={() => setIsContactModalOpen(true)}
+                className="hidden sm:flex items-center space-x-2 bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group relative overflow-hidden whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -skew-x-12"></div>
                 <span>{t('getQuote')}</span>
                 <ChevronDown className="w-4 h-4 rotate-[-90deg] group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
-              </a>
+              </button>
 
               {/* Mobile Menu Button */}
               <button
@@ -541,17 +547,15 @@ const Header: React.FC = () => {
                       <div className="border-t border-gray-200 my-4"></div>
                       
                       {/* Mobile CTA */}
-                      <a
-                        href="#quote"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          scrollToSection('#quote');
+                      <button
+                        onClick={() => {
                           setIsMenuOpen(false);
+                          setIsContactModalOpen(true);
                         }}
-                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 text-center shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
+                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 text-center shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                       >
                         {t('getQuote')}
-                      </a>
+                      </button>
                       
                       {/* EU Funding Logos */}
                       <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-3 mt-6 pt-4 border-t border-gray-200">
@@ -575,6 +579,14 @@ const Header: React.FC = () => {
         </div>
       </div>
       </header>
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+        onGetQuote={handleGetQuote}
+        onRequestInfo={handleRequestInfo}
+      />
 
       {/* Spacer for fixed header */}
       <div className={`transition-all duration-500 ease-in-out ${

@@ -329,14 +329,39 @@ const translations: Translations = {
     de: 'Fahrer und Personal, die jede Sendung wie ihre eigene behandeln.'
   },
   letsCooperate: {
-    el: 'Ας Συνεργαστούμε',
-    en: "Let's Cooperate",
-    de: 'Lassen Sie uns zusammenarbeiten'
+    el: 'Επικοινωνήστε μαζί μας',
+    en: 'Contact Us',
+    de: 'Kontaktieren Sie uns'
   },
   letsCooperateDescription: {
-    el: 'Έτοιμοι να μεταφέρουμε την επιχείρησή σας στο επόμενο επίπεδο; Ας ξεκινήσουμε μια συζήτηση για τους στόχους σας και πώς μπορούμε να σας βοηθήσουμε να τους επιτύχετε.',
-    en: "Ready to take your business to the next level? Let's start a discussion about your goals and how we can help you achieve them.",
-    de: 'Bereit, Ihr Unternehmen auf die nächste Stufe zu bringen? Lassen Sie uns ein Gespräch über Ihre Ziele führen und wie wir Ihnen helfen können, sie zu erreichen.'
+    el: 'Η ομάδα μας είναι εδώ για να λύσει τις ανάγκες μεταφορών σας. Επικοινωνήστε μαζί μας για προσαρμοσμένη λύση που ταιριάζει στην επιχείρησή σας.',
+    en: 'Our team is here to solve your transport needs. Contact us for a customized solution that fits your business.',
+    de: 'Unser Team ist hier, um Ihre Transportbedürfnisse zu lösen. Kontaktieren Sie uns für eine maßgeschneiderte Lösung, die zu Ihrem Unternehmen passt.'
+  },
+  contactModalHeader: {
+    el: 'επικοινωνήστε',
+    en: 'contact',
+    de: 'kontaktieren'
+  },
+  howCanWeHelp: {
+    el: 'Πως μπορούμε να σας βοηθήσουμε σήμερα;',
+    en: 'How can we help you today?',
+    de: 'Wie können wir Ihnen heute helfen?'
+  },
+  helpDescription: {
+    el: 'Παρακαλούμε ενημερώστε μας αν επιθυμείτε να λάβετε προσφορά ή ζητάτε περισσότερες πληροφορίες',
+    en: 'Please let us know if you would like to receive an offer or request more information',
+    de: 'Bitte teilen Sie uns mit, ob Sie ein Angebot erhalten oder weitere Informationen anfordern möchten'
+  },
+  getQuoteButton: {
+    el: 'Λάβετε προσφορά',
+    en: 'Get a quote',
+    de: 'Angebot erhalten'
+  },
+  requestOtherInfo: {
+    el: 'Ζήτηση άλλων πληροφορίων',
+    en: 'Request other information',
+    de: 'Weitere Informationen anfordern'
   },
   certifiedServices: {
     el: 'Πιστοποιημένες Υπηρεσίες',
@@ -521,7 +546,7 @@ const translations: Translations = {
   aboutDescription: { el: 'Σχετικά με εμάς', en: 'About us', de: 'Über uns' },
   contact: { el: 'Επικοινωνία', en: 'Contact', de: 'Kontakt' },
   contactDescription: { el: 'Επικοινωνήστε μαζί μας', en: 'Contact us', de: 'Kontaktieren Sie uns' },
-  getQuote: { el: 'Ας συνεργαστούμε', en: 'Let\'s Cooperate', de: 'Lassen Sie uns zusammenarbeiten' },
+  getQuote: { el: 'Επικοινωνήστε μαζί μας', en: 'Contact Us', de: 'Kontaktieren Sie uns' },
   
   // Hero Section
   heroTitle: { 

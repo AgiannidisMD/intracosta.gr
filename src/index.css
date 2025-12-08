@@ -716,6 +716,39 @@ a:focus-visible {
   object-position: center 30%;
 }
 
+/* Consistent cropping for team carousel images */
+.team-carousel-image {
+  object-fit: cover !important;
+  object-position: center 30% !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+}
+
+/* Mobile-specific fixes for team carousel */
+@media (max-width: 768px) {
+  .team-carousel-image {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 30% !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Ensure image containers are visible on mobile */
+  [class*="team-carousel"] img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
 /* Enhanced reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
