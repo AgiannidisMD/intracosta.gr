@@ -9,26 +9,40 @@ interface WarehouseData {
     code: string;
     city: string;
     isCentral?: boolean;
+    mapsLink?: string;
   }>;
+  postalCodeLinks?: { [code: string]: string };
 }
 
 const warehouseData: WarehouseData[] = [
   {
     country: 'Germany',
-    postalCodes: ['85716', '65549', '79576', '16727', '04435', '34253', '22113', '68309', '74321', '49549', '30916'],
+    postalCodes: ['85716', '65549', '79576', '16727', '04435', '34253', '22113', '68309', '74321', '49549', '30916', '53881', '18196'],
     warehouses: [
       { code: '85716', city: 'Munich' },
       { code: '65549', city: 'Limburg' },
       { code: '79576', city: 'Weil am Rhein' },
-      { code: '16727', city: 'Velten' },
-      { code: '04435', city: 'Schkeuditz' },
-      { code: '34253', city: 'Kassel' },
-      { code: '22113', city: 'Hamburg' },
+      { code: '16727', city: 'Velten', mapsLink: 'https://maps.app.goo.gl/tJM4zF6BoaPsf3oTA' },
+      { code: '04435', city: 'Schkeuditz', mapsLink: 'https://maps.app.goo.gl/AHj21ATFFo92RTRo7' },
+      { code: '34253', city: 'Lohfelden', mapsLink: 'https://maps.app.goo.gl/258dBeVmcwiFYcmB9' },
+      { code: '22113', city: 'Hamburg', mapsLink: 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9' },
       { code: '68309', city: 'Mannheim' },
-      { code: '74321', city: 'Stuttgart' },
+      { code: '74321', city: 'Bietigheim-Bissingen', mapsLink: 'https://maps.app.goo.gl/VKXJ5rXq2UnWV53j7' },
       { code: '49549', city: 'Ladbergen', isCentral: true },
-      { code: '30916', city: 'Isernhagen' }
-    ]
+      { code: '30916', city: 'Isernhagen', mapsLink: 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76' },
+      { code: '53881', city: 'Euskirchen', mapsLink: 'https://maps.app.goo.gl/noiesWbnik4pVw9A8' },
+      { code: '18196', city: 'Dummerstorf', mapsLink: 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46' }
+    ],
+    postalCodeLinks: {
+      '30916': 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76',
+      '04435': 'https://maps.app.goo.gl/AHj21ATFFo92RTRo7',
+      '22113': 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9',
+      '74321': 'https://maps.app.goo.gl/VKXJ5rXq2UnWV53j7',
+      '16727': 'https://maps.app.goo.gl/tJM4zF6BoaPsf3oTA',
+      '34253': 'https://maps.app.goo.gl/258dBeVmcwiFYcmB9',
+      '53881': 'https://maps.app.goo.gl/noiesWbnik4pVw9A8',
+      '18196': 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46'
+    }
   },
   {
     country: 'Austria',
@@ -156,24 +170,44 @@ const InteractiveMap: React.FC = () => {
                   </h4>
                   <div className="overflow-y-auto flex-1 pr-2">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {selectedCountry.warehouses.map((warehouse, index) => (
-                        <div
-                          key={index}
-                          className="px-4 py-3 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg border border-yellow-200 hover:shadow-md transition-shadow"
-                        >
-                          <div className="flex justify-between items-start">
-                            <div className="flex-1 min-w-0">
-                              <p className="font-semibold text-gray-900 truncate">{warehouse.city}</p>
-                              <p className="text-sm text-gray-600">{t('postalCodeLabel')}: {warehouse.code}</p>
+                      {selectedCountry.warehouses.map((warehouse, index) => {
+                        const mapsLink = warehouse.mapsLink || selectedCountry.postalCodeLinks?.[warehouse.code];
+                        return (
+                          <div
+                            key={index}
+                            className={`px-4 py-3 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg border border-yellow-200 hover:shadow-md transition-shadow ${mapsLink ? 'cursor-pointer' : ''}`}
+                            onClick={() => {
+                              if (mapsLink) {
+                                window.open(mapsLink, '_blank', 'noopener,noreferrer');
+                              }
+                            }}
+                          >
+                            <div className="flex justify-between items-start">
+                              <div className="flex-1 min-w-0">
+                                <p className="font-semibold text-gray-900 truncate">{warehouse.city}</p>
+                                {mapsLink ? (
+                                  <a
+                                    href={mapsLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="text-sm text-yellow-600 hover:text-yellow-700 hover:underline font-medium"
+                                  >
+                                    {t('postalCodeLabel')}: {warehouse.code} <MapPin className="w-3 h-3 inline ml-1" />
+                                  </a>
+                                ) : (
+                                  <p className="text-sm text-gray-600">{t('postalCodeLabel')}: {warehouse.code}</p>
+                                )}
+                              </div>
+                              {warehouse.isCentral && (
+                                <span className="px-3 py-1 bg-yellow-200 text-yellow-900 text-xs font-semibold rounded-full ml-2 flex-shrink-0">
+                                  {t('centralWarehouseShort')}
+                                </span>
+                              )}
                             </div>
-                            {warehouse.isCentral && (
-                              <span className="px-3 py-1 bg-yellow-200 text-yellow-900 text-xs font-semibold rounded-full ml-2 flex-shrink-0">
-                                {t('centralWarehouseShort')}
-                              </span>
-                            )}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -185,14 +219,31 @@ const InteractiveMap: React.FC = () => {
                     {t('postalCodesTitle')}
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {selectedCountry.postalCodes.map((code, index) => (
-                      <span
-                        key={index}
-                        className="px-4 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
-                      >
-                        {code}
-                      </span>
-                    ))}
+                    {selectedCountry.postalCodes.map((code, index) => {
+                      const mapsLink = selectedCountry.postalCodeLinks?.[code];
+                      if (mapsLink) {
+                        return (
+                          <a
+                            key={index}
+                            href={mapsLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-yellow-50 hover:border-yellow-500 hover:text-yellow-700 transition-colors flex items-center gap-1"
+                          >
+                            {code}
+                            <MapPin className="w-3 h-3" />
+                          </a>
+                        );
+                      }
+                      return (
+                        <span
+                          key={index}
+                          className="px-4 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
+                        >
+                          {code}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
 

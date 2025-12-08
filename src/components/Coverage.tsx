@@ -22,22 +22,34 @@ const Coverage: React.FC = () => {
   const translateCountryName = (name: string | null) => (name ? t(name) : '');
 
   // Real warehouse and coverage data
-  const coverageData: { [key: string]: { warehouses: Array<{code: string, city: string, isCentral?: boolean}>, postalCodes: string[] } } = {
+  const coverageData: { [key: string]: { warehouses: Array<{code: string, city: string, isCentral?: boolean, mapsLink?: string}>, postalCodes: string[], postalCodeLinks?: { [code: string]: string } } } = {
     'Germany': {
       warehouses: [
         { code: '85716', city: 'Munich' },
         { code: '65549', city: 'Limburg' },
         { code: '79576', city: 'Weil am Rhein' },
-        { code: '16727', city: 'Velten' },
-        { code: '04435', city: 'Schkeuditz' },
-        { code: '34253', city: 'Kassel' },
-        { code: '22113', city: 'Hamburg' },
+        { code: '16727', city: 'Velten', mapsLink: 'https://maps.app.goo.gl/tJM4zF6BoaPsf3oTA' },
+        { code: '04435', city: 'Schkeuditz', mapsLink: 'https://maps.app.goo.gl/AHj21ATFFo92RTRo7' },
+        { code: '34253', city: 'Lohfelden', mapsLink: 'https://maps.app.goo.gl/258dBeVmcwiFYcmB9' },
+        { code: '22113', city: 'Hamburg', mapsLink: 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9' },
         { code: '68309', city: 'Mannheim' },
-        { code: '74321', city: 'Stuttgart' },
+        { code: '74321', city: 'Bietigheim-Bissingen', mapsLink: 'https://maps.app.goo.gl/VKXJ5rXq2UnWV53j7' },
         { code: '49549', city: 'Ladbergen', isCentral: true },
-        { code: '30916', city: 'Isernhagen' }
+        { code: '30916', city: 'Isernhagen', mapsLink: 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76' },
+        { code: '53881', city: 'Euskirchen', mapsLink: 'https://maps.app.goo.gl/noiesWbnik4pVw9A8' },
+        { code: '18196', city: 'Dummerstorf', mapsLink: 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46' }
       ],
-      postalCodes: ['85716', '65549', '79576', '16727', '04435', '34253', '22113', '68309', '74321', '49549', '30916']
+      postalCodes: ['85716', '65549', '79576', '16727', '04435', '34253', '22113', '68309', '74321', '49549', '30916', '53881', '18196'],
+      postalCodeLinks: {
+        '30916': 'https://maps.app.goo.gl/mkamVCm9Ya6KkaX76',
+        '04435': 'https://maps.app.goo.gl/AHj21ATFFo92RTRo7',
+        '22113': 'https://maps.app.goo.gl/JZU46pmKgMJUppmY9',
+        '74321': 'https://maps.app.goo.gl/VKXJ5rXq2UnWV53j7',
+        '16727': 'https://maps.app.goo.gl/tJM4zF6BoaPsf3oTA',
+        '34253': 'https://maps.app.goo.gl/258dBeVmcwiFYcmB9',
+        '53881': 'https://maps.app.goo.gl/noiesWbnik4pVw9A8',
+        '18196': 'https://maps.app.goo.gl/Hj8p7P3ZbT5N8LX46'
+      }
     },
     'Austria': {
       warehouses: [
@@ -282,22 +294,42 @@ const Coverage: React.FC = () => {
                           {t('warehousesLabel')} ({coverageData[selectedCountry].warehouses.length})
                         </h4>
                         <div className="overflow-y-auto flex-1 space-y-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100" style={{ maxHeight: '200px' }}>
-                          {coverageData[selectedCountry].warehouses.map((warehouse, idx) => (
-                            <div
-                              key={idx}
-                              className="flex justify-between items-center px-3 py-2 bg-gradient-to-r from-yellow-50 to-orange-50 text-yellow-800 text-sm rounded-lg border border-yellow-200 hover:shadow-md transition-shadow"
-                            >
-                              <div className="flex-1 min-w-0">
-                                <span className="font-semibold block truncate">{warehouse.city}</span>
-                                <span className="text-gray-600 text-xs">{t('postalCodeLabel')}: {warehouse.code}</span>
+                          {coverageData[selectedCountry].warehouses.map((warehouse, idx) => {
+                            const mapsLink = warehouse.mapsLink || coverageData[selectedCountry].postalCodeLinks?.[warehouse.code];
+                            return (
+                              <div
+                                key={idx}
+                                className={`flex justify-between items-center px-3 py-2 bg-gradient-to-r from-yellow-50 to-orange-50 text-yellow-800 text-sm rounded-lg border border-yellow-200 hover:shadow-md transition-shadow ${mapsLink ? 'cursor-pointer' : ''}`}
+                                onClick={() => {
+                                  if (mapsLink) {
+                                    window.open(mapsLink, '_blank', 'noopener,noreferrer');
+                                  }
+                                }}
+                              >
+                                <div className="flex-1 min-w-0">
+                                  <span className="font-semibold block truncate">{warehouse.city}</span>
+                                  {mapsLink ? (
+                                    <a
+                                      href={mapsLink}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="text-yellow-600 hover:text-yellow-700 hover:underline text-xs font-medium flex items-center gap-1"
+                                    >
+                                      {t('postalCodeLabel')}: {warehouse.code} <MapPin className="w-3 h-3" />
+                                    </a>
+                                  ) : (
+                                    <span className="text-gray-600 text-xs">{t('postalCodeLabel')}: {warehouse.code}</span>
+                                  )}
+                                </div>
+                                {warehouse.isCentral && (
+                                  <span className="px-2 py-1 bg-yellow-200 text-yellow-900 text-xs font-semibold rounded-full ml-2 flex-shrink-0">
+                                    {t('centralWarehouseShort')}
+                                  </span>
+                                )}
                               </div>
-                              {warehouse.isCentral && (
-                                <span className="px-2 py-1 bg-yellow-200 text-yellow-900 text-xs font-semibold rounded-full ml-2 flex-shrink-0">
-                                  {t('centralWarehouseShort')}
-                                </span>
-                              )}
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       </div>
 
@@ -308,14 +340,31 @@ const Coverage: React.FC = () => {
                           {t('postalCodesTitle')}
                         </h4>
                         <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                          {coverageData[selectedCountry].postalCodes.map((code, idx) => (
-                            <div
-                              key={idx}
-                              className="px-3 py-2 bg-gray-50 text-gray-700 text-sm rounded-lg border border-gray-200 font-mono"
-                            >
-                              {code}
-                            </div>
-                          ))}
+                          {coverageData[selectedCountry].postalCodes.map((code, idx) => {
+                            const mapsLink = coverageData[selectedCountry].postalCodeLinks?.[code];
+                            if (mapsLink) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={mapsLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="px-3 py-2 bg-gray-50 text-gray-700 text-sm rounded-lg border border-gray-200 font-mono hover:bg-yellow-50 hover:border-yellow-500 hover:text-yellow-700 transition-colors flex items-center justify-between"
+                                >
+                                  {code}
+                                  <MapPin className="w-3 h-3" />
+                                </a>
+                              );
+                            }
+                            return (
+                              <div
+                                key={idx}
+                                className="px-3 py-2 bg-gray-50 text-gray-700 text-sm rounded-lg border border-gray-200 font-mono"
+                              >
+                                {code}
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
 

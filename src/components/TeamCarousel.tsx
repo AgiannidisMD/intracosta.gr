@@ -137,8 +137,7 @@ const TeamCarousel: React.FC = () => {
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
               WebkitOverflowScrolling: 'touch',
-              scrollSnapType: 'x mandatory',
-              WebkitOverflowScrolling: 'touch'
+              scrollSnapType: 'x mandatory'
             }}
           >
             <div className="flex gap-4 sm:gap-6 pb-4 px-2 sm:px-0" style={{ width: 'max-content' }}>
