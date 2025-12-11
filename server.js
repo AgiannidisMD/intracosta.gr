@@ -37,15 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
-const isProduction = process.env.NODE_ENV === 'production';
-const csrfProtection = csurf({ cookie: { httpOnly: true, secure: isProduction, sameSite: 'strict' } });
-app.use(csrfProtection);
-app.use((req, res, next) => {
-  res.cookie('XSRF-TOKEN', req.csrfToken(), { secure: isProduction, sameSite: 'strict' });
-  next();
-});
-
-// Email transport
+// Email transport (needed before test endpoint)
 const smtpHost = process.env.SMTP_HOST;
 const smtpPort = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 465;
 const smtpUser = process.env.SMTP_USER;
@@ -81,6 +73,70 @@ transporter.verify((error, success) => {
   } else {
     console.log('SMTP server is ready to take our messages');
   }
+});
+
+// Test email endpoint (before CSRF protection for easy testing)
+app.post('/api/test-email', async (req, res) => {
+  try {
+    const testEmail = {
+      from: mailFrom,
+      to: mailToContact,
+      subject: 'Test Email from Intracosta Website',
+      text: `This is a test email from the Intracosta website.
+
+SMTP Configuration:
+- Host: ${smtpHost}
+- Port: ${smtpPort}
+- From: ${mailFrom}
+- To: ${mailToContact}
+
+If you receive this email, the SMTP configuration is working correctly!
+
+Timestamp: ${new Date().toISOString()}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #eab308;">Test Email from Intracosta Website</h2>
+          <p>This is a test email from the Intracosta website.</p>
+          <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3 style="margin-top: 0;">SMTP Configuration:</h3>
+            <ul>
+              <li><strong>Host:</strong> ${smtpHost}</li>
+              <li><strong>Port:</strong> ${smtpPort}</li>
+              <li><strong>From:</strong> ${mailFrom}</li>
+              <li><strong>To:</strong> ${mailToContact}</li>
+            </ul>
+          </div>
+          <p style="color: #16a34a; font-weight: bold;">✓ If you receive this email, the SMTP configuration is working correctly!</p>
+          <p style="color: #6b7280; font-size: 12px;">Timestamp: ${new Date().toISOString()}</p>
+        </div>
+      `
+    };
+
+    const info = await transporter.sendMail(testEmail);
+    
+    console.log('Test email sent successfully:', info.messageId);
+    res.json({ 
+      success: true, 
+      message: 'Test email sent successfully',
+      messageId: info.messageId,
+      to: mailToContact
+    });
+  } catch (error) {
+    console.error('Failed to send test email', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to send test email',
+      details: error.message 
+    });
+  }
+});
+
+const isProduction = process.env.NODE_ENV === 'production';
+const csrfProtection = csurf({ cookie: { httpOnly: true, secure: isProduction, sameSite: 'strict' } });
+app.use(csrfProtection);
+app.use((req, res, next) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken(), { secure: isProduction, sameSite: 'strict' });
+  next();
 });
 
 function buildPlainText(obj) {
