@@ -63,6 +63,36 @@ const TeamCarousel: React.FC = () => {
       role: t('teamImportDepartment'),
       image: '/team/dimou-maria.JPG',
       email: 'mdimou@intracosta.com'
+    },
+    {
+      nameKey: 'teamMember.kouloudiIrini',
+      role: t('teamImportDepartment'),
+      image: '/team/kouloudi-irini.JPG'
+    },
+    {
+      nameKey: 'teamMember.tsitlakidouKyriaki',
+      role: t('teamImportDepartment'),
+      image: '/team/kyriaki-tsitlakidou.JPG'
+    },
+    {
+      nameKey: 'teamMember.kouloudiNikoleta',
+      role: t('teamImportDepartment'),
+      image: '/team/kouloudi-nikoleta.JPG'
+    },
+    {
+      nameKey: 'teamMember.giannakidouIrini',
+      role: t('teamImportDepartment'),
+      image: '/team/giannakidou-irini.JPG'
+    },
+    {
+      nameKey: 'teamMember.vangelisSaakian',
+      role: t('teamImportDepartment'),
+      image: '/team/vaggelis.JPG'
+    },
+    {
+      nameKey: 'teamMember.eleniAlbani',
+      role: t('teamImportDepartment'),
+      image: '/team/eleni-almpani.JPG'
     }
   ];
 

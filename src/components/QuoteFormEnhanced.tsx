@@ -286,14 +286,47 @@ const QuoteFormEnhanced: React.FC = () => {
 
     try {
       // Send quote request via email
-      await fetch('/api/quote', {
+      let response;
+      try {
+        response = await fetch('/api/quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'CSRF-Token': getCsrfToken(),
         },
-        body: JSON.stringify(formData),
-      });
+          body: JSON.stringify(formData),
+        });
+      } catch (fetchError) {
+        console.error('Network error during fetch:', fetchError);
+        throw new Error('Network error: Unable to connect to server. Please check your connection and try again.');
+      }
+
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
+      }
+
+
+      // Also check response body for error indicators
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch (parseError) {
+        console.error('Failed to parse response JSON:', parseError);
+        // If we can't parse the response, treat it as an error to be safe
+        throw new Error('Invalid server response format');
+      }
+
+      if (responseData.success === false) {
+        throw new Error(responseData.error || 'Server returned an error');
+      }
+
+      // Explicitly check for success === true to be extra safe
+      if (responseData.success !== true && responseData.success !== undefined) {
+        throw new Error('Server response indicates failure');
+      }
+
+      console.log('Quote form submission successful:', { status: response.status, data: responseData });
 
       localStorage.removeItem(FORM_STORAGE_KEY);
       setIsSubmitted(true);
@@ -301,7 +334,8 @@ const QuoteFormEnhanced: React.FC = () => {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     } catch (err) {
-      console.error(err);
+      console.error('Quote form submission error:', err);
+      setIsSubmitted(false); // Ensure isSubmitted is false on error
       setSubmissionError(t('submissionError') || 'Failed to submit quote. Please try again.');
       setIsSubmitting(false);
       return;

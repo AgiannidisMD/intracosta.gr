@@ -22,7 +22,7 @@ const Contact: React.FC = () => {
       message: sanitizeInput(formData.message)
     };
 
-    await fetch('/api/contact', {
+    const response = await fetch('/api/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,6 +30,20 @@ const Contact: React.FC = () => {
       },
       body: JSON.stringify(sanitizedData),
     });
+
+
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status} ${response.statusText}`);
+    }
+
+
+    // Also check response body for error indicators
+    const responseData = await response.json().catch(() => ({}));
+
+    if (responseData.success === false) {
+      throw new Error(responseData.error || 'Server returned an error');
+    }
+
   };
 
   return (
