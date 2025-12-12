@@ -67,17 +67,20 @@ const TeamCarousel: React.FC = () => {
     {
       nameKey: 'teamMember.kouloudiIrini',
       role: t('teamAccountingDepartment'),
-      image: '/team/kouloudi-irini.JPG'
+      image: '/team/kouloudi-irini.JPG',
+      email: 'account@intracosta.com'
     },
     {
       nameKey: 'teamMember.tsitlakidouKyriaki',
       role: t('teamAccountingDepartment'),
-      image: '/team/kyriaki-tsitlakidou.JPG'
+      image: '/team/kyriaki-tsitlakidou.JPG',
+      email: 'account@intracosta.com'
     },
     {
       nameKey: 'teamMember.kouloudiNikoleta',
       role: t('teamAccountingDepartment'),
-      image: '/team/kouloudi-nikoleta.JPG'
+      image: '/team/kouloudi-nikoleta.JPG',
+      email: 'account@intracosta.com'
     },
     {
       nameKey: 'teamMember.giannakidouIrini',
@@ -87,12 +90,14 @@ const TeamCarousel: React.FC = () => {
     {
       nameKey: 'teamMember.vangelisSaakian',
       role: t('teamExportDepartment'),
-      image: '/team/vaggelis.JPG'
+      image: '/team/vaggelis.JPG',
+      email: 'vaggelis@intracosta.com'
     },
     {
       nameKey: 'teamMember.eleniAlbani',
       role: t('teamExportDepartment'),
-      image: '/team/eleni-almpani.JPG'
+      image: '/team/eleni-almpani.JPG',
+      email: 'eleni.albani@intracosta.com'
     }
   ];
 
