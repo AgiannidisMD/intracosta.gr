@@ -66,17 +66,17 @@ const TeamCarousel: React.FC = () => {
     },
     {
       nameKey: 'teamMember.kouloudiIrini',
-      role: t('teamImportDepartment'),
+      role: t('teamAccountingDepartment'),
       image: '/team/kouloudi-irini.JPG'
     },
     {
       nameKey: 'teamMember.tsitlakidouKyriaki',
-      role: t('teamImportDepartment'),
+      role: t('teamAccountingDepartment'),
       image: '/team/kyriaki-tsitlakidou.JPG'
     },
     {
       nameKey: 'teamMember.kouloudiNikoleta',
-      role: t('teamImportDepartment'),
+      role: t('teamAccountingDepartment'),
       image: '/team/kouloudi-nikoleta.JPG'
     },
     {
@@ -86,12 +86,12 @@ const TeamCarousel: React.FC = () => {
     },
     {
       nameKey: 'teamMember.vangelisSaakian',
-      role: t('teamImportDepartment'),
+      role: t('teamExportDepartment'),
       image: '/team/vaggelis.JPG'
     },
     {
       nameKey: 'teamMember.eleniAlbani',
-      role: t('teamImportDepartment'),
+      role: t('teamExportDepartment'),
       image: '/team/eleni-almpani.JPG'
     }
   ];
