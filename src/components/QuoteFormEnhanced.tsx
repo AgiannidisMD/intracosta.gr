@@ -278,9 +278,12 @@ const QuoteFormEnhanced: React.FC = () => {
     if (hasErrors) {
       setIsSubmitting(false);
       setSubmissionError(t('formValidationError') || 'Please correct the errors before submitting');
-      // Check if user prefers reduced motion for accessibility
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      // Scroll to the form section to show validation errors, not to top of page
+      const quoteSection = document.getElementById('quote');
+      if (quoteSection) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        quoteSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+      }
       return;
     }
 
@@ -330,9 +333,12 @@ const QuoteFormEnhanced: React.FC = () => {
 
       localStorage.removeItem(FORM_STORAGE_KEY);
       setIsSubmitted(true);
-      // Check if user prefers reduced motion for accessibility
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      // Scroll to the form section to show success message, not to top of page
+      const quoteSection = document.getElementById('quote');
+      if (quoteSection) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        quoteSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+      }
     } catch (err) {
       console.error('Quote form submission error:', err);
       setIsSubmitted(false); // Ensure isSubmitted is false on error
