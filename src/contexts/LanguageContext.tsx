@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 type Language = 'el' | 'en' | 'de';
 
@@ -1969,8 +1969,63 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const STORAGE_KEY = 'intracosta_language';
+
+const detectLanguage = (): Language => {
+  if (typeof window === 'undefined') return 'en';
+
+  // 1) Respect browser language preferences
+  const navLanguages = (navigator.languages && navigator.languages.length > 0
+    ? navigator.languages
+    : [navigator.language]
+  ).filter(Boolean) as string[];
+
+  const matchFromLocales = (locales: string[]): Language | null => {
+    const lowerLocales = locales.map((l) => l.toLowerCase());
+    if (lowerLocales.some((l) => l.startsWith('el'))) return 'el';
+    if (lowerLocales.some((l) => l.startsWith('de'))) return 'de';
+    return null;
+  };
+
+  const localeMatch = matchFromLocales(navLanguages);
+  if (localeMatch) return localeMatch;
+
+  // 2) Fallback using timezone as a light geohint
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    if (tz.includes('Athens')) return 'el';
+    if (tz.includes('Berlin') || tz.includes('Vienna') || tz.includes('Zurich')) return 'de';
+  } catch {
+    // noop
+  }
+
+  // 3) Default to English
+  return 'en';
+};
+
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('el');
+
+  // On mount: restore saved language or detect
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const saved = window.localStorage.getItem(STORAGE_KEY) as Language | null;
+    if (saved === 'el' || saved === 'en' || saved === 'de') {
+      setLanguage(saved);
+      return;
+    }
+
+    const detected = detectLanguage();
+    setLanguage(detected);
+    window.localStorage.setItem(STORAGE_KEY, detected);
+  }, []);
+
+  // Persist user choice
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(STORAGE_KEY, language);
+  }, [language]);
 
   const t = (key: string, variables?: { [key: string]: any }): string => {
     const translatedString = translations[key]?.[language] || key;

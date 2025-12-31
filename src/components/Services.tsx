@@ -9,20 +9,20 @@ const Services: React.FC = () => {
 
   const services = [
     {
-      icon: <Truck className="w-12 h-12" aria-hidden="true" />,
-      title: t('services.roadTransportTitle'),
-      description: t('services.roadTransportSummary'),
+      icon: <Ship className="w-12 h-12" aria-hidden="true" />,
+      title: t('internationalTransportTitle'),
+      description: t('internationalTransportDesc'),
       color: 'bg-gray-700',
       hoverColor: 'hover:bg-gray-800',
-      link: '/road-transport'
+      link: '/international-transport'
     },
     {
-      icon: <Ship className="w-12 h-12" />,
-      title: t('services.intermodalTitle'),
-      description: t('services.intermodalSummary'),
+      icon: <Truck className="w-12 h-12" aria-hidden="true" />,
+      title: t('nationalTransportTitle'),
+      description: t('nationalTransportDesc'),
       color: 'bg-gray-700',
       hoverColor: 'hover:bg-gray-800',
-      link: '/intermodal-transport'
+      link: '/domestic-transport'
     },
     {
       icon: <Package className="w-12 h-12" aria-hidden="true" />,
@@ -33,12 +33,12 @@ const Services: React.FC = () => {
       link: '/special-transport'
     },
     {
-      icon: <Warehouse className="w-12 h-12" />,
-      title: t('services.logisticsTitle'),
-      description: t('services.logisticsSummary'),
+      icon: <Warehouse className="w-12 h-12" aria-hidden="true" />,
+      title: t('warehousingTitle'),
+      description: t('warehousingDesc'),
       color: 'bg-gray-700',
       hoverColor: 'hover:bg-gray-800',
-      link: '/logistics-services'
+      link: '/warehousing'
     }
   ];
 
@@ -56,7 +56,7 @@ const Services: React.FC = () => {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className={`group rounded-xl ${service.color} hover:${service.hoverColor} transition-all duration-300 hover:-translate-y-2 overflow-hidden w-full shadow-lg hover:shadow-2xl`}
+              className={`group rounded-xl ${service.color} ${service.hoverColor} transition-all duration-300 hover:-translate-y-2 overflow-hidden w-full shadow-lg hover:shadow-2xl`}
               initial={{ opacity: 0, y: 20, scale: 1 }}
               whileInView={{ opacity: 1, y: 0, scale: 1.03 }}
               viewport={{ once: true, amount: 0.3 }}
