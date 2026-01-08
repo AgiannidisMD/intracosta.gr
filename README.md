@@ -14,7 +14,7 @@ Modern, multilingual marketing website for Intracosta's transport and logistics 
 - [Resources](#resources)
 
 ## Overview
-The application delivers a high-performing, fully responsive experience tailored for a multilingual audience (Greek, English, German). It emphasizes modern visuals, smooth animations, and secure data handling backed by Supabase.
+The application delivers a high-performing, fully responsive experience tailored for a multilingual audience (Greek, English, German). It emphasizes modern visuals, smooth animations, and secure data handling via email integration.
 
 ## Features
 - Multilingual interface (Greek, English, German)
@@ -22,7 +22,7 @@ The application delivers a high-performing, fully responsive experience tailored
 - Modern UI with motion effects
 - Advanced quote request form with validation
 - CSRF-protected form submission
-- Supabase-backed data storage
+- Email integration for contact and quote requests
 - SEO-friendly metadata and markup
 
 ## Tech Stack
@@ -30,7 +30,7 @@ The application delivers a high-performing, fully responsive experience tailored
 - TypeScript
 - Vite
 - Tailwind CSS
-- Supabase
+- Express.js (for API endpoints)
 - React Router
 - Framer Motion
 - React Helmet Async
@@ -39,7 +39,19 @@ The application delivers a high-performing, fully responsive experience tailored
 
 ### Local Setup
 1. Clone the repository.
-2. Copy `.env.example` to `.env` and provide your Supabase credentials.
+2. Create a `.env` file in the root directory with your SMTP email configuration:
+   ```env
+   SMTP_HOST=smtp.example.com
+   SMTP_PORT=465
+   SMTP_USER=your-email@example.com
+   SMTP_PASS=your-email-password
+   MAIL_FROM=your-email@example.com
+   MAIL_TO_CONTACT=contact@example.com
+   MAIL_TO_QUOTE=quotes@example.com
+   ```
+   **Required variables:** `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`
+   
+   **Optional variables:** `SMTP_PORT` (defaults to 465), `MAIL_FROM`, `MAIL_TO_CONTACT`, `MAIL_TO_QUOTE`, `MAIL_TO`
 3. Install dependencies:
    ```bash
    npm install
@@ -52,28 +64,41 @@ The application delivers a high-performing, fully responsive experience tailored
    ```bash
    npm run build
    ```
+6. Start the production server:
+   ```bash
+   npm start
+   ```
 
 ### Available Scripts
 - `npm run dev` – start the Vite dev server with hot reloading.
 - `npm run build` – create an optimized production build.
 
 ## Deployment
-The project is ready for deployment on Vercel. Configure the required environment variables in your Vercel project before triggering a build:
+The project can be deployed to various platforms. Configure the required environment variables in your deployment platform before building:
 
-```
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
-```
+**Required environment variables:**
+- `SMTP_HOST` - Your SMTP server hostname
+- `SMTP_USER` - Your SMTP username/email
+- `SMTP_PASS` - Your SMTP password
 
-After the variables are set, every push to the connected repository will create a new deployment automatically.
+**Optional environment variables:**
+- `SMTP_PORT` - SMTP port (defaults to 465)
+- `MAIL_FROM` - Email sender address (defaults to SMTP_USER)
+- `MAIL_TO_CONTACT` - Contact form recipient (defaults to SMTP_USER)
+- `MAIL_TO_QUOTE` - Quote form recipient (defaults to SMTP_USER)
+- `PORT` - Server port (defaults to 3000)
+- `NODE_ENV` - Environment (development/production)
+
+For server-based deployments (cPanel, VPS, etc.), see `CPANEL_DEPLOYMENT.md` for detailed instructions.
 
 ## Project Structure
 - `src/components` – shared UI components.
 - `src/pages` – route-level pages.
 - `src/contexts` – React context providers (e.g., language).
-- `src/utils` – helpers and Supabase client setup.
+- `src/utils` – helper utilities.
+- `api/` – API route handlers for contact and quote forms.
+- `server.js` – Express server for production deployments.
 - `public` – static assets.
-- `supabase/migrations` – database migration files.
 
 ## Resources
 - `ACCESSIBILITY_AUDIT.md` – accessibility review and findings.
