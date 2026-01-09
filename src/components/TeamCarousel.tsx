@@ -20,19 +20,19 @@ const TeamCarousel: React.FC = () => {
       nameKey: 'teamMember.kostasFilippos',
       role: t('teamGeneralDirector'),
       image: '/team/kostas-filippos.JPG',
-      email: 'kfilippos@intracosta.com'
+      email: 'filippos.costas@intracosta.com'
     },
     {
       nameKey: 'teamMember.katerinaNtaoula',
       role: t('teamImportManager'),
       image: '/team/katerina-ntaoula.JPG',
-      email: 'kntaoula@intracosta.com'
+      email: 'katerina.ntaoula@intracosta.com'
     },
     {
       nameKey: 'teamMember.pleplesTheodoros',
       role: t('teamExportManager'),
       image: '/team/pleples-theodoros.JPG',
-      email: 'tpleples@intracosta.com'
+      email: 'theodoros.pleples@intracosta.com'
     },
     {
       nameKey: 'teamMember.papadimitriouDimitrios',
