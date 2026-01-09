@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Link, useLocation } from 'react-router-dom';
 import NAP from './SEO/NAP';
-import { Facebook, Instagram } from 'lucide-react';
+import { Facebook, Linkedin, Instagram } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
                 <Facebook className="w-5 h-5 text-yellow-500" />
               </a>
               <a href="https://www.linkedin.com/company/intracosta" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Visit Intracosta on LinkedIn">
-                <span className="text-xl">💼</span>
+                <Linkedin className="w-5 h-5 text-yellow-500" />
               </a>
               <a href="https://www.instagram.com/intracosta/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Visit Intracosta on Instagram">
                 <Instagram className="w-5 h-5 text-yellow-500" />
