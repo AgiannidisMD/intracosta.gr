@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
             <div className="text-gray-700 text-center lg:text-left">
               <span itemScope itemType="https://schema.org/Organization">
-                © 2024 <span itemProp="name">Intracosta</span>. All rights reserved. StolosOfficial
+                © 2024 <span itemProp="name">Intracosta</span>. All rights reserved. <a href="https://stolos-official.onrender.com/" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-500 transition-colors">StolosOfficial</a>
               </span>
             </div>
             <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">

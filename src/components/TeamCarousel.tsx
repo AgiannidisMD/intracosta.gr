@@ -44,13 +44,13 @@ const TeamCarousel: React.FC = () => {
       nameKey: 'teamMember.kostaKaterina',
       role: t('teamImportDepartment'),
       image: '/team/kosta-katerina.JPG',
-      email: 'kkosta@intracosta.com'
+      email: 'katerina.kosta@intracosta.com'
     },
     {
       nameKey: 'teamMember.petridisDimitrios',
       role: t('teamImportDepartment'),
       image: '/team/petridis-dimitrios.JPG',
-      email: 'dpetridis@intracosta.com'
+      email: 'dimitris.petridis@intracosta.com'
     },
     {
       nameKey: 'teamMember.emmanouilidouAnastasia',
