@@ -7,6 +7,8 @@ interface LazyImageProps {
   placeholder?: string;
   onLoad?: () => void;
   style?: React.CSSProperties;
+  width?: number;
+  height?: number;
 }
 
 const LazyImage: React.FC<LazyImageProps> = ({ 
@@ -15,7 +17,9 @@ const LazyImage: React.FC<LazyImageProps> = ({
   className = '', 
   placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+',
   onLoad,
-  style
+  style,
+  width = 200,
+  height = 200
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
@@ -51,6 +55,8 @@ const LazyImage: React.FC<LazyImageProps> = ({
           src={placeholder}
           alt=""
           className="absolute inset-0 w-full h-full object-contain blur-sm"
+          width={width}
+          height={height}
         />
       )}
       {isInView && (
@@ -62,6 +68,8 @@ const LazyImage: React.FC<LazyImageProps> = ({
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           loading="lazy"
+          width={width}
+          height={height}
         />
       )}
     </div>

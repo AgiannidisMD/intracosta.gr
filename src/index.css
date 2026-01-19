@@ -198,6 +198,21 @@ body.screen-reader-optimized img {
   /* Ensure all images have alt text */
 }
 
+/* Keep header layout stable even when background blur/shadow changes */
+.intracosta-header-fixed,
+.intracosta-header-spacer {
+  height: 96px;
+  min-height: 96px;
+}
+
+@media (min-width: 1024px) {
+  .intracosta-header-fixed,
+  .intracosta-header-spacer {
+    height: 112px;
+    min-height: 112px;
+  }
+}
+
 body.keyboard-navigation {
   /* Enhanced keyboard navigation */
 }

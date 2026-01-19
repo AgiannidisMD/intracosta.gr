@@ -46,6 +46,9 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
           src="/intracosta-logo.svg"
           alt="Intracosta"
           className="w-64 sm:w-80 md:w-96 h-auto mx-auto"
+          width={1228}
+          height={534}
+          loading="eager"
         />
       </div>
 

@@ -99,6 +99,9 @@ const InternationalTransportPage: React.FC = () => {
                 src="https://images.pexels.com/photos/1427107/pexels-photo-1427107.jpeg?auto=compress&cs=tinysrgb&w=1200"
                 alt={t('internationalTransportTitle')}
                 className="w-full h-96 object-cover"
+                width={1200}
+                height={900}
+                loading="lazy"
               />
             </motion.div>
           </div>

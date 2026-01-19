@@ -2,107 +2,181 @@ import React, { useRef, useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface TeamMember {
+interface TeamMemberMeta {
   nameKey: string;
-  role: string;
+  roleKey: string;
   image: string;
   email?: string;
 }
+
+const defaultImageDimensions = { width: 4024, height: 6048 };
+
+const teamImageDimensions: Record<string, { width: number; height: number }> = {
+  'dimitrios-papadimitriou': { width: 4024, height: 6048 },
+  'dimou-maria': { width: 4024, height: 6048 },
+  'eleni-almpani': { width: 4024, height: 6048 },
+  'emmanouilidou-anastasia': { width: 4024, height: 6048 },
+  'giannakidou-irini': { width: 3600, height: 5020 },
+  'katerina-ntaoula': { width: 3659, height: 5410 },
+  'kosta-katerina': { width: 4024, height: 6048 },
+  'kostas-filippos': { width: 4024, height: 6048 },
+  'kouloudi-irini': { width: 4024, height: 6048 },
+  'kouloudi-nikoleta': { width: 3471, height: 5292 },
+  'kyriaki-tsitlakidou': { width: 4024, height: 6048 },
+  'petridis-dimitrios': { width: 4024, height: 6048 },
+  'pleples-theodoros': { width: 4024, height: 6048 },
+  'vaggelis': { width: 4024, height: 6048 }
+};
+
+const teamMembersMeta: TeamMemberMeta[] = [
+  {
+    nameKey: 'teamMember.kostasFilippos',
+    roleKey: 'teamGeneralDirector',
+    image: 'kostas-filippos',
+    email: 'filippos.costas@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.katerinaNtaoula',
+    roleKey: 'teamImportManager',
+    image: 'katerina-ntaoula',
+    email: 'katerina.ntaoula@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.pleplesTheodoros',
+    roleKey: 'teamExportManager',
+    image: 'pleples-theodoros',
+    email: 'theodoros.pleples@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.papadimitriouDimitrios',
+    roleKey: 'teamAccountingManager',
+    image: 'dimitrios-papadimitriou',
+    email: 'dpapadimitriou@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.kostaKaterina',
+    roleKey: 'teamImportDepartment',
+    image: 'kosta-katerina',
+    email: 'katerina.kosta@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.petridisDimitrios',
+    roleKey: 'teamImportDepartment',
+    image: 'petridis-dimitrios',
+    email: 'dimitris.petridis@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.emmanouilidouAnastasia',
+    roleKey: 'teamImportDepartment',
+    image: 'emmanouilidou-anastasia',
+    email: 'aemmanouilidou@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.dimouMaria',
+    roleKey: 'teamImportDepartment',
+    image: 'dimou-maria',
+    email: 'mdimou@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.kouloudiIrini',
+    roleKey: 'teamAccountingDepartment',
+    image: 'kouloudi-irini',
+    email: 'account@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.tsitlakidouKyriaki',
+    roleKey: 'teamAccountingDepartment',
+    image: 'kyriaki-tsitlakidou',
+    email: 'account@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.kouloudiNikoleta',
+    roleKey: 'teamAccountingDepartment',
+    image: 'kouloudi-nikoleta',
+    email: 'account@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.giannakidouIrini',
+    roleKey: 'teamImportDepartment',
+    image: 'giannakidou-irini'
+  },
+  {
+    nameKey: 'teamMember.vangelisSaakian',
+    roleKey: 'teamExportDepartment',
+    image: 'vaggelis',
+    email: 'vaggelis@intracosta.com'
+  },
+  {
+    nameKey: 'teamMember.eleniAlbani',
+    roleKey: 'teamExportDepartment',
+    image: 'eleni-almpani',
+    email: 'eleni.albani@intracosta.com'
+  }
+];
+
+interface TeamMemberCardProps {
+  member: TeamMemberMeta;
+  displayName: string;
+  roleLabel: string;
+  onImageError?: (event: React.SyntheticEvent<HTMLImageElement>) => void;
+}
+
+const TeamMemberCard = React.memo(({ member, displayName, roleLabel, onImageError }: TeamMemberCardProps) => {
+  const dimensions = teamImageDimensions[member.image] ?? defaultImageDimensions;
+  const webpSrc = `/team-webp/${member.image}.webp`;
+  const fallbackSrc = `/team/${member.image}.JPG`;
+
+  return (
+    <div
+      className="flex-shrink-0 w-[240px] sm:w-[260px] h-[380px] sm:h-[420px]"
+      style={{ scrollSnapAlign: 'start' }}
+    >
+      <div className="bg-yellow-500 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex flex-col w-full h-full">
+        <div className="relative w-full overflow-hidden h-[250px] sm:h-[280px] min-h-[250px] sm:min-h-[280px]">
+          <picture>
+            <source srcSet={webpSrc} type="image/webp" />
+            <img
+              src={fallbackSrc}
+              alt={displayName}
+              className="team-carousel-image w-full h-full object-cover"
+              style={{
+                filter: 'grayscale(100%) brightness(0.9) contrast(1.2) sepia(30%) saturate(150%) hue-rotate(5deg)'
+              }}
+              width={dimensions.width}
+              height={dimensions.height}
+              loading="lazy"
+              decoding="async"
+              sizes="(max-width: 768px) 80vw, 260px"
+              onError={onImageError}
+            />
+          </picture>
+        </div>
+        <div className="p-6 flex flex-col justify-between h-full">
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 mb-1">{displayName}</h3>
+            <p className="text-sm uppercase tracking-wider text-gray-800 mb-2">{roleLabel}</p>
+          </div>
+          {member.email && (
+            <a
+              href={`mailto:${member.email}`}
+              className="text-xs text-gray-700 hover:text-yellow-600 transition-colors"
+            >
+              {member.email}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+});
 
 const TeamCarousel: React.FC = () => {
   const { t } = useLanguage();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Team members - focusing on key team members
-  const teamMembers: TeamMember[] = [
-    {
-      nameKey: 'teamMember.kostasFilippos',
-      role: t('teamGeneralDirector'),
-      image: '/team/kostas-filippos.JPG',
-      email: 'filippos.costas@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.katerinaNtaoula',
-      role: t('teamImportManager'),
-      image: '/team/katerina-ntaoula.JPG',
-      email: 'katerina.ntaoula@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.pleplesTheodoros',
-      role: t('teamExportManager'),
-      image: '/team/pleples-theodoros.JPG',
-      email: 'theodoros.pleples@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.papadimitriouDimitrios',
-      role: t('teamAccountingManager'),
-      image: '/team/dimitrios-papadimitriou.JPG',
-      email: 'dpapadimitriou@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.kostaKaterina',
-      role: t('teamImportDepartment'),
-      image: '/team/kosta-katerina.JPG',
-      email: 'katerina.kosta@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.petridisDimitrios',
-      role: t('teamImportDepartment'),
-      image: '/team/petridis-dimitrios.JPG',
-      email: 'dimitris.petridis@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.emmanouilidouAnastasia',
-      role: t('teamImportDepartment'),
-      image: '/team/emmanouilidou-anastasia.JPG',
-      email: 'aemmanouilidou@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.dimouMaria',
-      role: t('teamImportDepartment'),
-      image: '/team/dimou-maria.JPG',
-      email: 'mdimou@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.kouloudiIrini',
-      role: t('teamAccountingDepartment'),
-      image: '/team/kouloudi-irini.JPG',
-      email: 'account@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.tsitlakidouKyriaki',
-      role: t('teamAccountingDepartment'),
-      image: '/team/kyriaki-tsitlakidou.JPG',
-      email: 'account@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.kouloudiNikoleta',
-      role: t('teamAccountingDepartment'),
-      image: '/team/kouloudi-nikoleta.JPG',
-      email: 'account@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.giannakidouIrini',
-      role: t('teamImportDepartment'),
-      image: '/team/giannakidou-irini.JPG'
-    },
-    {
-      nameKey: 'teamMember.vangelisSaakian',
-      role: t('teamExportDepartment'),
-      image: '/team/vaggelis.JPG',
-      email: 'vaggelis@intracosta.com'
-    },
-    {
-      nameKey: 'teamMember.eleniAlbani',
-      role: t('teamExportDepartment'),
-      image: '/team/eleni-almpani.JPG',
-      email: 'eleni.albani@intracosta.com'
-    }
-  ];
-
   const cardsPerView = 4;
-  const maxIndex = Math.max(0, teamMembers.length - cardsPerView);
+  const maxIndex = Math.max(0, teamMembersMeta.length - cardsPerView);
 
   const scroll = (direction: 'left' | 'right') => {
     const container = scrollContainerRef.current;
@@ -127,13 +201,11 @@ const TeamCarousel: React.FC = () => {
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title and Navigation */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-600">
             {t('teamTitle')}
           </h2>
-          
-          {/* Navigation Arrows - Hidden on mobile, shown on desktop */}
+
           <div className="hidden md:flex items-center gap-4">
             <button
               onClick={() => scroll('left')}
@@ -147,7 +219,7 @@ const TeamCarousel: React.FC = () => {
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
-            
+
             <button
               onClick={() => scroll('right')}
               disabled={currentIndex >= maxIndex}
@@ -163,7 +235,6 @@ const TeamCarousel: React.FC = () => {
           </div>
         </div>
 
-        {/* Carousel Container */}
         <div className="relative">
           <div
             ref={scrollContainerRef}
@@ -176,77 +247,22 @@ const TeamCarousel: React.FC = () => {
             }}
           >
             <div className="flex gap-4 sm:gap-6 pb-4 px-2 sm:px-0" style={{ width: 'max-content' }}>
-              {teamMembers.map((member, index) => {
+              {teamMembersMeta.map((member) => {
                 const displayName = t(member.nameKey);
-                
-                return (
-                  <div
-                    key={index}
-                    className="flex-shrink-0 w-[240px] sm:w-[260px] h-[380px] sm:h-[420px]"
-                    style={{
-                      scrollSnapAlign: 'start'
-                    }}
-                  >
-                    {/* Card with Yellow Background */}
-                    <div className="bg-yellow-500 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex flex-col w-full h-full">
-                      {/* Image Container with Monochromatic Yellow Filter - Consistent Cropping */}
-                      <div className="relative w-full overflow-hidden h-[250px] sm:h-[280px] min-h-[250px] sm:min-h-[280px]">
-                        <img
-                          src={member.image}
-                          alt={displayName}
-                          className="team-carousel-image w-full h-full"
-                          style={{
-                            filter: 'grayscale(100%) brightness(0.9) contrast(1.2) sepia(30%) saturate(150%) hue-rotate(5deg)',
-                          }}
-                          onError={handleImageError}
-                          loading="lazy"
-                        />
-                        
-                        {/* Yellow overlay for monochromatic effect */}
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.4) 0%, rgba(234, 179, 8, 0.2) 100%)',
-                            mixBlendMode: 'multiply',
-                            zIndex: 1
-                          }}
-                        />
-                        
-                        {/* Role Badge - Top Left (White text) */}
-                        <div className="absolute top-3 left-3 z-10">
-                          <span className="text-white text-xs font-bold px-2 py-1">
-                            {member.role}
-                          </span>
-                        </div>
-                      </div>
+                const roleLabel = t(member.roleKey);
 
-                      {/* Name and Email - Bottom Section (Yellow text on yellow background) */}
-                      <div className="p-5 bg-yellow-500 flex-1 flex flex-col justify-end">
-                        <h3 className="text-yellow-900 font-bold text-base mb-1.5">
-                          {displayName}
-                        </h3>
-                        {member.email && (
-                          <a
-                            href={`mailto:${member.email}`}
-                            className="text-yellow-800 hover:text-yellow-900 text-sm font-medium transition-colors duration-200"
-                          >
-                            {member.email}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                return (
+                  <TeamMemberCard
+                    key={member.image}
+                    member={member}
+                    displayName={displayName}
+                    roleLabel={roleLabel}
+                    onImageError={handleImageError}
+                  />
                 );
               })}
             </div>
           </div>
-        </div>
-
-        {/* Mobile Scroll Hint */}
-        <div className="text-center mt-6 md:hidden">
-          <p className="text-sm text-gray-500">
-            ← {t('teamNavigationHint')} →
-          </p>
         </div>
       </div>
     </section>
@@ -254,4 +270,3 @@ const TeamCarousel: React.FC = () => {
 };
 
 export default TeamCarousel;
-

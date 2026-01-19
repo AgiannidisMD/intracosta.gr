@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import NAP from './SEO/NAP';
 import ContactModal from './ContactModal';
@@ -13,8 +13,6 @@ const Header: React.FC = () => {
   const [isCountriesExpanded, setIsCountriesExpanded] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isCompact, setIsCompact] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const languages = [
@@ -23,7 +21,7 @@ const Header: React.FC = () => {
     { code: 'de' as const, name: 'DE', flag: '🇩🇪', fullName: 'Deutsch' }
   ];
 
-  const menuItems = [
+  const menuItems = useMemo(() => ([
     { 
       key: 'home', 
       href: '#home',
@@ -80,7 +78,7 @@ const Header: React.FC = () => {
       icon: Phone,
       description: t('contactDescription') || 'Επικοινωνήστε μαζί μας'
     }
-  ];
+  ]), [t]);
 
   // Track scroll position and active section with throttling
   useEffect(() => {
@@ -101,19 +99,6 @@ const Header: React.FC = () => {
           const currentScrollPos = window.scrollY;
           
           setIsScrolled(currentScrollPos > 20);
-          
-          // Compact logic with hysteresis to avoid jitter
-          const downThreshold = 200; // enter compact only after 200px
-          const upThreshold = 100;   // exit compact when near top
-          const scrollDelta = prevScrollPos - currentScrollPos;
-
-          if (currentScrollPos > downThreshold && currentScrollPos > prevScrollPos) {
-            setIsCompact(true);
-          } else if (currentScrollPos < upThreshold || scrollDelta > 20) {
-            setIsCompact(false);
-          }
-          
-          setPrevScrollPos(currentScrollPos);
           
           // Update active section based on scroll position (throttled)
           const sections = menuItems.map(item => item.key);
@@ -138,7 +123,7 @@ const Header: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [prevScrollPos]);
+  }, [menuItems]);
 
   // Close menus when clicking outside
   useEffect(() => {
@@ -203,11 +188,9 @@ const Header: React.FC = () => {
           isScrolled
             ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200'
             : 'bg-white/90 backdrop-blur-sm'
-        }`}>
-          <div className="spacing-container">
-            <div className={`flex justify-between items-center transition-all duration-300 ease-in-out ${
-              isCompact ? 'py-2 lg:py-3' : 'py-4 lg:py-6'
-            }`}>
+        } intracosta-header-fixed`}>
+          <div className="spacing-container h-full">
+            <div className="flex justify-between items-center h-full transition-all duration-300 ease-in-out">
             {/* Logo */}
               <div className="flex items-center justify-start ml-2 lg:ml-12 mr-auto">
               <a
@@ -227,13 +210,10 @@ const Header: React.FC = () => {
                   <img
                     src="/intracosta001.png"
                     alt="Intracosta Logo"
-                    className="object-contain transition-all duration-500 ease-in-out group-hover:brightness-110 drop-shadow-lg hover:drop-shadow-xl"
-                    style={{
-                      height: isCompact ? '40px' : '72px',
-                      width: isCompact ? '80px' : '144px',
-                      minWidth: isCompact ? '80px' : '144px',
-                      maxWidth: isCompact ? '112px' : '144px'
-                    }}
+                    className="object-contain h-16 lg:h-20 w-auto transition-all duration-500 ease-in-out group-hover:brightness-110 drop-shadow-lg hover:drop-shadow-xl"
+                    width={1847}
+                    height={2088}
+                    loading="eager"
                     itemProp="logo"
                   />
                   <meta itemProp="name" content="Intracosta" />
@@ -252,7 +232,7 @@ const Header: React.FC = () => {
                       <button
                         onClick={() => setIsCoverageOpen(!isCoverageOpen)}
                         onMouseEnter={() => setIsCoverageOpen(true)}
-                        className={`flex items-center space-x-2 ${isCompact ? 'px-3 py-2' : 'px-5 py-3'} rounded-xl font-semibold transition-all duration-300 group relative overflow-hidden ${
+                        className={`flex items-center space-x-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 group relative overflow-hidden ${
                           isActive(item.key)
                             ? 'text-yellow-600'
                             : 'text-gray-700 hover:text-yellow-600'
@@ -333,7 +313,7 @@ const Header: React.FC = () => {
                           e.preventDefault();
                           scrollToSection(item.href);
                         }}
-                        className={`flex items-center space-x-2 ${isCompact ? 'px-3 py-2' : 'px-5 py-3'} rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group ${
+                        className={`flex items-center space-x-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group ${
                           isActive(item.key)
                             ? 'text-yellow-600'
                             : 'text-gray-700 hover:text-yellow-600'
@@ -358,7 +338,7 @@ const Header: React.FC = () => {
                         e.preventDefault();
                         scrollToSection(item.href);
                       }}
-                      className={`flex items-center space-x-2 ${isCompact ? 'px-3 py-2' : 'px-5 py-3'} rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group ${
+                      className={`flex items-center space-x-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group ${
                         isActive(item.key)
                           ? 'text-yellow-600'
                           : 'text-gray-700 hover:text-yellow-600'
@@ -385,7 +365,7 @@ const Header: React.FC = () => {
               <div className="relative dropdown-container">
                 <button
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                  className={`flex items-center space-x-2 ${isCompact ? 'px-3 py-2' : 'px-4 py-3'} text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-xl hover:underline hover:decoration-yellow-500 hover:underline-offset-4 group`}
+                className="flex items-center space-x-2 px-4 py-3 text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-xl hover:underline hover:decoration-yellow-500 hover:underline-offset-4 group"
                   aria-expanded={isLanguageOpen}
                   aria-haspopup="true"
                   aria-label="Select language"
@@ -436,7 +416,7 @@ const Header: React.FC = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`lg:hidden ${isCompact ? 'p-2' : 'p-3'} text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-xl hover:bg-gray-50 hover:scale-110 min-h-[48px] min-w-[48px] touch-manipulation`}
+                className="lg:hidden p-3 text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-xl hover:bg-gray-50 hover:scale-110 min-h-[48px] min-w-[48px] touch-manipulation"
                 aria-expanded={isMenuOpen}
                 aria-label="Toggle mobile menu"
               >
@@ -473,6 +453,9 @@ const Header: React.FC = () => {
                         src="/intracosta001.png"
                         alt="Intracosta Logo"
                         className="h-8 w-auto"
+                        width={1847}
+                        height={2088}
+                        loading="lazy"
                       />
                       <span className="font-semibold text-gray-900">Menu</span>
                     </div>
@@ -563,11 +546,17 @@ const Header: React.FC = () => {
                           src="/e-bannerseuerdf730x90-1.jpg" 
                           alt="European Union Regional Development Fund" 
                           className="h-5 sm:h-6 w-auto opacity-80 max-w-[100px] sm:max-w-none"
+                          width={732}
+                          height={92}
+                          loading="lazy"
                         />
                         <img 
                           src="/sticker-website_etpa_gr_highres-1.jpg" 
                           alt="ΕΣΠΑ 2014-2020" 
                           className="h-5 sm:h-6 w-auto opacity-80 max-w-[100px] sm:max-w-none"
+                          width={490}
+                          height={97}
+                          loading="lazy"
                         />
                       </div>
                     </nav>
@@ -589,9 +578,7 @@ const Header: React.FC = () => {
       />
 
       {/* Spacer for fixed header */}
-      <div className={`transition-all duration-500 ease-in-out ${
-        isCompact ? 'h-16 lg:h-20' : 'h-28 lg:h-48'
-      }`}></div>
+      <div className="intracosta-header-spacer"></div>
     </>
   );
 };

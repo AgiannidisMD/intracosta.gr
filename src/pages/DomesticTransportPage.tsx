@@ -99,6 +99,9 @@ const DomesticTransportPage: React.FC = () => {
                 src="https://images.pexels.com/photos/4481326/pexels-photo-4481326.jpeg?auto=compress&cs=tinysrgb&w=1200"
                 alt={t('nationalTransportTitle')}
                 className="w-full h-96 object-cover"
+                width={1200}
+                height={900}
+                loading="lazy"
               />
             </motion.div>
           </div>

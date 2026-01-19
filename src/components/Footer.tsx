@@ -50,7 +50,14 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="mb-6">
-              <img src="/logocorrectversion.svg" alt={t('logoAlt')} className="h-24" />
+              <img
+                src="/logocorrectversion.svg"
+                alt={t('logoAlt')}
+                className="h-24 w-24"
+                width={96}
+                height={96}
+                loading="lazy"
+              />
             </div>
             <div className="flex space-x-4">
               <a href="https://www.facebook.com/intracosta" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Visit Intracosta on Facebook">
@@ -120,7 +127,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
             <div className="text-gray-700 text-center lg:text-left">
               <span itemScope itemType="https://schema.org/Organization">
-                © 2024 <span itemProp="name">Intracosta</span>. All rights reserved. <a href="https://stolos-official.onrender.com/" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-500 transition-colors">StolosOfficial</a>
+                <strong>Intracosta</strong> ® 2024 — Web design by <a href="https://stolosofficial.gr/" target="_blank" rel="noopener noreferrer" className="text-yellow-500 hover:text-yellow-400 transition-colors">StolosOfficial</a>
               </span>
             </div>
             <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
@@ -145,11 +152,17 @@ const Footer: React.FC = () => {
                   src="/e-bannerseuerdf730x90-1.jpg" 
                   alt="European Union Regional Development Fund" 
                   className="h-6 sm:h-8 w-auto opacity-80 hover:opacity-100 transition-opacity max-w-[120px] sm:max-w-none"
+                  width={732}
+                  height={92}
+                  loading="lazy"
                 />
                 <img 
                   src="/sticker-website_etpa_gr_highres-1.jpg" 
                   alt="ΕΣΠΑ 2014-2020" 
                   className="h-6 sm:h-8 w-auto opacity-80 hover:opacity-100 transition-opacity max-w-[120px] sm:max-w-none"
+                  width={490}
+                  height={97}
+                  loading="lazy"
                 />
               </div>
             </div>

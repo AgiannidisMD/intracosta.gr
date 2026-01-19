@@ -165,6 +165,9 @@ const LogisticsServicesPage: React.FC = () => {
                 src="https://images.pexels.com/photos/4246206/pexels-photo-4246206.jpeg?auto=compress&cs=tinysrgb&w=1200"
                 alt="Logistics Services"
                 className="w-full h-96 object-cover"
+                width={1200}
+                height={900}
+                loading="lazy"
               />
             </motion.div>
 
@@ -232,4 +235,3 @@ const LogisticsServicesPage: React.FC = () => {
 };
 
 export default LogisticsServicesPage;
-

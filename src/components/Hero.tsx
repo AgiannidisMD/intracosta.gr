@@ -64,6 +64,9 @@ const Hero: React.FC = () => {
               src="/intracosta-logo.svg"
               alt={t('logoAlt')}
               className="w-64 sm:w-80 md:w-[400px] lg:w-[500px] h-auto mx-auto hero-logo"
+              width={1228}
+              height={534}
+              loading="eager"
             />
           </div>
           
