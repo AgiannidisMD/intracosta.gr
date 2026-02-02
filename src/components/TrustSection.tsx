@@ -41,7 +41,7 @@ const TrustSection: React.FC = () => {
         {/* Statistics */}
         <div
           ref={ref}
-          className={`grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 transition-opacity duration-700 ${
+          className={`grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-16 transition-opacity duration-700 ${
             inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >

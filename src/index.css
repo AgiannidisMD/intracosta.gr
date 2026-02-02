@@ -6,15 +6,24 @@
 
 /* Design tokens for accessibility */
 :root {
-  --color-brand-primary: #eab308; /* yellow-500 */
-  --color-brand-dark: #ca8a04; /* yellow-600 - better contrast */
-  --color-text-primary: #111827; /* gray-900 */
-  --color-text-secondary: #4b5563; /* gray-600 */
-  --color-text-muted: #6b7280; /* gray-500 */
-  --color-focus: #eab308; /* yellow-500 */
-  --color-error: #dc2626; /* red-600 */
-  --color-success: #16a34a; /* green-600 */
-  --color-warning: #d97706; /* amber-600 */
+  --color-brand-primary: #eab308;
+  /* yellow-500 */
+  --color-brand-dark: #ca8a04;
+  /* yellow-600 - better contrast */
+  --color-text-primary: #111827;
+  /* gray-900 */
+  --color-text-secondary: #4b5563;
+  /* gray-600 */
+  --color-text-muted: #6b7280;
+  /* gray-500 */
+  --color-focus: #eab308;
+  /* yellow-500 */
+  --color-error: #dc2626;
+  /* red-600 */
+  --color-success: #16a34a;
+  /* green-600 */
+  --color-warning: #d97706;
+  /* amber-600 */
 }
 
 * {
@@ -30,13 +39,16 @@ body {
 }
 
 html {
-  scroll-behavior: auto; /* Disable smooth scroll for better performance */
-  scroll-padding-top: 80px; /* Account for fixed header */
+  scroll-behavior: auto;
+  /* Disable smooth scroll for better performance */
+  scroll-padding-top: 80px;
+  /* Account for fixed header */
 }
 
 /* Optimize scroll performance */
 * {
-  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+  scroll-behavior: auto;
+  /* Disable smooth scroll for better performance */
 }
 
 /* Disable expensive animations on mobile */
@@ -46,26 +58,28 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .magnetic,
   .hover-glow,
   .parallax {
     transform: none !important;
     filter: none !important;
   }
-  
+
   /* Mobile accessibility widget optimizations */
   .touch-manipulation {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
-  
+
   /* Ensure minimum touch target size */
-  button, input[type="checkbox"], label {
+  button,
+  input[type="checkbox"],
+  label {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Improve mobile scrolling */
   .overflow-y-auto {
     -webkit-overflow-scrolling: touch;
@@ -74,7 +88,8 @@ html {
 
 /* Optimize scroll performance globally */
 * {
-  will-change: auto !important; /* Disable will-change to prevent GPU layer creation */
+  will-change: auto !important;
+  /* Disable will-change to prevent GPU layer creation */
 }
 
 /* Disable expensive transforms during scroll */
@@ -86,7 +101,8 @@ html {
 
 /* Optimize motion elements */
 [data-framer-motion] {
-  transform: translateZ(0); /* Force hardware acceleration only when needed */
+  transform: translateZ(0);
+  /* Force hardware acceleration only when needed */
 }
 
 /* Reduce motion for better performance */
@@ -206,6 +222,7 @@ body.screen-reader-optimized img {
 }
 
 @media (min-width: 1024px) {
+
   .intracosta-header-fixed,
   .intracosta-header-spacer {
     height: 112px;
@@ -330,6 +347,7 @@ body.dark-mode .border-gray-200 {
     opacity: 0;
     transform: translateY(30px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -341,6 +359,7 @@ body.dark-mode .border-gray-200 {
     opacity: 0;
     transform: translateY(20px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -352,6 +371,7 @@ body.dark-mode .border-gray-200 {
     opacity: 0;
     transform: translateX(-50px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateX(0) scale(1);
@@ -363,6 +383,7 @@ body.dark-mode .border-gray-200 {
     opacity: 0;
     transform: translateX(50px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateX(0) scale(1);
@@ -374,6 +395,7 @@ body.dark-mode .border-gray-200 {
     opacity: 0;
     transform: scale(0.8) rotateY(-10deg);
   }
+
   to {
     opacity: 1;
     transform: scale(1) rotateY(0deg);
@@ -386,6 +408,7 @@ body.dark-mode .border-gray-200 {
     transform: translateY(30px);
     filter: blur(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -418,11 +441,25 @@ body.dark-mode .border-gray-200 {
 }
 
 /* Staggered animations */
-.animate-stagger-1 { animation-delay: 0.1s; }
-.animate-stagger-2 { animation-delay: 0.2s; }
-.animate-stagger-3 { animation-delay: 0.3s; }
-.animate-stagger-4 { animation-delay: 0.4s; }
-.animate-stagger-5 { animation-delay: 0.5s; }
+.animate-stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.animate-stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.animate-stagger-3 {
+  animation-delay: 0.3s;
+}
+
+.animate-stagger-4 {
+  animation-delay: 0.4s;
+}
+
+.animate-stagger-5 {
+  animation-delay: 0.5s;
+}
 
 /* Enhanced focus styles for accessibility */
 :focus-visible {
@@ -483,6 +520,7 @@ a:focus-visible {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -521,7 +559,7 @@ a:focus-visible {
     font-size: 2.5rem;
     line-height: 1.2;
   }
-  
+
   .hero-subtitle {
     font-size: 1.125rem;
   }
@@ -539,7 +577,7 @@ a:focus-visible {
   .text-gray-600 {
     @apply text-gray-800;
   }
-  
+
   .text-gray-500 {
     @apply text-gray-700;
   }
@@ -547,7 +585,8 @@ a:focus-visible {
 
 /* Enhanced scroll effects */
 .scroll-smooth-enhanced {
-  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+  scroll-behavior: auto;
+  /* Disable smooth scroll for better performance */
   scroll-padding-top: 80px;
 }
 
@@ -592,28 +631,54 @@ a:focus-visible {
 @media (max-width: 768px) {
   .accessibility-widget {
     right: 8px !important;
-    top: 8rem !important; /* 32 * 0.25rem = 8rem */
-    bottom: auto !important;
+    bottom: 80px !important;
+    top: auto !important;
+    left: auto !important;
   }
-  
+
   .accessibility-widget .accessibility-panel {
     max-width: calc(100vw - 32px) !important;
     right: 0 !important;
     left: auto !important;
+  }
+
+  /* Position the Skynet accessibility widget on mobile */
+  #aioa-adawidget~div,
+  [id^="aioa-"],
+  .aioa-widget {
+    right: 12px !important;
+    left: auto !important;
+    bottom: 80px !important;
+    top: auto !important;
+    z-index: 9999 !important;
+  }
+
+  /* Make sure the widget button is smaller on mobile */
+  #aioa-adawidget~div button,
+  [id^="aioa-"] button {
+    transform: scale(0.8) !important;
   }
 }
 
 /* Tablet positioning */
 @media (min-width: 769px) and (max-width: 1024px) {
   .accessibility-widget {
-    top: 6rem !important; /* 24 * 0.25rem = 6rem */
+    top: 6rem !important;
+    /* 24 * 0.25rem = 6rem */
     bottom: auto !important;
   }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 /* Magnetic hover effect */
@@ -666,6 +731,7 @@ a:focus-visible {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -677,9 +743,26 @@ a:focus-visible {
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 .animate-shake {
@@ -698,7 +781,8 @@ a:focus-visible {
 
 /* Smooth horizontal scroll */
 .overflow-x-auto {
-  scroll-behavior: auto; /* Disable smooth scroll for better performance */
+  scroll-behavior: auto;
+  /* Disable smooth scroll for better performance */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -755,7 +839,7 @@ a:focus-visible {
     visibility: visible !important;
     opacity: 1 !important;
   }
-  
+
   /* Ensure image containers are visible on mobile */
   [class*="team-carousel"] img {
     display: block !important;
@@ -766,6 +850,7 @@ a:focus-visible {
 
 /* Enhanced reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -802,7 +887,7 @@ a:focus-visible {
   }
 
   /* New Accessibility Features */
-  
+
   /* Focus Mode - Highlight interactive elements */
   body.focus-mode a,
   body.focus-mode button,
@@ -847,5 +932,46 @@ a:focus-visible {
     outline: 3px solid #f59e0b !important;
     outline-offset: 3px !important;
     box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3) !important;
+  }
+}
+
+/* ========================================
+   SKYNET ACCESSIBILITY WIDGET MOBILE FIX
+   ======================================== */
+/* These rules target the external All-in-One Accessibility widget from Skynet Technologies
+   and reposition it on mobile to prevent covering the header logo */
+
+@media (max-width: 768px) {
+
+  /* HIDE the widget on mobile - it covers the logo and repositioning doesn't work */
+  /* The site has adequate mobile accessibility through the bottom navigation bar */
+  #aioa-wrapper,
+  #aioa-launcher,
+  .aioa_toolbar,
+  .aioa-widget-launcher,
+  [id*="aioa"],
+  [class*="aioa"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Tablet positioning for accessibility widget */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  #aioa-wrapper,
+  #aioa-launcher,
+  .aioa_toolbar,
+  [id*="aioa"],
+  [class*="aioa"] {
+    top: auto !important;
+    bottom: 20px !important;
+    left: auto !important;
+    right: 20px !important;
   }
 }

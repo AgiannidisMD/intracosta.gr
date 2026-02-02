@@ -48,7 +48,7 @@ const Hero: React.FC = () => {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden scroll-mt-20 spacing-section-xl">
       {/* Static background for better performance */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-gray-900/80" />
-      
+
       {/* Static background elements - no animations for better performance */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-20 h-20 bg-yellow-500/10 rounded-full blur-xl" />
@@ -57,8 +57,8 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Content with minimal animations for better performance */}
-      <div className="relative z-10 spacing-container-lg text-center">
-        <div className="flex flex-col items-center justify-center min-h-screen visual-hierarchy-lg">
+      <div className="relative z-10 spacing-container-lg text-center px-4">
+        <div className="flex flex-col items-center justify-center py-16 sm:py-24 md:py-32 lg:min-h-screen visual-hierarchy-lg">
           <div className="mb-8 sm:mb-12">
             <img
               src="/intracosta-logo.svg"
@@ -69,13 +69,13 @@ const Hero: React.FC = () => {
               loading="eager"
             />
           </div>
-          
+
           <div className="mb-10 sm:mb-12">
             <h1 className="text-heading-2 sm:text-heading-1 text-gray-200 max-w-3xl mx-auto leading-relaxed px-4">
               {t('heroTitle')}
             </h1>
           </div>
-          
+
           <div className="mb-12">
             <a
               href="#quote"
@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
               className="inline-flex items-center border-2 border-yellow-500 bg-yellow-500 text-white hover:bg-white hover:text-yellow-500 button-spacing-lg text-body-lg font-semibold transition-colors duration-300 shadow-2xl touch-manipulation focus-ring"
             >
               <span className="mr-3 text-xl sm:text-2xl">→</span>
-{t('letsCooperate')}
+              {t('letsCooperate')}
             </a>
           </div>
 
